@@ -1,0 +1,25 @@
+{
+  "name": "posapi",
+  "version": "1.0.0",
+  "description": "RESTful posAPI",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Test\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "keywords": [
+    "RESTFUL",
+    "API",
+    "POS"
+  ],
+  "author": "heshan eranga",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^1.18.9"
+  },
+  "dependencies": {
+    "express": "^4.16.4",
+    "express-oauth-server": "^2.0.0",
+    "mongoose": "^5.4.10"
+  }
+}

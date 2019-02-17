@@ -1,0 +1,68 @@
+import React from 'react';
+import { Provider } from 'react-redux';
+import { mount } from 'enzyme';
+import { configure } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+import HeaderContainer from '../../containers/header';
+import { Header } from '../../containers/header';
+
+configure({adapter: new Adapter()});
+
+const storeFake = state => {
+  return {
+    default: jest.fn(),
+    subscribe: jest.fn(),
+    dispatch: jest.fn(),
+    getState: () => state,
+  };
+};
+
+describe('Header container and component', () => {
+  let wrapper;
+  let component;
+  let container;
+
+  beforeEach(() => {
+    jest.resetAllMocks();
+
+    const store = storeFake({
+
+    	user: [ 
+			{
+				username:"heshanera",
+				firstName:"Heshan",
+				lastName:"Eranga"
+			} 
+		],
+
+    });
+
+    wrapper = mount(
+      <Provider store={store}>
+        <HeaderContainer />
+      </Provider>
+    );
+
+    container = wrapper.find(HeaderContainer);
+    component = container.find(Header);
+  });
+
+  it('should render both the container and the component ', () => {
+    expect(container.length).toBeTruthy();
+    expect(component.length).toBeTruthy();
+  });
+
+  it('should map state to props', () => {
+    const expectedPropKeys = [
+      'user'
+    ];
+
+    expect(Object.keys(component.props())).toEqual(expect.arrayContaining(expectedPropKeys));
+  });
+
+  // it('should map dispatch to props', () => {
+  //   const expectedPropKeys = ['load'];
+
+  //   expect(Object.keys(container.props())).toEqual(expect.arrayContaining(expectedPropKeys));
+  // });
+});

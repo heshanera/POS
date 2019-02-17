@@ -1,0 +1,214 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 40vmin;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/*************************************************************************/
+
+.login-container {
+  width: 500px;
+  text-align:center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 15%;
+}
+
+.login-box {
+  padding:20px;
+}
+
+.login-icon{
+  margin: 0 auto 20px auto; 
+}
+
+.login-button-container {
+  padding-top: 20px;
+}
+
+.login-button {
+  height: 60px;
+  color: #000000;
+}
+
+.header {
+  background: #0091EA;
+  color: #ffffff;
+  min-height: 60px;
+}
+
+.menu-icon {
+  float: left;
+  line-height: 75px;
+  margin-left: 20px;
+  cursor: pointer;;
+}
+
+.person-icon {
+  float:right;
+  line-height: 75px;
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.nameUser {
+  line-height: 60px;
+  float: right;
+  margin-right: 10px;
+}
+
+.exit-icon {
+  float:right;
+  line-height: 75px;
+  margin-right: 20px;
+  cursor: pointer;
+}
+
+.order-list-container {
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  margin: 15px;
+  padding: 20px;
+  background: #eeeeee;
+}
+
+.order-container {
+  text-align: center;
+}
+
+.order-value-container {
+  color:#ffffff;
+  background: #888888;
+  border-radius: 5px;
+  padding: 8px 15px 8px 15px;
+  margin-left: 10px;
+}
+
+.order-id {
+  padding: 20px;
+  width: 40%;
+  text-align: left;
+}
+
+.order-items {
+  padding: 20px;
+  width:20%;
+}
+
+.order-total {
+  float:right;
+  padding: 20px;
+  width:40%;
+  text-align: right;
+}
+
+.order-detail{  
+  background: #eeeeee;
+}
+
+.order-item-container {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+  text-align: center;
+  margin: 10px;
+  font-size: 15px;
+  width:100%;
+}
+
+.order-item-container:hover {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.24), 0 1px 2px rgba(0,0,0,0.48);
+}
+
+.order-item-container-header {
+  background-color: #0091EA;
+  color: white;
+  padding: 10px;
+  font-size: 25px;
+  min-height: 15px;
+}
+
+.order-item-name {
+  padding:1px;
+  background: #FFFFFF;
+}
+
+.wrapper {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 15px;
+  width:100%;
+}
+
+.delete-item{
+  float: right;
+  margin: -10px -10px 0 0;
+  display: none;
+  cursor: pointer;
+  background: #FFFFFF;
+  border-radius: 20px;
+  line-height: 10px;
+}
+
+.order-item-container:hover  > .delete-item {
+  display: block;
+}
+
+.add-item-container {
+  background: #FFFFFF;
+  line-height: 100%;
+}
+
+.add-item-inner-container {
+  width:100%;
+}
+
+.add-item-input {
+  width: 85%;
+  float: left;
+}
+
+.add-item-button-container {
+  padding: 10px 0 0 20px;
+  color: #0091EA;
+  float: right;
+}
+
+.secondary-color {
+  color: #777777;
+}
