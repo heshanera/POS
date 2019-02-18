@@ -1,10 +1,10 @@
 'use strict';
 
 const mongoose = require('mongoose'),
-Order = mongoose.model('Orders');
+OrderModel = mongoose.model('Orders');
 
 let createOrder = function(req, res) {
-  var newOrder = new Order(req.body);
+  var newOrder = new OrderModel(req.body);
   newOrder.save(function(err, order) {
     if (err)
       res.send(err);
@@ -13,7 +13,7 @@ let createOrder = function(req, res) {
 };
 
 let deleteOrder = function(req, res) {
-  Order.remove({
+  OrderModel.remove({
     _id: req.params.orderId
   }, function(err, order) {
     if (err)
@@ -23,15 +23,48 @@ let deleteOrder = function(req, res) {
 };
 
 let listOrders = function(req, res) {
-  Order.find({}, function(err, order) {
+  OrderModel.find({}, function(err, order) {
     if (err)
       res.send(err);
     res.json(order);
   });
 };
 
+let addOrderItem = function(req, res) {
+  OrderModel.findOne({ userName: req.body.username }, function(err, userOrders) {
+    const newItem = {
+      name: req.body.itemName,
+      price: req.body.price
+    };
+    const i = userOrders.orderList.findIndex(order => order._id == req.body.orderId);
+    userOrders.orderList[i].items.push(newItem);
+    userOrders.save(function(err, userOrders) {
+      if (err)
+        res.send(err);
+      res.json(userOrders.orderList[i].items.slice(-1)[0]);
+    })
+  });
+};
+
+let removeOrderItem = function(req, res) {
+  OrderModel.findOne({ userName: req.body.username }, function(err, userOrders) {
+    const i = userOrders.orderList.findIndex(order => order._id == req.body.orderId);
+    if (userOrders.orderList[i].items.length > 1) {
+      userOrders.orderList[i].items = userOrders.orderList[i].items.filter( item => item._id != req.body.itemId );  
+    } else {
+      // delete the order when removing the last item of the order
+      userOrders.orderList.splice(i,1);
+    }
+    userOrders.save(function(err, userOrders) {
+      if (err)
+        res.send(err);
+      res.json(userOrders.orderList[i].items.length);
+    })
+  });
+};
+
 let getOrders = function(req, res) {
-  Order.find({
+  OrderModel.find({
     userName: req.body.username
   }, function(err, user) {
     if (err)
@@ -40,4 +73,7 @@ let getOrders = function(req, res) {
   });
 };
 
-module.exports = {createOrder, deleteOrder, listOrders, getOrders}; 
+module.exports = {
+  createOrder, deleteOrder, listOrders, getOrders, addOrderItem,
+  removeOrderItem
+}; 

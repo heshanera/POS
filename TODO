@@ -1,2 +1,11 @@
 encrypt password
 aouth2
+
+
+
+created database model for available items
+added API calls to add, update and list items
+updated the reducer to fetch data from the database
+added API calls to add new items to an order
+implement the frontend functions to add new items to an order 
+

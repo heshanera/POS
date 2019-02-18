@@ -55,7 +55,7 @@ class Item extends Component {
 	            <Button onClick={this.handleAlertClose} color="inherit" >
 	              Cancel
 	            </Button>
-	            <Button onClick={() => this.props.handleRemove(this.props.orderId,this.props.itemId)} color="inherit" autoFocus>
+	            <Button onClick={() => this.props.removeItem(this.props.orderId,this.props.itemId)} color="inherit" autoFocus>
 	              Remove
 	            </Button>
 	          </DialogActions>

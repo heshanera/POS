@@ -5,7 +5,7 @@ let Schema = mongoose.Schema;
 
 
 let ItemSchema = new Schema({
-  item: {
+  itemName: {
     type: String
   },
   price: {

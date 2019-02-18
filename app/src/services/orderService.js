@@ -16,7 +16,7 @@ const fetchOrders = (username, history) => {
    .then(
       response => response.json(),
       error => console.log('An error occurred.', error),
-  )
+    )
    .then((orders) => {
       console.log(orders);
       // storing the order list in the local storage
@@ -26,41 +26,88 @@ const fetchOrders = (username, history) => {
       if (!(Object.keys(orders).length === 0)) {
         history.push('/orders');
       }
-   },
-  )
+   })
   .catch((e) => {
     console.log('invalid username');
-   }
-  );
+   });
  };
 }
 
 const removeItem = (orderId, itemId) => {
+  const user = JSON.parse(localStorage.getItem('user'))
+  const data = "username="+user.username+
+                "&orderId="+orderId+
+                "&itemId="+itemId;
   return dispatch => {
-    // delete the item from the local storage
-    let orders = JSON.parse(localStorage.getItem('orders'));
-    // update the order list
-    const i = orders.orderList.findIndex(order => order._id === orderId);
-    if (orders.orderList[i].items.length > 1) {
-      orders.orderList[i].items = orders.orderList[i].items.filter( item => item._id !== itemId );  
-    } else {
-      // delete the order when removing the last item of the order
-      // TODO :
-    }
-    
-    localStorage.setItem('orders', JSON.stringify(orders));
-    dispatch(updateOrders(orders));
-
-    console.log(orders);
-
-    // TODO :
     // update the database
+    dispatch(requestOrders());
+    return fetch(config.apiUrl+'/removeOrderItem', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: data
+    })
+    .then(
+      response => response.json(),
+      error => console.log('An error occurred.', error),
+    )
+    .then((orderSize) => {
 
- };
+      // update the local storage
+      let orders = JSON.parse(localStorage.getItem('orders'));
+      const i = orders.orderList.findIndex(order => order._id === orderId);
+      // check if the item is removed from the database
+      if (orderSize < orders.orderList[i].items.length) {
+        // update the order list
+        if (orders.orderList[i].items.length > 1) {
+          orders.orderList[i].items = orders.orderList[i].items.filter( item => item._id !== itemId );  
+        } else {
+          // delete the order when removing the last item of the order
+          orders.orderList.splice(i,1);
+        }
+        localStorage.setItem('orders', JSON.stringify(orders));
+        dispatch(updateOrders(orders));
+      }
+    })
+    .catch((e) => {
+      console.log('error in removing the item' );
+    });
+  };
 }
 
-const addItem = (orderId, itemId) => {
-
+const addItem = (orderId, itemName, price) => {
+  const user = JSON.parse(localStorage.getItem('user'))
+  const data = "username="+user.username+
+                "&orderId="+orderId+
+                "&itemName="+itemName+
+                "&price="+price;
+  return dispatch => {
+    // update the database
+    dispatch(requestOrders());
+    return fetch(config.apiUrl+'/addOrderItem', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: data
+    })
+    .then(
+      response => response.json(),
+      error => console.log('An error occurred.', error),
+    )
+    .then((item) => {
+      // update the local storage
+      let orders = JSON.parse(localStorage.getItem('orders'));
+      const i = orders.orderList.findIndex(order => order._id === orderId);
+      orders.orderList[i].items.push(item);
+      localStorage.setItem('orders', JSON.stringify(orders));
+      dispatch(updateOrders(orders));
+    })
+    .catch((e) => {
+      console.log('error in adding the new item ' + itemName);
+    });
+ };
 }
 
 

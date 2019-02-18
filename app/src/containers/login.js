@@ -33,8 +33,8 @@ class LoginComponent extends Component {
 
   handlesubmit = state => (event) => {
     const { username, password } = this.state;
-    this.props.onLogin(username, password, this.props.history);
-    this.props.loadData(username, this.props.history);
+    this.props.onLogin(username, password, this.props.history)
+    // this.props.loadOrders(username, this.props.history);
   };
 
   loadSignIn = () => {
@@ -89,9 +89,9 @@ const mapDispatchToProps = dispatch => ({
   onLogin: (username, password, history) => {
     dispatch(loginSerive.fetchUser({username, password}, history));
   },
-  loadData: (username, history) => {
-    dispatch(orderService.fetchOrders(username, history))
-  }
+  // loadOrders: (username, history) => {
+  //   dispatch(orderService.fetchOrders(username, history))
+  // }
 });
 
 const LoginContainer = connect(mapStateToProps, mapDispatchToProps)(LoginComponent);

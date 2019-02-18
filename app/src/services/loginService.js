@@ -1,4 +1,6 @@
 import {requestUser, receiveUser } from '../actions/loginActions';
+import orderService from './orderService';
+import itemService from './itemService';
 import config from './config';
 
 const fetchUser = (user, history) => {
@@ -21,6 +23,10 @@ const fetchUser = (user, history) => {
       dispatch(receiveUser(user));
       if (!(Object.keys(user).length === 0)) {
         localStorage.setItem('user', JSON.stringify(user));
+        // loading the order details
+        dispatch(orderService.fetchOrders(user.username, history));
+        // loading available items
+        dispatch(itemService.fetchAvailableItems());
       }
    },
   )

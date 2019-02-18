@@ -51,14 +51,18 @@ class Order extends Component {
 								itemPrice = {item.price}
 								orderId = {this.props.orderId}
 								orderSize = {this.props.noOfItems}
-								handleRemove = {this.props.removeItem}
+								removeItem = {this.props.removeItem}
 							/>
 		            	)
 					})}
 				</div>
 	          </ExpansionPanelDetails>
 	          <ExpansionPanelDetails className="add-item-container">
-	          	<AddItem availableItems={this.props.availableItems} orderId={this.props.orderId}/>
+	          	<AddItem 
+	          		availableItems={this.props.availableItems} 
+	          		orderId={this.props.orderId} 
+	          		addItem={this.props.addItem}
+	          	/>
 	          </ExpansionPanelDetails>
 	        </ExpansionPanel>    	
 		);

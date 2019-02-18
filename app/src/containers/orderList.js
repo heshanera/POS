@@ -23,10 +23,14 @@ export class OrderList extends Component {
   		return this.props.removeItem;
   	};
 
+    handleAddItem = event => {
+      return this.props.addItem;
+    };
+
   	handleTotalPrice = (itemList) => {
   		let total = 0;
   		for (let item of itemList) {
-  			total += item.price;
+  			total += Number(item.price);
   		}
   		return total;
   	}
@@ -45,6 +49,7 @@ export class OrderList extends Component {
 					orderExpanded = {expanded}
 					handleExpand = {this.handleExpand}
 					removeItem = {this.handleRemoveItem()}
+          addItem = {this.handleAddItem()}
 				/>
 			);
 		});
@@ -95,6 +100,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   removeItem: (orderId, itemId) => {
   		dispatch(orderService.removeItem(orderId,itemId));
+  },
+  addItem: (orderId, itemName, price) => {
+      dispatch(orderService.addItem(orderId, itemName, price)); 
   },
   logout: () => {
   		dispatch(loginService.logout);
