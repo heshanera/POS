@@ -41,10 +41,10 @@ class Order extends Component {
 	          </ExpansionPanelSummary>
 	          <ExpansionPanelDetails className="order-detail">
 	            <div className="wrapper">
-		            {this.props.orderItems.map((item) => {
+		            {this.props.orderItems.map((item, index) => {
 						return(
 							<Item 
-								key = {item._id}
+								key = {index}
 								className="item"
 								itemId = {item._id} 
 								itemName = {item.name} 

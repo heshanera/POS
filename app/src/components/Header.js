@@ -8,6 +8,8 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import { MuiThemeProvider } from '@material-ui/core/styles';
+import themes from "./ColorTheme"
 
 import './App.css'
 
@@ -36,19 +38,21 @@ class Header extends Component {
 	          aria-labelledby="alert-dialog-title"
 	          aria-describedby="alert-dialog-description"
 	        >
-	          <DialogTitle id="logout-dialog-title">{"Logout?"}</DialogTitle>
-	          <DialogContent>
+	          <DialogTitle id="logout-dialog-title">{"Logout"}</DialogTitle>
+	          <DialogContent className="logout-alert">
 	            <DialogContentText id="alert-dialog-description">
 	              Are you sure want to logout?
 	            </DialogContentText>
 	          </DialogContent>
 	          <DialogActions>
-	            <Button onClick={this.handleAlertClose} color="inherit" >
-	              Cancel
-	            </Button>
-	            <Button onClick={this.handleLogout()} color="inherit" autoFocus>
-	              Logout
-	            </Button>
+	          	<MuiThemeProvider theme={themes.theme1}>
+		            <Button onClick={this.handleAlertClose} color="primary" className="logout-cancel">
+		              <b>Cancel</b>
+		            </Button>
+		            <Button onClick={this.handleLogout()} color="primary" className="logout-logout">
+		              <b>Logout</b>
+		            </Button>
+		        </MuiThemeProvider>
 	          </DialogActions>
 	        </Dialog>
   		);
@@ -60,8 +64,8 @@ class Header extends Component {
 				<span className="menu-icon">
 					<MenuIcon />
 				</span>
-				<span className="exit-icon">
-					<ExitIcon onClick = {this.handleAlertOpen}/>
+				<span className="exit-icon" onClick = {this.handleAlertOpen}>
+					<ExitIcon/>
 				</span>
 				<span className="nameUser">
 					{this.props.firstName} {this.props.lastName}

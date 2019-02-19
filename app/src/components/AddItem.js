@@ -10,10 +10,10 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import { MuiThemeProvider } from '@material-ui/core/styles';
+import themes from "./ColorTheme"
 
 import './App.css'
-
-
 
 class AddItem extends Component {
 
@@ -33,13 +33,12 @@ class AddItem extends Component {
 	};
 
 	handleAddNewItem = () => {
-	    console.log(this.state);
 	    this.props.addItem(this.props.orderId, this.state.itemName, this.state.price);
-	    this.handleAlertClose();
 	    this.setState({ 
 	    	value: '',
 	    	itemName: '',
-	    	price: ''
+	    	price: '',
+	    	open: false
 	    });
 	};
 
@@ -60,19 +59,21 @@ class AddItem extends Component {
 	          aria-labelledby="alert-dialog-title"
 	          aria-describedby="alert-dialog-description"
 	        >
-	          <DialogTitle id="logout-dialog-title">{"Logout?"}</DialogTitle>
+	          <DialogTitle id="add-item-dialog-title">{"Add new item"}</DialogTitle>
 	          <DialogContent>
 	            <DialogContentText id="alert-dialog-description">
 	              Are you sure want to add <b>{this.state.itemName}</b> to the order
 	            </DialogContentText>
 	          </DialogContent>
 	          <DialogActions>
-	            <Button onClick={this.handleAlertClose} color="inherit" >
-	              Cancel
-	            </Button>
-	            <Button onClick={this.handleAddNewItem} color="inherit" autoFocus>
-	              Add
-	            </Button>
+	          	<MuiThemeProvider theme={themes.theme1}>
+		            <Button onClick={this.handleAlertClose} color="primary" className="cancel-add-item-button">
+		              <b>Cancel</b>
+		            </Button>
+		            <Button onClick={this.handleAddNewItem} color="primary"  className="add-add-item-button">
+		              <b>Add</b>
+		            </Button>
+		        </MuiThemeProvider>
 	          </DialogActions>
 	        </Dialog>
   		);
@@ -80,9 +81,9 @@ class AddItem extends Component {
 
 	loadAllAvailableItems = () => {
 		return (
-			this.props.availableItems.map((item) => {
+			this.props.availableItems.map((item, index) => {
 				return( 
-					<MenuItem className='menuItem' key={item._id} value={item.itemName+','+item.price}>
+					<MenuItem className='menuItem' key={index} value={item.itemName+','+item.price}>
 						{item.itemName}: $ {item.price}
 					</MenuItem>
 				);			            	
@@ -106,15 +107,17 @@ class AddItem extends Component {
 		          	<FormHelperText>Add New</FormHelperText>
 		        </FormControl>
 		        <div className="add-item-button-container">
-		          	<Button 
+		          	<MuiThemeProvider theme={themes.theme1}>
+      				<Button 
 		          		variant="outlined" 
 		          		size="large" 
-		          		color="inherit" 
-		          		className=""
+		          		color="primary" 
+		          		className="add-item-button"
 		          		onClick = {this.handleAlertOpen}
 		          	>
 			        	<AddIcon/> 
 			        </Button>
+    			</MuiThemeProvider>
 		        </div>
 		        {this.loadAddAlert()}
 		    </div>    
@@ -125,7 +128,7 @@ class AddItem extends Component {
 	render() {
 	    return ( this.loadAddItem() );
 	}
-}
+};
 
 
 export default AddItem;

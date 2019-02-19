@@ -6,6 +6,8 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import { MuiThemeProvider } from '@material-ui/core/styles';
+import themes from "./ColorTheme"
 
 import './App.css'
 
@@ -35,7 +37,12 @@ class Item extends Component {
 				Are you sure want to remove <b>{this.props.itemName}</b> from the order?
 			</span>
 		)
-	}
+	};
+
+	handleRemoveItem = () => {
+		this.props.removeItem(this.props.orderId,this.props.itemId);
+		this.setState({ open: false });
+	};
 
 	loadDeleteAlert = () => {
 		return (
@@ -52,16 +59,18 @@ class Item extends Component {
 	            </DialogContentText>
 	          </DialogContent>
 	          <DialogActions>
-	            <Button onClick={this.handleAlertClose} color="inherit" >
-	              Cancel
-	            </Button>
-	            <Button onClick={() => this.props.removeItem(this.props.orderId,this.props.itemId)} color="inherit" autoFocus>
-	              Remove
-	            </Button>
+	          	<MuiThemeProvider theme={themes.theme1}>
+		            <Button onClick={this.handleAlertClose} color="primary" className="delete-item-cancel">
+		              <b>Cancel</b>
+		            </Button>
+		            <Button onClick={this.handleRemoveItem} color="primary" className="delete-item-delete">
+		              <b>Remove</b>
+		            </Button>
+		        </MuiThemeProvider>    
 	          </DialogActions>
 	        </Dialog>
   		);
-	}
+	};
 
   	loadItem = () => {
 
@@ -80,7 +89,7 @@ class Item extends Component {
 			</div>
     	)
 
-  	}
+  	};
 
 	render() {
 	    return (

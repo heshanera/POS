@@ -205,10 +205,15 @@ body {
 
 .add-item-button-container {
   padding: 10px 0 0 20px;
-  color: #0091EA;
+  /*color: #0091EA;*/
+  /*color: #111111;*/
   float: right;
 }
 
 .secondary-color {
   color: #777777;
+}
+
+.logout-alert {
+  width: 300px;
 }
