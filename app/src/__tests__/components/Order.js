@@ -55,15 +55,20 @@ describe('Order component', () => {
   });
 
 
-  it('should display no of order items and total ', () => {
+  it('should display order id, number of items and total', () => {
     const wrapper = shallow(component);
-    const total = 1300, items = 3;
-    expect(wrapper.contains(items)).toEqual(true);
-    // expect(wrapper.contains(total)).toEqual(true);
-
+    const orderId = '#'+("12qwdgsad261eggd2513fghasd".substring(15));
+    expect(wrapper.find('.order-id').containsMatchingElement(orderId)).toBeTruthy();
+    expect(wrapper.find('.order-items').containsMatchingElement(3)).toBeTruthy();
+    expect(wrapper.find('.order-total').containsMatchingElement('$ 1300')).toBeTruthy();
   });
 
-  it('should display 3 items in the order ', () => {
+  it('should display 3 items in the order', () => {
+    const wrapper = shallow(component);
+    expect(wrapper.find('.item')).toHaveLength(3);
+  });
+
+  it('should display item name and the price', () => {
     const wrapper = shallow(component);
     expect(wrapper.find('.item')).toHaveLength(3);
   });

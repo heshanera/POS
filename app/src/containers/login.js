@@ -14,7 +14,7 @@ import orderService from '../services/orderService';
 
 
 
-class LoginComponent extends Component {
+export class Login extends Component {
 
   state = { username:'', password:'' };
 
@@ -51,7 +51,7 @@ class LoginComponent extends Component {
           <form className='' >
             <FormControl margin="normal" required fullWidth>
               <InputLabel htmlFor="username">Username</InputLabel>
-              <Input onChange={this.handleFormChange}  id="username" autoComplete="username" autoFocus />
+              <Input onChange={this.handleFormChange}  id="username" autoComplete="username" className='test123' />
             </FormControl>
             <FormControl margin="normal" required fullWidth>
               <InputLabel htmlFor="password">Password</InputLabel>
@@ -88,11 +88,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   onLogin: (username, password, history) => {
     dispatch(loginSerive.fetchUser({username, password}, history));
-  },
-  // loadOrders: (username, history) => {
-  //   dispatch(orderService.fetchOrders(username, history))
-  // }
+  }
 });
 
-const LoginContainer = connect(mapStateToProps, mapDispatchToProps)(LoginComponent);
+const LoginContainer = connect(mapStateToProps, mapDispatchToProps)(Login);
 export default LoginContainer;

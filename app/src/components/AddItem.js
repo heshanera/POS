@@ -10,8 +10,8 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { MuiThemeProvider } from '@material-ui/core/styles';
-import themes from "./ColorTheme"
+// import { MuiThemeProvider } from '@material-ui/core/styles';
+// import themes from "./ColorTheme"
 
 import './App.css'
 
@@ -66,14 +66,12 @@ class AddItem extends Component {
 	            </DialogContentText>
 	          </DialogContent>
 	          <DialogActions>
-	          	<MuiThemeProvider theme={themes.theme1}>
-		            <Button onClick={this.handleAlertClose} color="primary" className="cancel-add-item-button">
-		              <b>Cancel</b>
-		            </Button>
-		            <Button onClick={this.handleAddNewItem} color="primary"  className="add-add-item-button">
-		              <b>Add</b>
-		            </Button>
-		        </MuiThemeProvider>
+	            <Button onClick={this.handleAlertClose} color="inherit" className="cancel-add-item-button">
+	              <b>Cancel</b>
+	            </Button>
+	            <Button onClick={this.handleAddNewItem} color="inherit"  className="add-add-item-button">
+	              <b>Add</b>
+	            </Button>
 	          </DialogActions>
 	        </Dialog>
   		);
@@ -107,17 +105,15 @@ class AddItem extends Component {
 		          	<FormHelperText>Add New</FormHelperText>
 		        </FormControl>
 		        <div className="add-item-button-container">
-		          	<MuiThemeProvider theme={themes.theme1}>
       				<Button 
 		          		variant="outlined" 
 		          		size="large" 
-		          		color="primary" 
+		          		color="inherit" 
 		          		className="add-item-button"
 		          		onClick = {this.handleAlertOpen}
 		          	>
 			        	<AddIcon/> 
 			        </Button>
-    			</MuiThemeProvider>
 		        </div>
 		        {this.loadAddAlert()}
 		    </div>    

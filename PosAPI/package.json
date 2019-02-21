@@ -18,6 +18,7 @@
     "nodemon": "^1.18.9"
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.16.4",
     "express-oauth-server": "^2.0.0",
     "mongoose": "^5.4.10"

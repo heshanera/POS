@@ -12,10 +12,6 @@ class Order extends Component {
 
 	state = { item: "" };
 
-	// handleItemRemove = itemId => (event) => {
- //  		this.props.removeItem(itemId);
- //  	};
-
   	loadOrder = () => {
 		return(
 			<ExpansionPanel key={this.props.orderId} expanded={this.props.orderExpanded === this.props.orderId} onChange={this.props.handleExpand(this.props.orderId)}>

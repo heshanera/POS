@@ -43,10 +43,10 @@ module.exports = function(app) {
 
   app.route('/orders')
     .post(order.createOrder)
-    .get(order.listOrders);
+    .get(order.listOrders); // list all the orders of all users
 
   app.route('/orders/:orderId')
-    .delete(order.deleteOrder);
+    .delete(order.deleteOrder); // delete an order
 
   app.route('/getOrders')
     .post(order.getOrders); // return an order list of the requested user
@@ -57,7 +57,7 @@ module.exports = function(app) {
 
   // params = {username: string, orderId: string, itemId: string}
   app.route('/removeOrderItem')
-    .post(order.removeOrderItem); // remove an item from exiting order
+    .delete(order.removeOrderItem); // remove an item from exiting order
 
   app.use(function(req, res) {
 	  res.status(404).send({url: req.originalUrl + ' not found'})

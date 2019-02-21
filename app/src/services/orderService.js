@@ -34,6 +34,9 @@ const fetchOrders = (username, history) => {
 }
 
 const removeItem = (orderId, itemId) => {
+
+  console.log('inside remove');
+
   const user = JSON.parse(localStorage.getItem('user'))
   const data = "username="+user.username+
                 "&orderId="+orderId+
@@ -42,7 +45,7 @@ const removeItem = (orderId, itemId) => {
     // update the database
     dispatch(requestOrders());
     return fetch(config.apiUrl+'/removeOrderItem', {
-        method: 'POST',
+        method: 'delete',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         },

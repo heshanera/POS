@@ -4,36 +4,47 @@ import { mount } from 'enzyme';
 import { configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { BrowserRouter as Router } from 'react-router-dom';
-
+import configureStore from 'redux-mock-store';
+import thunk from 'redux-thunk'
 import OrderListContainer from '../../containers/orderList';
 import { OrderList } from '../../containers/orderList';
 
 configure({adapter: new Adapter()});
 
-const storeFake = state => {
-  return {
-    default: jest.fn(),
-    subscribe: jest.fn(),
-    dispatch: jest.fn(),
-    getState: () => state,
-  };
-};
+describe('Orderlist component and container', () => {
 
-describe('OrderList container and component', () => {
-  let wrapper;
-  let component;
   let container;
+  let component;
 
-  beforeEach(() => {
-    jest.resetAllMocks();
-
-    const store = storeFake({
-
+  beforeAll(() => {
+    const mockStore = configureStore([thunk]);
+    const store = mockStore({});
+    const reducer = { 
+      user: {username:'johns'},
       userOrders: {
         id:1,
         orderList: [
           {
-            id:1,
+            _id:'12qwdgsad261eggd2513fghasd767',
+            items:[
+              {
+                id: 1,
+                name: "item1",
+                price: 300
+              },
+              {
+                id: 3,
+                name: "item3",
+                price: 600
+              }
+            ],
+            noOfItems:2,
+            total:900,
+            CreatedDate:"09.02.2018",
+            status:"pending"
+          },
+          {
+            _id:'12qwdgsad261eggd2513fghasd345',
             items:[
               {
                 id: 1,
@@ -44,69 +55,84 @@ describe('OrderList container and component', () => {
                 id: 2,
                 name: "item2",
                 price: 400
-              },
-              {
-                id: 3,
-                name: "item3",
-                price: 600
               }
             ],
-            noOfItems:3,
-            total:1300,
+            noOfItems:2,
+            total:700,
             CreatedDate:"09.02.2018",
             status:"pending"
           }
         ]
       },
-      items: [
-        {
-          id:1,
-          itemName:"item1",
-          price:"$300",
-        },
-        {
-          id:2,
-          itemName:"item2",
-          price:"$400",
-        },
-        {
-          id:3,
-          itemName:"item3",
-          price:"$600",
-        }
-      ]
+      items:[], 
+    }
 
+    store.dispatch = jest.fn();
+    store.getState = jest.fn(() => reducer);
+    store.default = jest.fn();
 
-    });
-
-    wrapper = mount(
+    container = mount(
       <Provider store={store}>
         <Router>
           <OrderListContainer />
         </Router>
-      </Provider>
-    );
+      </Provider>)
+    component = container.find(OrderList);
 
-    container = wrapper.find(OrderListContainer);
-    // component = container.find(OrderList);
   });
 
-  it('should render both the container and the component ', () => {
+  it("should render the container and component successfully", () => {
     expect(container.length).toBeTruthy();
-    // expect(component.length).toBeTruthy();
+    expect(component.length).toBeTruthy();
   });
 
-  // it('should map state to props', () => {
-  //   const expectedPropKeys = [
-  //     'user'
-  //   ];
+  it("should map states to props", () => {
+    const expectedPropKeys = [
+      'user', 'userOrders', 'items',
+    ];
+    expect(Object.keys(component.props())).toEqual(expect.arrayContaining(expectedPropKeys));
+  });
 
-  //   expect(Object.keys(component.props())).toEqual(expect.arrayContaining(expectedPropKeys));
-  // });
+  it("should map dispatch to props", () => {
+    const expectedPropKeys = [
+      'removeItem', 'addItem', 'logout',
+    ];
+    expect(Object.keys(component.props())).toEqual(expect.arrayContaining(expectedPropKeys));
+  });
 
-  // it('should map dispatch to props', () => {
-  //   const expectedPropKeys = ['load'];
+  it("should display the order list and the header when logged in", () => {
+    JSON.parse = jest.fn().mockImplementationOnce(() => {
+      {user:{username:'johns'}};
+    });
+    const loadOrderList = jest.spyOn(component.instance(), "loadOrderList");
+    const loadHeader = jest.spyOn(component.instance(), "loadHeader");
+    component.instance().forceUpdate();
+    expect(loadOrderList).toHaveBeenCalledTimes(1);
+    expect(loadHeader).toHaveBeenCalledTimes(1);
+  });  
 
-  //   expect(Object.keys(container.props())).toEqual(expect.arrayContaining(expectedPropKeys));
-  // });
+  it("should calculate the total price from the list of items", () => {
+    JSON.parse = jest.fn().mockImplementationOnce(() => {
+      {user:{username:'johns'}};
+    });
+    const items = [
+      {
+        id: 1,
+        name: "item1",
+        price: 300
+      },
+      {
+        id: 3,
+        name: "item3",
+        price: 600
+      }
+    ]
+    const handleTotalPrice = jest.spyOn(component.instance(), "handleTotalPrice");
+    component.instance().forceUpdate();
+    expect(handleTotalPrice).toHaveBeenCalledTimes(2);
+    expect(component.instance().handleTotalPrice(items)).toEqual(900);
+  });
+
+
 });
+

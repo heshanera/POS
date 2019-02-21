@@ -6,8 +6,8 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { MuiThemeProvider } from '@material-ui/core/styles';
-import themes from "./ColorTheme"
+// import { MuiThemeProvider } from '@material-ui/core/styles';
+// import themes from "./ColorTheme"
 
 import './App.css'
 
@@ -59,14 +59,12 @@ class Item extends Component {
 	            </DialogContentText>
 	          </DialogContent>
 	          <DialogActions>
-	          	<MuiThemeProvider theme={themes.theme1}>
-		            <Button onClick={this.handleAlertClose} color="primary" className="delete-item-cancel">
-		              <b>Cancel</b>
-		            </Button>
-		            <Button onClick={this.handleRemoveItem} color="primary" className="delete-item-delete">
-		              <b>Remove</b>
-		            </Button>
-		        </MuiThemeProvider>    
+	            <Button onClick={this.handleAlertClose} color="inherit" className="delete-item-cancel">
+	              <b>Cancel</b>
+	            </Button>
+	            <Button onClick={this.handleRemoveItem} color="inherit" className="delete-item-delete">
+	              <b>Remove</b>
+	            </Button>    
 	          </DialogActions>
 	        </Dialog>
   		);

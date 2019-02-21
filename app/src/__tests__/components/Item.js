@@ -23,7 +23,6 @@ describe('Item component', () => {
     shallow(component);
   });
 
-
   it('should display item name and price', () => {
      const wrapper = shallow(component);
      const name = 'itemX';

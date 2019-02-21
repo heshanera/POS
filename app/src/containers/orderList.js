@@ -33,34 +33,34 @@ export class OrderList extends Component {
   			total += Number(item.price);
   		}
   		return total;
-  	}
+  	};
 
   	loadOrderList = () => {
     	const { expanded } = this.state;
   		return this.props.userOrders.orderList.map((order) => {
-			return(
-				<Order 
-					key = {order._id}
-					orderId = {order._id} 
-					noOfItems = {order.items.length} 
-					orderTotal = {this.handleTotalPrice(order.items)} 
-					orderItems = {order.items} 
-					availableItems = {this.props.items} 
-					orderExpanded = {expanded}
-					handleExpand = {this.handleExpand}
-					removeItem = {this.handleRemoveItem()}
-          addItem = {this.handleAddItem()}
-				/>
-			);
-		});
+  			return(
+  				<Order
+  					key = {order._id}
+  					orderId = {order._id} 
+  					noOfItems = {order.items.length} 
+  					orderTotal = {this.handleTotalPrice(order.items)} 
+  					orderItems = {order.items} 
+  					availableItems = {this.props.items} 
+  					orderExpanded = {expanded}
+  					handleExpand = {this.handleExpand}
+  					removeItem = {this.handleRemoveItem()}
+            addItem = {this.handleAddItem()}
+  				/>
+  			);
+		  });
   	};
 
-  	loadHeader = (user) => {
+  	loadHeader = () => {
   		return (
   			<Header 
   				logout = {this.props.logout}
-	  			firstName = {user.firstName} 
-	  			lastName = {user.lastName}
+	  			firstName = {this.props.user.firstName} 
+	  			lastName = {this.props.user.lastName}
   			/>
   		)	
   	};
@@ -73,7 +73,7 @@ export class OrderList extends Component {
     		return (
 		    	<div>
 		    		<div className="header">
-		    			{this.loadHeader(this.props.user)}
+		    			{this.loadHeader()}
 					</div>
 			    	<div className="order-list-container">
 			      		{this.loadOrderList()}
@@ -92,7 +92,7 @@ export class OrderList extends Component {
 
 
 const mapStateToProps = state => ({
-  	userOrders: state.userOrders,
+  userOrders: state.userOrders,
 	items: state.items,
 	user: state.user,
 });
