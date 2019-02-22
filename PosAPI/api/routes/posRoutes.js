@@ -1,4 +1,7 @@
 'use strict';
+
+const middleware = require('../middleware/middleware');
+
 module.exports = function(app) {
   let order = require('../controllers/orderController');
   let user = require('../controllers/userController');
@@ -36,27 +39,31 @@ module.exports = function(app) {
     .post(item.updateItem); // update details of an existing item
 
   app.route('/getItems')
+    .post(middleware.checkToken)
     .post(item.listItems); // list all available items
 
 
   /////////// Orders ////////////////
 
   app.route('/orders')
-    .post(order.createOrder)
+    .post(order.createOrder) // 
     .get(order.listOrders); // list all the orders of all users
 
   app.route('/orders/:orderId')
     .delete(order.deleteOrder); // delete an order
 
   app.route('/getOrders')
+    .post(middleware.checkToken)
     .post(order.getOrders); // return an order list of the requested user
 
   // params = {username: string, orderId: string, itemName: string, price: number}
   app.route('/addOrderItem')
+    .post(middleware.checkToken)
     .post(order.addOrderItem); // add item to an existing order
 
   // params = {username: string, orderId: string, itemId: string}
   app.route('/removeOrderItem')
+    .delete(middleware.checkToken)
     .delete(order.removeOrderItem); // remove an item from exiting order
 
   app.use(function(req, res) {

@@ -1,6 +1,8 @@
 'use strict';
 
-const mongoose = require('mongoose'), 
+const config = require('../middleware/config'),
+jwt = require('jsonwebtoken'),
+mongoose = require('mongoose'), 
 User = mongoose.model('Users');
 
 let addUser = function(req, res) {
@@ -37,7 +39,27 @@ let getUser = function(req, res) {
   }, function(err, user) {
     if (err)
       res.send(err);
-    res.json(user[0]);
+    else if (user != null) {
+
+      const username = user[0].username;
+      const firstName = user[0].firstName;
+      const lastName = user[0].lastName;
+
+      let token = jwt.sign(
+        {username: username},
+        config.secret,
+        { expiresIn: '24h' }
+      );
+      res.json({
+        success: true,
+        message: 'Authentication successfull',
+        token:token,
+        username: username,
+        firstName: firstName,
+        lastName: lastName
+      }); 
+      // res.json(user[0]); 
+    } else res.json({});
   });
 };
 

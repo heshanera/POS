@@ -40,6 +40,7 @@ const fetchUser = (user, history) => {
 const logout = () => {
   localStorage.removeItem('user');
   localStorage.removeItem('orders');
+  localStorage.removeItem('items');
   window.location.reload();
 }
 
