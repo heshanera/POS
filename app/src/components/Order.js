@@ -48,6 +48,9 @@ class Order extends Component {
 								orderId = {this.props.orderId}
 								orderSize = {this.props.noOfItems}
 								removeItem = {this.props.removeItem}
+								updateItem = {this.props.updateItem}
+								availableItems = {this.props.availableItems}
+								itemCount = {item.count}
 							/>
 		            	)
 					})}

@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import DeleteIcon from  '@material-ui/icons/CancelSharp';
+import EditIcon from  '@material-ui/icons/Edit';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import TextField from '@material-ui/core/TextField';
+
 // import { MuiThemeProvider } from '@material-ui/core/styles';
 // import themes from "./ColorTheme"
 
@@ -14,14 +17,26 @@ import './App.css'
 
 class Item extends Component {
 
-	state = { open: false };
+	state = { 
+		openDeleteAlert: false, 
+		openEditAlert: false,
+		itemCount: this.props.itemCount,
+		totalPrice: ((this.props.itemPrice * this.props.itemCount).toFixed(2)),
+	};
 
-  	handleAlertOpen = () => {
-    	this.setState({ open: true });
+  	handleAlertOpen = (state) => () => {
+    	this.setState({ [state]: true });
   	};
 
-	handleAlertClose = () => {
-		this.setState({ open: false });
+	handleAlertClose = (state) => () => {
+		this.setState({ [state]: false });
+	};
+
+	handleCountChange = event => {
+	    this.setState({
+	      	itemCount: event.target.value,
+	      	totalPrice: (this.props.itemPrice * event.target.value).toFixed(2),
+		});
 	};
 
 	handleRemoveMessage = (orderSize) => {
@@ -41,14 +56,19 @@ class Item extends Component {
 
 	handleRemoveItem = () => {
 		this.props.removeItem(this.props.orderId,this.props.itemId);
-		this.setState({ open: false });
+		this.setState({ openDeleteAlert: false });
 	};
+
+	handleUpdateItem = () => {
+		this.props.updateItem(this.props.orderId,this.props.itemName,this.props.itemPrice,this.state.itemCount);
+		this.setState({ openEditAlert: false });
+	}
 
 	loadDeleteAlert = () => {
 		return (
   			<Dialog
-	          open={this.state.open}
-	          onClose={this.handleAlertClose}
+	          open={this.state.openDeleteAlert}
+	          onClose={this.handleAlertClose('openDeleteAlert')}
 	          aria-labelledby="alert-dialog-title"
 	          aria-describedby="alert-dialog-description"
 	        >
@@ -59,7 +79,7 @@ class Item extends Component {
 	            </DialogContentText>
 	          </DialogContent>
 	          <DialogActions>
-	            <Button onClick={this.handleAlertClose} color="inherit" className="delete-item-cancel">
+	            <Button onClick={this.handleAlertClose('openDeleteAlert')} color="inherit" className="delete-item-cancel">
 	              <b>Cancel</b>
 	            </Button>
 	            <Button onClick={this.handleRemoveItem} color="inherit" className="delete-item-delete">
@@ -70,18 +90,88 @@ class Item extends Component {
   		);
 	};
 
+	loadImage = (itemName) => {
+
+		const itemData = this.props.availableItems.find(item => item.itemName == itemName);	
+		if (itemData) {
+			if (itemData.image !== undefined ) {
+				const image = "data:"+itemData.image.contentType+";base64," + Buffer.from(itemData.image.image).toString('base64');
+				return(
+					<img className='item-image' src={image} />
+				);
+			}
+		}
+	};
+
+	loadItemCountAlert = () => {
+  		return (
+  			<Dialog
+	          open={this.state.openEditAlert}
+	          onClose={this.handleAlertClose('openEditAlert')}
+	          aria-labelledby="form-dialog-title"
+	        >
+	          <DialogTitle id="form-dialog-title">{this.props.itemName}</DialogTitle>
+	          <DialogContent>
+	            <DialogContentText> </DialogContentText>
+
+	            <div className="update-item-img">
+	            	{this.loadImage(this.props.itemName)}
+	            </div>
+	            <div className="update-item-counter">
+		            <p className="total-price">${this.state.totalPrice} </p>
+					<TextField
+						label="Count: "
+						value={this.state.itemCount}
+						onChange={this.handleCountChange}
+						type="number"
+						className="item-counter"
+						InputLabelProps={{shrink: true}}
+						inputProps={{ min: "1", step: "1" }}
+						margin="normal"
+				    />
+				</div>    
+
+	          </DialogContent>
+	          <DialogActions>
+	            <Button onClick={this.handleAlertClose('openEditAlert')}  color="inherit" className="update-item-cancel">
+	              Cancel
+	            </Button>
+	            <Button onClick={this.handleUpdateItem}  color="inherit" className="update-item-update">
+	              Update
+	            </Button>
+	          </DialogActions>
+	        </Dialog>
+  		);
+
+	};
+
+	loadItemCounter = () => {
+		return(
+			<span>
+				<p className="item-count" onClick={this.handleAlertOpen('openEditAlert')}>
+					{this.state.itemCount}
+				</p>
+				{this.loadItemCountAlert()}
+			</span>
+		);
+	};
+
   	loadItem = () => {
 
     	return(						
 			<div key={this.props.itemId} className="order-item-container">
-			  <span className="delete-item" onClick={this.handleAlertOpen}>
+			  <span className="delete-item" onClick={this.handleAlertOpen('openDeleteAlert')}>
 			  	<DeleteIcon />
 			  </span>
-			  <div className="order-item-container-header"> 
-			  	<p>{this.props.itemName}</p>
+			  <div className="item-count-container">
+			  	{this.loadItemCounter()}
 			  </div>
-			  <div className="order-item-name">
-			    <p className="secondary-color">${this.props.itemPrice}</p>
+			  <div className="order-item-container-header"> 
+			  	<p>{this.loadImage(this.props.itemName)}</p>
+			  </div>
+			  <div className="order-item-info">
+			  	<p className="order-item-name">{this.props.itemName}</p>
+			    <p className="order-item-price">${this.props.itemPrice}</p>
 			  </div>
 			  {this.loadDeleteAlert()}
 			</div>

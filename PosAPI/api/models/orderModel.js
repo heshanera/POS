@@ -12,7 +12,8 @@ let OrderSchema = new Schema({
       items: [{
         itemId: String,
         name: String,
-        price: Number
+        price: Number,
+        count: Number
       }],
       noOfItems: Number,
       total: Number,

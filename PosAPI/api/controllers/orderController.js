@@ -34,7 +34,8 @@ let addOrderItem = function(req, res) {
   OrderModel.findOne({ userName: req.body.username }, function(err, userOrders) {
     const newItem = {
       name: req.body.itemName,
-      price: req.body.price
+      price: req.body.price,
+      count: req.body.count,
     };
     const i = userOrders.orderList.findIndex(order => order._id == req.body.orderId);
     userOrders.orderList[i].items.push(newItem);
@@ -42,6 +43,22 @@ let addOrderItem = function(req, res) {
       if (err)
         res.send(err);
       res.json(userOrders.orderList[i].items.slice(-1)[0]);
+    })
+  });
+};
+
+let updateOrderItem = function(req, res) {
+  OrderModel.findOne({ userName: req.body.username }, function(err, userOrders) {
+    // get the index of the order
+    const i = userOrders.orderList.findIndex(order => order._id == req.body.orderId);
+    // index of the item    
+    const itemIndex = userOrders.orderList[i].items.findIndex((item => item.name == req.body.itemName));
+    // update the item details
+    userOrders.orderList[i].items[itemIndex].count = req.body.count;
+    userOrders.save(function(err, userOrders) {
+      if (err)
+        res.send(err);
+      res.json(userOrders.orderList[i].items[itemIndex]);
     })
   });
 };
@@ -75,5 +92,5 @@ let getOrders = function(req, res) {
 
 module.exports = {
   createOrder, deleteOrder, listOrders, getOrders, addOrderItem,
-  removeOrderItem
+  updateOrderItem, removeOrderItem
 }; 

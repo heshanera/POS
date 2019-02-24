@@ -27,13 +27,25 @@ export class OrderList extends Component {
       return this.props.addItem;
     };
 
+    handleUpdateItem = event => {
+      return this.props.updateItem;
+    };
+
   	handleTotalPrice = (itemList) => {
   		let total = 0;
   		for (let item of itemList) {
-  			total += Number(item.price);
+  			total += (Number(item.price)*Number(item.count));
   		}
-  		return total;
+  		return total.toFixed(2);
   	};
+
+    handleTotalCount = (itemList) => {
+      let total = 0;
+      for (let item of itemList) {
+        total += Number(item.count);
+      }
+      return total;
+    };
 
   	loadOrderList = () => {
     	const { expanded } = this.state;
@@ -42,7 +54,7 @@ export class OrderList extends Component {
   				<Order
   					key = {order._id}
   					orderId = {order._id} 
-  					noOfItems = {order.items.length} 
+  					noOfItems = {this.handleTotalCount(order.items)} 
   					orderTotal = {this.handleTotalPrice(order.items)} 
   					orderItems = {order.items} 
   					availableItems = {this.props.items} 
@@ -50,6 +62,7 @@ export class OrderList extends Component {
   					handleExpand = {this.handleExpand}
   					removeItem = {this.handleRemoveItem()}
             addItem = {this.handleAddItem()}
+            updateItem = {this.handleUpdateItem()}
   				/>
   			);
 		  });
@@ -69,7 +82,7 @@ export class OrderList extends Component {
   	authorizedLogin = () => {
   		const loggedIn = (JSON.parse(localStorage.getItem('user')) !== null);
     	if (loggedIn) {
-    		console.log('logged In');
+    		// console.log('logged In');
     		return (
 		    	<div>
 		    		<div className="header">
@@ -101,8 +114,11 @@ const mapDispatchToProps = dispatch => ({
   removeItem: (orderId, itemId) => {
   		dispatch(orderService.removeItem(orderId,itemId));
   },
-  addItem: (orderId, itemName, price) => {
-      dispatch(orderService.addItem(orderId, itemName, price)); 
+  addItem: (orderId, itemName, price, count) => {
+      dispatch(orderService.addItem(orderId, itemName, price, count)); 
+  },
+  updateItem: (orderId, itemName, price, count) => {
+      dispatch(orderService.updateItem(orderId, itemName, price, count)); 
   },
   logout: () => {
   		dispatch(loginService.logout);

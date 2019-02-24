@@ -19,52 +19,72 @@ describe('Orderlist component and container', () => {
   beforeAll(() => {
     const mockStore = configureStore([thunk]);
     const store = mockStore({});
-    const reducer = { 
-      user: {username:'johns'},
-      userOrders: {
-        id:1,
-        orderList: [
-          {
-            _id:'12qwdgsad261eggd2513fghasd767',
-            items:[
-              {
-                id: 1,
-                name: "item1",
-                price: 300
-              },
-              {
-                id: 3,
-                name: "item3",
-                price: 600
-              }
-            ],
-            noOfItems:2,
-            total:900,
-            CreatedDate:"09.02.2018",
-            status:"pending"
-          },
-          {
-            _id:'12qwdgsad261eggd2513fghasd345',
-            items:[
-              {
-                id: 1,
-                name: "item1",
-                price: 300
-              },
-              {
-                id: 2,
-                name: "item2",
-                price: 400
-              }
-            ],
-            noOfItems:2,
-            total:700,
-            CreatedDate:"09.02.2018",
-            status:"pending"
+
+    const user = {username:'johns'};
+    const userOrders = {
+      id:1,
+      orderList: [
+        {
+          _id:'12qwdgsad261eggd2513fghasd767',
+          items:[
+            {
+              id: 1,
+              name: "item1",
+              price: 1.4,
+              count: 1
+            }
+          ],
+          noOfItems:1,
+          total:1.4,
+          CreatedDate:"09.02.2018",
+          status:"pending"
+        },
+        {
+          _id:'12qwdgsad261eggd2513fghasd345',
+          items:[
+            {
+              id: 1,
+              name: "item1",
+              price: 1.4,
+              count: 1
+            },
+            {
+              id: 2,
+              name: "item2",
+              price: 2.3,
+              count: 1
+            }
+          ],
+          noOfItems:2,
+          total:3.7,
+          CreatedDate:"09.02.2018",
+          status:"pending"
+        }
+      ]
+    }
+    const itemList = [
+      {
+        itemName:'item1', 
+        price:1.4, 
+        image:{
+          contentType: "image/jpeg", 
+          image:{
+            type: "Buffer", 
+            data:[255, 216, 255, 224, 0, 16, 74, 70, 73, 70, 0, 1, 1, 1, 0, 72, 0, 72]
           }
-        ]
+        }
       },
-      items:[], 
+      {
+        itemName:'item2', 
+        price:2.3, 
+      }
+    ];
+
+
+    const reducer = { 
+      user: user,
+      userOrders: userOrders,
+      items:itemList, 
     }
 
     store.dispatch = jest.fn();
@@ -119,18 +139,20 @@ describe('Orderlist component and container', () => {
       {
         id: 1,
         name: "item1",
-        price: 300
+        price: 2.5,
+        count: 1,
       },
       {
         id: 3,
         name: "item3",
-        price: 600
+        price: 1.5,
+        count: 2,
       }
     ]
     const handleTotalPrice = jest.spyOn(component.instance(), "handleTotalPrice");
     component.instance().forceUpdate();
     expect(handleTotalPrice).toHaveBeenCalledTimes(2);
-    expect(component.instance().handleTotalPrice(items)).toEqual(900);
+    expect(component.instance().handleTotalPrice(items)).toEqual("5.50");
   });
 
 

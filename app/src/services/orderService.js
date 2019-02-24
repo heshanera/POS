@@ -92,13 +92,14 @@ const removeItem = (orderId, itemId) => {
   };
 }
 
-const addItem = (orderId, itemName, price) => {
+const addItem = (orderId, itemName, price, count) => {
   const user = JSON.parse(localStorage.getItem('user'));
   const token = user.token;
   const data = "username="+user.username+
                 "&orderId="+orderId+
                 "&itemName="+itemName+
-                "&price="+price;
+                "&price="+price+
+                "&count="+count;
   return dispatch => {
     // update the database
     dispatch(requestOrders());
@@ -134,6 +135,52 @@ const addItem = (orderId, itemName, price) => {
  };
 }
 
+const updateItem = (orderId, itemName, price, count) => {
+  const user = JSON.parse(localStorage.getItem('user'));
+  const token = user.token;
+  const data = "username="+user.username+
+                "&orderId="+orderId+
+                "&itemName="+itemName+
+                "&price="+price+
+                "&count="+count;
+  return dispatch => {
+    // update the database
+    dispatch(requestOrders());
+    return fetch(config.apiUrl+'/updateOrderItem', {
+        method: 'POST',
+        headers: {
+            'Authorization': token,
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: data
+    })
+    .then(
+      response => response.json(),
+      error => console.log('An error occurred.', error),
+    )
+    .then((item) => {
 
-const orderService = { fetchOrders, removeItem, addItem };
+       // If authentication fails
+      if (item.success == false) {
+        // DO NOTHING: TODO
+      } else {
+        // get data from local storage
+        let orders = JSON.parse(localStorage.getItem('orders'));
+        const i = orders.orderList.findIndex(order => order._id === orderId);
+        // index of the item    
+        const itemIndx = orders.orderList[i].items.findIndex((item => item.name == itemName));
+        // update the item details
+        orders.orderList[i].items[itemIndx].count = count;
+        // update the local storage
+        localStorage.setItem('orders', JSON.stringify(orders));
+        dispatch(updateOrders(orders));
+      }
+    })
+    .catch((e) => {
+      console.log('error in adding the new item ' + itemName + '\ne');
+    });
+ };
+}
+
+const orderService = { fetchOrders, removeItem, addItem, updateItem };
 export default orderService;

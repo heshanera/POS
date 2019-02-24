@@ -23,10 +23,10 @@ const fetchUser = (user, history) => {
       dispatch(receiveUser(user));
       if (!(Object.keys(user).length === 0)) {
         localStorage.setItem('user', JSON.stringify(user));
-        // loading the order details
-        dispatch(orderService.fetchOrders(user.username, history));
         // loading available items
         dispatch(itemService.fetchAvailableItems());
+        // loading the order details
+        dispatch(orderService.fetchOrders(user.username, history));
       }
    },
   )

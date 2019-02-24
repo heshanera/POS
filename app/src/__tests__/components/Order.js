@@ -14,36 +14,39 @@ describe('Order component', () => {
     component = <Order 
                   orderId = "12qwdgsad261eggd2513fghasd"
                   noOfItems = {3} 
-                  orderTotal = {1300} 
+                  orderTotal = {5} 
                   orderItems = {[{
                                     id: 1,
                                     name: "item1",
-                                    price: 300
+                                    price: 2.5,
+                                    count: 1
                                   },
                                   {
                                     id: 2,
                                     name: "item2",
-                                    price: 400
+                                    price: 1,
+                                    count: 2
                                   },
                                   {
                                     id: 3,
                                     name: "item3",
-                                    price: 600
+                                    price: 1.5,
+                                    count: 1
                                   }]} 
                   availableItems = {[{
                                         id:1,
                                         itemName:"item1",
-                                        price:"$300",
+                                        price:2.5,
                                       },
                                       {
                                         id:2,
                                         itemName:"item2",
-                                        price:"$400",
+                                        price:1,
                                       },
                                       {
                                         id:3,
                                         itemName:"item3",
-                                        price:"$600",
+                                        price:1.5,
                                       }]} 
                   orderExpanded = {true}
                   handleExpand = {jest.fn()}
@@ -60,7 +63,7 @@ describe('Order component', () => {
     const orderId = '#'+("12qwdgsad261eggd2513fghasd".substring(15));
     expect(wrapper.find('.order-id').containsMatchingElement(orderId)).toBeTruthy();
     expect(wrapper.find('.order-items').containsMatchingElement(3)).toBeTruthy();
-    expect(wrapper.find('.order-total').containsMatchingElement('$ 1300')).toBeTruthy();
+    expect(wrapper.find('.order-total').containsMatchingElement('$ 5')).toBeTruthy();
   });
 
   it('should display 3 items in the order', () => {

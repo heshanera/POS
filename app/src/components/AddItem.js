@@ -21,6 +21,7 @@ class AddItem extends Component {
 		value:"",
     	itemName: "",
     	price:"",
+    	count:1,
     	open: false
 	};
 
@@ -33,7 +34,7 @@ class AddItem extends Component {
 	};
 
 	handleAddNewItem = () => {
-	    this.props.addItem(this.props.orderId, this.state.itemName, this.state.price);
+	    this.props.addItem(this.props.orderId, this.state.itemName, this.state.price, this.state.count);
 	    this.setState({ 
 	    	value: '',
 	    	itemName: '',
