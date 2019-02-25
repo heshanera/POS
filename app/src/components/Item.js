@@ -62,7 +62,7 @@ class Item extends Component {
 	handleUpdateItem = () => {
 		this.props.updateItem(this.props.orderId,this.props.itemName,this.props.itemPrice,this.state.itemCount);
 		this.setState({ openEditAlert: false });
-	}
+	};
 
 	loadDeleteAlert = () => {
 		return (
@@ -91,13 +91,13 @@ class Item extends Component {
 	};
 
 	loadImage = (itemName) => {
-
 		const itemData = this.props.availableItems.find(item => item.itemName == itemName);	
 		if (itemData) {
 			if (itemData.image !== undefined ) {
 				const image = "data:"+itemData.image.contentType+";base64," + Buffer.from(itemData.image.image).toString('base64');
 				return(
 					<img className='item-image' src={image} />
+					// <span>test</span>
 				);
 			}
 		}

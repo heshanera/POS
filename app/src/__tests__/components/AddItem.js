@@ -15,15 +15,26 @@ describe('AddItem component', () => {
                   orderId = {1} 
                   availableItems = {[{
                         itemName:"item1",
-                        price:"$300",
+                        price:1.5,
                       },
                       {
                         itemName:"item2",
-                        price:"$400",
+                        price:2.3,
                       },
                       {
                         itemName:"item3",
-                        price:"$600",
+                        price:1.8,
+                      }
+                  ]}
+                  orderItems = {[{
+                        itemName:"item1",
+                        price:1.5,
+                        count: 1,
+                      },
+                      {
+                        itemName:"item2",
+                        price:2.3,
+                        count: 1
                       }
                   ]} 
                 />
@@ -54,9 +65,9 @@ describe('AddItem component', () => {
   it('should display an alert before adding a selected item', () => {
     const wrapper = shallow(component);
     wrapper.setState({ 
-      value:"item1,300",
+      value:"item1,1.4",
       itemName: "item1",
-      price:"300",
+      price:"1.4",
       open: false 
     })
     wrapper.find('.add-item-button').simulate('click');
@@ -66,24 +77,24 @@ describe('AddItem component', () => {
   it('should not add item, but the selected item details should be visible when the alert dialog is canceled', () => {
     const wrapper = shallow(component);
     wrapper.setState({ 
-      value:"item1,300",
+      value:"item1,1.4",
       itemName: "item1",
-      price:"300",
+      price:"1.4",
       open: false 
     })
     wrapper.find('.add-item-button').simulate('click');
     wrapper.find('.cancel-add-item-button').simulate('click');
     expect(wrapper.state('open')).toEqual(false);
     expect(wrapper.state('itemName')).toEqual('item1');
-    expect(wrapper.state('price')).toEqual('300');
+    expect(wrapper.state('price')).toEqual('1.4');
   })
 
   it('should add the selected item and clear the details when ADD is clicked from the alert dialog', () => {
     const wrapper = shallow(component);
     wrapper.setState({ 
-      value:"item1,300",
+      value:"item1,1.4",
       itemName: "item1",
-      price:"300",
+      price:"1.4",
       open: false 
     })
     wrapper.setProps({ 

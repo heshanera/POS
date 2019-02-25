@@ -22,7 +22,15 @@ class AddItem extends Component {
     	itemName: "",
     	price:"",
     	count:1,
-    	open: false
+    	open: false,
+	};
+
+	handleAvailableItems = () => (event) => {
+
+		const itemArray = [];
+		this.props.orderItems.map((item) => {
+			itemArray.push(item);
+		});
 	};
 
   	handleSelectNewItem = () => (event) => {
@@ -34,12 +42,13 @@ class AddItem extends Component {
 	};
 
 	handleAddNewItem = () => {
+
 	    this.props.addItem(this.props.orderId, this.state.itemName, this.state.price, this.state.count);
 	    this.setState({ 
 	    	value: '',
 	    	itemName: '',
 	    	price: '',
-	    	open: false
+	    	open: false,
 	    });
 	};
 
@@ -79,11 +88,13 @@ class AddItem extends Component {
   	};
 
 	loadAllAvailableItems = () => {
+
+
 		return (
 			this.props.availableItems.map((item, index) => {
 				return( 
-					<MenuItem className='menuItem' key={index} value={item.itemName+','+item.price}>
-						{item.itemName}: $ {item.price}
+					<MenuItem className='menuItem' key={index} value={item.itemName+','+item.price} disabled={this.props.orderItems.findIndex(addedItem => addedItem.name == item.itemName) >= 0}>
+						{item.itemName} <span className='select-item-price'>$ {item.price}</span>
 					</MenuItem>
 				);			            	
             })
@@ -97,6 +108,7 @@ class AddItem extends Component {
 		          	<Select 
 			          	value={this.state.value} 
 			            onChange={this.handleSelectNewItem()}
+			            onClick={this.handleAvailableItems()}
 			            displayEmpty 
 			            name="itemName"
 		          	>

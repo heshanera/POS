@@ -69,9 +69,14 @@ body {
 }
 
 .header {
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
   background: #0091EA;
   color: #ffffff;
   min-height: 60px;
+  position: fixed;
+  width: 100%;
+  top:0;
+  z-index: 1;
 }
 
 .menu-icon {
@@ -106,6 +111,8 @@ body {
   margin: 15px;
   padding: 20px;
   background: #eeeeee;
+  margin-top: 100px; 
+  margin-bottom: 100px;
 }
 
 .order-container {
@@ -149,6 +156,7 @@ body {
   margin: 10px;
   font-size: 15px;
   width:100%;
+  min-width: 200px;
 }
 
 .order-item-container:hover {
@@ -188,6 +196,8 @@ body {
   grid-template-columns: repeat(5, 1fr);
   grid-gap: 15px;
   width:100%;
+  overflow-x: auto;
+  padding-right: 20px;
 }
 
 .delete-item{
@@ -211,18 +221,38 @@ body {
 
 .add-item-inner-container {
   width:100%;
+  display: flex;
 }
 
 .add-item-input {
-  width: 85%;
+  width: 100%;
   float: left;
+}
+
+.select-item-price {
+  margin-right: 0px;
+  width:100%;
+  text-align: right; 
+}
+
+.global-add-item-container {
+  box-shadow: 3px 0 6px rgba(0,0,0,0.16), 3px 0 6px rgba(0,0,0,0.23);
+  max-width:100%;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  position: fixed;
+  z-index: 1;
+  height: 50px;
+  line-height: 100%;
+  background-color: #eeeeee;
+  padding: 10px 20px 10px 20px;
 }
 
 .add-item-button-container {
   padding: 10px 0 0 20px;
-  /*color: #0091EA;*/
-  /*color: #111111;*/
   float: right;
+  width: 100px;
 }
 
 .item-image{
@@ -273,4 +303,25 @@ body {
 
 .logout-alert {
   width: 300px;
+}
+
+.add-order-button-container {
+  position: fixed;
+  bottom: 15px;
+  right: 15px;
+  color: #FFFFFF;
+}
+
+.wrapper2 {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 15px;
+  width:100%;
+  overflow-x: auto;
+  padding-right: 20px;
+}
+
+.order-check-box {
+  text-align: left;
+  margin-left: 10px;
 }

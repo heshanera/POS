@@ -14,6 +14,7 @@ class Order extends Component {
 
   	loadOrder = () => {
 		return(
+
 			<ExpansionPanel key={this.props.orderId} expanded={this.props.orderExpanded === this.props.orderId} onChange={this.props.handleExpand(this.props.orderId)}>
 	          <ExpansionPanelSummary className="order-container">
 	            <span className="order-id">
@@ -56,13 +57,16 @@ class Order extends Component {
 					})}
 				</div>
 	          </ExpansionPanelDetails>
+	          {/*	
 	          <ExpansionPanelDetails className="add-item-container">
 	          	<AddItem 
 	          		availableItems={this.props.availableItems} 
 	          		orderId={this.props.orderId} 
 	          		addItem={this.props.addItem}
+	          		orderItems={this.props.orderItems}
 	          	/>
 	          </ExpansionPanelDetails>
+	      		*/}
 	        </ExpansionPanel>    	
 		);
 		
