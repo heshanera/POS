@@ -156,7 +156,7 @@ body {
   margin: 10px;
   font-size: 15px;
   width:100%;
-  min-width: 200px;
+  min-width: 250px;
 }
 
 .order-item-container:hover {
@@ -312,9 +312,13 @@ body {
   color: #FFFFFF;
 }
 
+.add-order-action-container {
+  /*background-color: #777777;*/
+}
+
 .wrapper2 {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   grid-gap: 15px;
   width:100%;
   overflow-x: auto;

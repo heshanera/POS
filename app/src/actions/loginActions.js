@@ -12,8 +12,8 @@ export const receiveUser = user => ({
     payload: user
 });
 
-export const loggedIn = loggedIn => ({
-	type: 'LOGGED_IN',
-	payload: loggedIn
-});
+// export const loggedIn = loggedIn => ({
+// 	type: 'LOGGED_IN',
+// 	payload: loggedIn
+// });
 

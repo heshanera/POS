@@ -77,6 +77,13 @@ describe('Orderlist component and container', () => {
       {
         itemName:'item2', 
         price:2.3, 
+        image:{
+          contentType: "image/png", 
+          image:{
+            type: "Buffer", 
+            data:[225, 206, 12, 124, 20, 34, 61, 29, 23, 70, 0, 23, 1, 9, 0, 38, 10, 73]
+          }
+        }
       }
     ];
 
@@ -120,15 +127,17 @@ describe('Orderlist component and container', () => {
     expect(Object.keys(component.props())).toEqual(expect.arrayContaining(expectedPropKeys));
   });
 
-  it("should display the order list and the header when logged in", () => {
+  it("should display the order list, header and the order add button when logged in", () => {
     JSON.parse = jest.fn().mockImplementationOnce(() => {
       {user:{username:'johns'}};
     });
     const loadOrderList = jest.spyOn(component.instance(), "loadOrderList");
     const loadHeader = jest.spyOn(component.instance(), "loadHeader");
+    const loadAddContainers = jest.spyOn(component.instance(), "loadAddContainers");
     component.instance().forceUpdate();
     expect(loadOrderList).toHaveBeenCalledTimes(1);
     expect(loadHeader).toHaveBeenCalledTimes(1);
+    expect(loadAddContainers).toHaveBeenCalledTimes(1);
   });  
 
   it("should calculate the total price from the list of items", () => {

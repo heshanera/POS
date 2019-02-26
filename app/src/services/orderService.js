@@ -41,13 +41,57 @@ const fetchOrders = (username, history) => {
  };
 }
 
+const addOrder = (newOrder) => {
+  const user = JSON.parse(localStorage.getItem('user'));
+  const token = user.token;
+  let data = newOrder;  
+  data.username = user.username;
+  data = JSON.stringify(data);
+  return dispatch => {
+    // update the database
+    dispatch(requestOrders());
+    return fetch(config.apiUrl+'/addOrder', {
+        method: 'POST',
+        headers: {
+            'Authorization': token,
+            'Content-Type': 'application/json'
+        },
+        body: data
+    })
+    .then(
+      response => response.json(),
+      error => console.log('An error occurred.', error),
+    )
+    .then((order) => {
+
+       // If authentication fails
+      if (order.success == false) {
+        // DO NOTHING: TODO
+      } else {
+        // update the local storage
+        let orders = JSON.parse(localStorage.getItem('orders'));
+        // const i = orders.orderList.findIndex(order => order._id === orderId);
+        orders.orderList.push(order);
+        localStorage.setItem('orders', JSON.stringify(orders));
+        dispatch(updateOrders(orders));
+      }
+    })
+    .catch((e) => {
+      console.log('error in adding the new order\n' + e);
+    });
+ };
+}
+
 const removeItem = (orderId, itemId) => {
 
   const user = JSON.parse(localStorage.getItem('user'))
   const token = user.token;
-  const data = "username="+user.username+
-                "&orderId="+orderId+
-                "&itemId="+itemId;
+  let data = {
+    username:user.username,
+    orderId: orderId,
+    itemId: itemId
+  }
+  data = JSON.stringify(data);
   return dispatch => {
     // update the database
     dispatch(requestOrders());
@@ -55,7 +99,7 @@ const removeItem = (orderId, itemId) => {
         method: 'DELETE',
         headers: {
             'Authorization': token,
-            'Content-Type': 'application/x-www-form-urlencoded'
+            'Content-Type': 'application/json'
         },
         body: data
     })
@@ -95,11 +139,14 @@ const removeItem = (orderId, itemId) => {
 const addItem = (orderId, itemName, price, count) => {
   const user = JSON.parse(localStorage.getItem('user'));
   const token = user.token;
-  const data = "username="+user.username+
-                "&orderId="+orderId+
-                "&itemName="+itemName+
-                "&price="+price+
-                "&count="+count;
+  let data = {
+    username: user.username,
+    orderId: orderId,
+    itemName: itemName,
+    price: price,
+    count: count
+  }              
+  data = JSON.stringify(data);  
   return dispatch => {
     // update the database
     dispatch(requestOrders());
@@ -107,7 +154,7 @@ const addItem = (orderId, itemName, price, count) => {
         method: 'POST',
         headers: {
             'Authorization': token,
-            'Content-Type': 'application/x-www-form-urlencoded'
+            'Content-Type': 'application/json'
         },
         body: data
     })
@@ -138,11 +185,14 @@ const addItem = (orderId, itemName, price, count) => {
 const updateItem = (orderId, itemName, price, count) => {
   const user = JSON.parse(localStorage.getItem('user'));
   const token = user.token;
-  const data = "username="+user.username+
-                "&orderId="+orderId+
-                "&itemName="+itemName+
-                "&price="+price+
-                "&count="+count;
+  let data = {
+    username: user.username,
+    orderId: orderId,
+    itemName: itemName,
+    price: price,
+    count: count,
+  }
+  data = JSON.stringify(data);
   return dispatch => {
     // update the database
     dispatch(requestOrders());
@@ -150,7 +200,7 @@ const updateItem = (orderId, itemName, price, count) => {
         method: 'POST',
         headers: {
             'Authorization': token,
-            'Content-Type': 'application/x-www-form-urlencoded'
+            'Content-Type': 'application/json'
         },
         body: data
     })
@@ -182,5 +232,5 @@ const updateItem = (orderId, itemName, price, count) => {
  };
 }
 
-const orderService = { fetchOrders, removeItem, addItem, updateItem };
+const orderService = { fetchOrders, addOrder, removeItem, addItem, updateItem };
 export default orderService;

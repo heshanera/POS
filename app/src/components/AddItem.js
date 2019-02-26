@@ -25,13 +25,12 @@ class AddItem extends Component {
     	open: false,
 	};
 
-	handleAvailableItems = () => (event) => {
-
-		const itemArray = [];
-		this.props.orderItems.map((item) => {
-			itemArray.push(item);
-		});
-	};
+	// handleAvailableItems = () => (event) => {
+	// 	const itemArray = [];
+	// 	this.props.orderItems.map((item) => {
+	// 		itemArray.push(item);
+	// 	});
+	// };
 
   	handleSelectNewItem = () => (event) => {
 	    this.setState({ 
@@ -106,9 +105,10 @@ class AddItem extends Component {
 			<div className="add-item-inner-container">
 	            <FormControl className="add-item-input">
 		          	<Select 
+		          		className="add-item-select"
 			          	value={this.state.value} 
 			            onChange={this.handleSelectNewItem()}
-			            onClick={this.handleAvailableItems()}
+			            // onClick={this.handleAvailableItems()}
 			            displayEmpty 
 			            name="itemName"
 		          	>

@@ -30,6 +30,10 @@ export class OrderList extends Component {
       }  
   	};
 
+    handleAddOrder = event => {
+      return this.props.addOrder;
+    }
+
   	handleRemoveItem = event => {
   		return this.props.removeItem;
   	};
@@ -93,31 +97,36 @@ export class OrderList extends Component {
       return(
         <AddOrder 
           availableItems={this.props.items}
+          addOrder={this.handleAddOrder()}
         />
       );
     };
 
     loadAddOrderItem = () => {
-      return(
-        <div className="global-add-item-container">
-          <AddItem 
-            availableItems={this.props.items} 
-            orderId={this.state.orderId}
-            addItem={this.handleAddItem()}
-            orderItems={this.props.userOrders.orderList.filter(order => order._id == this.state.orderId)[0].items}
-          />
-        </div>
-      );
-    }
+      const order = this.props.userOrders.orderList.filter(order => order._id == this.state.orderId)[0]
+      if (order) {
+        return(
+          <div className="global-add-item-container">
+            <AddItem 
+              availableItems={this.props.items} 
+              orderId={this.state.orderId}
+              addItem={this.handleAddItem()}
+              orderItems={order.items}
+            />
+          </div>
+        );
+      } else {
+        return(this.loadAddOrder());
+      }
+    };
 
   	loadAddContainers = () => {
       if (this.state.expanded) {
         return (this.loadAddOrderItem());
       } else {
-        // return (this.loadAddOrder());
+        return (this.loadAddOrder());
       }
     };
-
 
   	authorizedLogin = () => {
   		const loggedIn = (JSON.parse(localStorage.getItem('user')) !== null);
@@ -156,6 +165,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   removeItem: (orderId, itemId) => {
   		dispatch(orderService.removeItem(orderId,itemId));
+  },
+  addOrder: (order) => {
+      dispatch(orderService.addOrder(order)); 
   },
   addItem: (orderId, itemName, price, count) => {
       dispatch(orderService.addItem(orderId, itemName, price, count)); 

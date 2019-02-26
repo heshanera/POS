@@ -4,7 +4,6 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 
 import Item from './Item';
-import AddItem from './AddItem'
 import './App.css'
 
 

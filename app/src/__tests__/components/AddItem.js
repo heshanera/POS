@@ -50,6 +50,18 @@ describe('AddItem component', () => {
     expect(wrapper.find('.menuItem')).toHaveLength(3);
   });
 
+  it('should be able to select an item from the item list', () => {
+    const wrapper = shallow(component);
+    wrapper.find('.add-item-select').simulate('change', {
+      target: {
+        value: 'itemX,1.6'
+      }
+    })
+    expect(wrapper.state('value')).toEqual('itemX,1.6');
+    expect(wrapper.state('itemName')).toEqual('itemX');
+    expect(wrapper.state('price')).toEqual('1.6');
+  })  
+
   it('should not add item when the selected item is None', () => {
     const wrapper = shallow(component);
     wrapper.setState({ 

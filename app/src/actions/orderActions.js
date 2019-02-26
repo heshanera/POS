@@ -3,7 +3,7 @@ export const RECEIVE_ORDERS = 'RECEIVE_ORDERS';
 export const UPDATE_ORDERS = 'UPDATE_ORDERS';
 
 export const requestOrders = () => ({
-    type: 'REQUEST_USERS',    
+    type: 'REQUEST_ORDERS',    
 });
 
 export const receiveOrders = orders => ({

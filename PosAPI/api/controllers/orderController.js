@@ -12,7 +12,7 @@ let createOrder = function(req, res) {
   });
 };
 
-let deleteOrder = function(req, res) {
+let removeOrderList = function(req, res) {
   OrderModel.remove({
     _id: req.params.orderId
   }, function(err, order) {
@@ -27,6 +27,33 @@ let listOrders = function(req, res) {
     if (err)
       res.send(err);
     res.json(order);
+  });
+};
+
+let addOrder = function(req, res) {
+  OrderModel.findOne({ userName: req.body.username }, function(err, userOrders) {
+    const newOrder = {
+      items: req.body.items,
+      status: req.body.status,
+      createdDate: new Date(new Date().toUTCString())
+    };
+    userOrders.orderList.push(newOrder);
+    userOrders.save(function(err, userOrders) {
+      if (err)
+        res.send(err);
+      res.json(userOrders.orderList[userOrders.orderList.length-1]);
+    })
+  });
+};
+
+let removeOrder = function(req, res) {
+  OrderModel.findOne({ userName: req.body.username }, function(err, userOrders) {
+    userOrders.orderList = userOrders.orderList.filter( order => order._id != req.body.orderId );
+    userOrders.save(function(err, userOrders) {
+      if (err)
+        res.send(err);
+      res.json(userOrders.orderList.length);
+    })
   });
 };
 
@@ -75,7 +102,10 @@ let removeOrderItem = function(req, res) {
     userOrders.save(function(err, userOrders) {
       if (err)
         res.send(err);
-      res.json(userOrders.orderList[i].items.length);
+      else if (userOrders.orderList[i])
+        res.json(userOrders.orderList[i].items.length);
+      else
+        res.json(0);
     })
   });
 };
@@ -91,6 +121,6 @@ let getOrders = function(req, res) {
 };
 
 module.exports = {
-  createOrder, deleteOrder, listOrders, getOrders, addOrderItem,
-  updateOrderItem, removeOrderItem
+  createOrder, removeOrderList, listOrders, addOrder, removeOrder, 
+  addOrderItem, updateOrderItem, removeOrderItem, getOrders
 }; 

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import DeleteIcon from  '@material-ui/icons/CancelSharp';
-import EditIcon from  '@material-ui/icons/Edit';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -96,8 +95,8 @@ class Item extends Component {
 			if (itemData.image !== undefined ) {
 				const image = "data:"+itemData.image.contentType+";base64," + Buffer.from(itemData.image.image).toString('base64');
 				return(
-					<img className='item-image' src={image} />
-					// <span>test</span>
+					<img className='item-image' src={image} alt='Img'/>
+					// <img className='item-image'alt='Img'/>
 				);
 			}
 		}

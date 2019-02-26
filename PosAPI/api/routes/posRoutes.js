@@ -55,15 +55,23 @@ module.exports = function(app) {
 
   app.route('/createOrder')
     .post(middleware.checkToken)
-    .post(order.createOrder);
+    .post(order.createOrder); // create new orderlist for a new user
+
+  app.route('/removeOrderList/:orderId')
+    .delete(middleware.checkToken)
+    .delete(order.removeOrderList); // delete all orders of a user
 
   app.route('/listOrders')
     .get(middleware.checkToken)
     .get(order.listOrders); // list all the orders of all users
 
-  app.route('/orders/:orderId')
+  app.route('/addOrder')
+    .post(middleware.checkToken)
+    .post(order.addOrder); // create new order for a user
+
+  app.route('/removeOrder')
     .delete(middleware.checkToken)
-    .delete(order.deleteOrder); // delete an order
+    .delete(order.removeOrder); // remove an order from user order list  
 
   app.route('/getOrders')
     .post(middleware.checkToken)
@@ -78,7 +86,6 @@ module.exports = function(app) {
   app.route('/updateOrderItem')
     .post(middleware.checkToken)
     .post(order.updateOrderItem); // update item count
-
 
   // params = {username: string, orderId: string, itemId: string}
   app.route('/removeOrderItem')

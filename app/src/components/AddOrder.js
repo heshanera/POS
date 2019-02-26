@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -10,47 +9,86 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Item from './Item'
 
 import './App.css'
 
 class AddOrder extends Component {
   state = {
     openAddOrder: false,
+    selected: {},
+    orderItems: [],
   };
 
   handleClickOpen = () => {
-    this.setState({ AddOrder: true });
+    const selected = this.state.selected;
+    this.props.availableItems.map((item) => {
+      selected[item._id] = false;
+    });
+    this.setState({ 
+      openAddOrder: true,
+      selected:selected 
+    });
   };
 
   handleClose = () => {
-    this.setState({ AddOrder: false });
+    this.setState({ openAddOrder: false });
   };
 
-   handleCheck = name => event => {
-    this.setState({ [name]: event.target.checked });
+  handleCheck = item => event => {
+
+    let orderItems = this.state.orderItems
+    const selected = this.state.selected;
+    selected[item._id] = !selected[item._id]
+
+    if(selected[item._id]) {
+      // add item to the order
+      orderItems.push({
+        name: item.itemName,
+        price: item.price,
+        count: 1
+      });
+    } else {
+      // remove item from the order
+      orderItems = orderItems.filter(orderItem => orderItem.name != item.itemName);
+    }
+
+    this.setState({
+      selected: selected, 
+      orderItems: orderItems
+    });
   };
+
+  handleOrderCreate = () => {
+    if (this.state.orderItems.length > 0) {
+      const order = {
+        items:this.state.orderItems,
+        status: "pending"
+      }
+      this.props.addOrder(order);
+      this.setState({ openAddOrder: false });  
+    }   
+  }
 
 
   loadImage = (itemName) => {
     const itemData = this.props.availableItems.find(item => item.itemName == itemName);
     const image = "data:"+itemData.image.contentType+";base64," + Buffer.from(itemData.image.image).toString('base64');
     return(
-      // <img className='item-image' src={image} />
-      <span>test</span>
+      <img className='item-image' src={image} alt='Img'/>
+      // <img className='item-image' alt='Img'/>
     );
   };
 
   loadOrderAddOrderDialog = () => {
     return(
       <Dialog
-          open={this.state.AddOrder}
+          open={this.state.openAddOrder}
           onClose={this.handleClose}
           aria-labelledby="form-dialog-title"
           fullWidth={true}
           maxWidth = {'lg'}
         >
-          <DialogTitle id="form-dialog-title">Add Order</DialogTitle>
+          <DialogTitle id="form-dialog-title">Order</DialogTitle>
           <DialogContent>
             <DialogContentText>
 
@@ -59,16 +97,19 @@ class AddOrder extends Component {
             <div className="wrapper2">
               {this.props.availableItems.map((item, index) => {
                 return(
-                  <div className='order-item-container'>
-
+                  <div 
+                    key={index}
+                    className='order-item-container' 
+                    onClick={this.handleCheck(item)}
+                    variant="contained"
+                  >
                     <div className='order-check-box'>
                       <FormControlLabel
                         control={
                           <Checkbox
-                            checked={this.state.checkedB}
-                            onChange={this.handleCheck('checkedB')}
-                            value="checkedB"
-                            color="primary"
+                            checked={this.state.selected[item._id]}
+                            value={item._id}
+                            color="default"
                           />
                         }
                       />
@@ -87,12 +128,12 @@ class AddOrder extends Component {
             </div>
 
           </DialogContent>
-          <DialogActions>
-          <Button onClick={this.handleClose} color="inherit">
+          <DialogActions className="add-order-action-container">
+          <Button onClick={this.handleClose} color="inherit" className="cancel-create-order-button">
             <b>Cancel</b>
           </Button>
-          <Button onClick={this.handleClose} color="inherit">
-            <b>Add</b>
+          <Button onClick={this.handleOrderCreate} color="inherit" className="create-order-button">
+            <b>Create Order</b>
           </Button>
         </DialogActions>
       </Dialog>
@@ -102,7 +143,7 @@ class AddOrder extends Component {
   loadAddOrderButton = () => {
     return(
       <div>
-        <Fab variant="outlined" onClick={this.handleClickOpen}>
+        <Fab className="add-order-button" onClick={this.handleClickOpen}>
           <AddIcon />
         </Fab>
         {this.loadOrderAddOrderDialog()}
