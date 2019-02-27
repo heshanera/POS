@@ -2,6 +2,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { mount } from 'enzyme';
 import { configure } from 'enzyme';
+import { shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { BrowserRouter as Router } from 'react-router-dom';
 import configureStore from 'redux-mock-store';
@@ -15,12 +16,17 @@ describe('Orderlist component and container', () => {
 
   let container;
   let component;
+  let wrapper
 
   beforeAll(() => {
     const mockStore = configureStore([thunk]);
     const store = mockStore({});
 
-    const user = {username:'johns'};
+    const user = {
+      username:'johns',
+      firstName: 'John',
+      lastName: 'Smith'
+    };
     const userOrders = {
       id:1,
       orderList: [
@@ -106,6 +112,13 @@ describe('Orderlist component and container', () => {
       </Provider>)
     component = container.find(OrderList);
 
+    wrapper = shallow(
+      <OrderList
+        user={user}
+        userOrders={userOrders}
+      />
+    );
+
   });
 
   it("should render the container and component successfully", () => {
@@ -122,14 +135,14 @@ describe('Orderlist component and container', () => {
 
   it("should map dispatch to props", () => {
     const expectedPropKeys = [
-      'removeItem', 'addItem', 'logout',
+      'addOrder', 'removeItem', 'updateItem', 'addItem', 'logout',
     ];
     expect(Object.keys(component.props())).toEqual(expect.arrayContaining(expectedPropKeys));
   });
 
   it("should display the order list, header and the order add button when logged in", () => {
     JSON.parse = jest.fn().mockImplementationOnce(() => {
-      {user:{username:'johns'}};
+       {user:{ username:'johns' }};
     });
     const loadOrderList = jest.spyOn(component.instance(), "loadOrderList");
     const loadHeader = jest.spyOn(component.instance(), "loadHeader");
@@ -164,6 +177,10 @@ describe('Orderlist component and container', () => {
     expect(component.instance().handleTotalPrice(items)).toEqual("5.50");
   });
 
+  it("should keep the details of expanded order id in the state", () => {
+    component.instance().handleExpand('12qwdgsad261eggd2513fghasd767')({}, true);
+    expect(component.instance().state.orderId).toEqual('12qwdgsad261eggd2513fghasd767');
+  });  
 
 });
 

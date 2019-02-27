@@ -60,13 +60,13 @@ describe('Orderlist component and container', () => {
     expect(Object.keys(component.props())).toEqual(expect.arrayContaining(expectedPropKeys));
   });
 
-  it("should disable the login button until username and password fields are filed", () => {
-    expect(component.find('Button').props().disabled).toEqual(true);
-    component.instance().setState({
-      username: 'johns',
-      password: 'test' 
-    });
-    const validateForm = jest.spyOn(component.instance(), "validateForm");
-    expect(component.instance().validateForm()).toBeTruthy();
-  });  
+  // it("should disable the login button until username and password fields are filed", () => {
+  //   expect(component.find('Button').props().disabled).toEqual(true);
+  //   component.instance().setState({
+  //     username: 'johns',
+  //     password: 'test' 
+  //   });
+  //   const validateForm = jest.spyOn(component.instance(), "validateForm");
+  //   expect(component.instance().validateForm()).toBeTruthy();
+  // });  
 });

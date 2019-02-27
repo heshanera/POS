@@ -10,9 +10,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-// import { MuiThemeProvider } from '@material-ui/core/styles';
-// import themes from "./ColorTheme"
-
+import Styles from './Styles'
 import './App.css'
 
 class AddItem extends Component {
@@ -25,13 +23,7 @@ class AddItem extends Component {
     	open: false,
 	};
 
-	// handleAvailableItems = () => (event) => {
-	// 	const itemArray = [];
-	// 	this.props.orderItems.map((item) => {
-	// 		itemArray.push(item);
-	// 	});
-	// };
-
+	/**** save details of the selected item in the state ****/
   	handleSelectNewItem = () => (event) => {
 	    this.setState({ 
 	    	value: event.target.value,
@@ -40,8 +32,8 @@ class AddItem extends Component {
 	    });
 	};
 
+	/**** calling the add item function ****/
 	handleAddNewItem = () => {
-
 	    this.props.addItem(this.props.orderId, this.state.itemName, this.state.price, this.state.count);
 	    this.setState({ 
 	    	value: '',
@@ -51,15 +43,18 @@ class AddItem extends Component {
 	    });
 	};
 
+	/**** open alert dialog before adding the selected item ****/
 	handleAlertOpen = () => {
 		if (this.state.itemName != '')
 	    	this.setState({ open: true });	
   	};
 
+  	/**** close the add item alert dialog ****/
 	handleAlertClose = () => {
 		this.setState({ open: false });
 	};
 
+	/**** load alert dialog asking sure to add the selected new item ****/
 	loadAddAlert() {
   		return (
   			<Dialog
@@ -75,20 +70,19 @@ class AddItem extends Component {
 	            </DialogContentText>
 	          </DialogContent>
 	          <DialogActions>
-	            <Button onClick={this.handleAlertClose} color="inherit" className="cancel-add-item-button">
-	              <b>Cancel</b>
+	            <Button style={Styles.secondary} onClick={this.handleAlertClose} color="inherit" className="cancel-add-item-button">
+	              Cancel
 	            </Button>
-	            <Button onClick={this.handleAddNewItem} color="inherit"  className="add-add-item-button">
-	              <b>Add</b>
+	            <Button style={Styles.primary} onClick={this.handleAddNewItem} color="inherit"  className="add-add-item-button">
+	              Add
 	            </Button>
 	          </DialogActions>
 	        </Dialog>
   		);
   	};
 
+  	/**** load all available items to the select list ****/
 	loadAllAvailableItems = () => {
-
-
 		return (
 			this.props.availableItems.map((item, index) => {
 				return( 
@@ -100,6 +94,7 @@ class AddItem extends Component {
 		);
 	};
 
+	/**** component containing  add item list and the add button ****/
   	loadAddItem = () => {
 		return(
 			<div className="add-item-inner-container">
@@ -108,7 +103,6 @@ class AddItem extends Component {
 		          		className="add-item-select"
 			          	value={this.state.value} 
 			            onChange={this.handleSelectNewItem()}
-			            // onClick={this.handleAvailableItems()}
 			            displayEmpty 
 			            name="itemName"
 		          	>
@@ -119,9 +113,7 @@ class AddItem extends Component {
 		        </FormControl>
 		        <div className="add-item-button-container">
       				<Button 
-		          		variant="outlined" 
-		          		size="large" 
-		          		color="inherit" 
+      					style={Styles.primary} 
 		          		className="add-item-button"
 		          		onClick = {this.handleAlertOpen}
 		          	>

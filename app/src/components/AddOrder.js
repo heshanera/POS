@@ -10,6 +10,7 @@ import AddIcon from '@material-ui/icons/Add';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
+import Styles from './Styles'
 import './App.css'
 
 class AddOrder extends Component {
@@ -74,8 +75,8 @@ class AddOrder extends Component {
     const itemData = this.props.availableItems.find(item => item.itemName == itemName);
     const image = "data:"+itemData.image.contentType+";base64," + Buffer.from(itemData.image.image).toString('base64');
     return(
-      <img className='item-image' src={image} alt='Img'/>
-      // <img className='item-image' alt='Img'/>
+      // <img className='item-image' src={image} alt='Img'/>
+      <img className='item-image' alt='Img'/>
     );
   };
 
@@ -129,10 +130,10 @@ class AddOrder extends Component {
 
           </DialogContent>
           <DialogActions className="add-order-action-container">
-          <Button onClick={this.handleClose} color="inherit" className="cancel-create-order-button">
-            <b>Cancel</b>
+          <Button style={Styles.secondary} onClick={this.handleClose} className="cancel-create-order-button">
+            Cancel
           </Button>
-          <Button onClick={this.handleOrderCreate} color="inherit" className="create-order-button">
+          <Button style={Styles.primary} onClick={this.handleOrderCreate} className="create-order-button">
             <b>Create Order</b>
           </Button>
         </DialogActions>
@@ -143,7 +144,7 @@ class AddOrder extends Component {
   loadAddOrderButton = () => {
     return(
       <div>
-        <Fab className="add-order-button" onClick={this.handleClickOpen}>
+        <Fab  style={Styles.primary} className="add-order-button" onClick={this.handleClickOpen}>
           <AddIcon />
         </Fab>
         {this.loadOrderAddOrderDialog()}

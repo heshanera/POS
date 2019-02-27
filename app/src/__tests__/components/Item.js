@@ -44,6 +44,44 @@ describe('Item component', () => {
      expect(wrapper.find('.item-image').containsMatchingElement(<img />)).toBeTruthy();
   });
 
+  it('should display empty image container if the image data is not given', () => {
+    const itemData = [{
+      itemName:'itemX', 
+      price:1.3, 
+    }]
+
+    const item = <Item 
+        itemId={1} 
+        itemName='itemX' 
+        itemPrice={1.3} 
+        handleRemove={jest.fn()}
+        handleUpdateItem={jest.fn()}
+        availableItems={itemData}
+        itemCount={2}
+    />
+    const wrapper = shallow(item);
+    expect(wrapper.find('.item-image').find('img').first().props('src')).toEqual({"alt": "Img", "className": "item-image"});
+  });  
+
+  it('should not load image when item details are not given', () => {
+
+    const itemData = [{
+      itemName:'itemY', 
+      price:1.3, 
+    }]
+    const item = <Item 
+        itemId={1} 
+        itemName='itemX' 
+        itemPrice={1.3} 
+        handleRemove={jest.fn()}
+        handleUpdateItem={jest.fn()}
+        availableItems={itemData}
+        itemCount={2}
+    />    
+    const wrapper = shallow(item);
+    expect(wrapper.find('.item-image').containsMatchingElement(<img />)).toBeFalsy();
+  });  
+
   it('should display item count', () => {
      const wrapper = shallow(component);
      expect(wrapper.find('.item-count').containsMatchingElement(2)).toBeTruthy();

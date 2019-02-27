@@ -11,6 +11,7 @@ import TextField from '@material-ui/core/TextField';
 // import { MuiThemeProvider } from '@material-ui/core/styles';
 // import themes from "./ColorTheme"
 
+import Styles from './Styles'
 import './App.css'
 
 
@@ -78,11 +79,11 @@ class Item extends Component {
 	            </DialogContentText>
 	          </DialogContent>
 	          <DialogActions>
-	            <Button onClick={this.handleAlertClose('openDeleteAlert')} color="inherit" className="delete-item-cancel">
-	              <b>Cancel</b>
+	            <Button style={Styles.secondary} onClick={this.handleAlertClose('openDeleteAlert')} color="inherit" className="delete-item-cancel">
+	              Cancel
 	            </Button>
-	            <Button onClick={this.handleRemoveItem} color="inherit" className="delete-item-delete">
-	              <b>Remove</b>
+	            <Button style={Styles.primary} onClick={this.handleRemoveItem} color="inherit" className="delete-item-delete">
+	              Remove
 	            </Button>    
 	          </DialogActions>
 	        </Dialog>
@@ -95,10 +96,10 @@ class Item extends Component {
 			if (itemData.image !== undefined ) {
 				const image = "data:"+itemData.image.contentType+";base64," + Buffer.from(itemData.image.image).toString('base64');
 				return(
-					<img className='item-image' src={image} alt='Img'/>
-					// <img className='item-image'alt='Img'/>
+					// <img className='item-image' src={image} alt='Img'/>
+					<img className='item-image'alt='Img'/>
 				);
-			}
+			} else return (<img className='item-image'alt='Img'/>);
 		}
 	};
 
@@ -132,10 +133,10 @@ class Item extends Component {
 
 	          </DialogContent>
 	          <DialogActions>
-	            <Button onClick={this.handleAlertClose('openEditAlert')}  color="inherit" className="update-item-cancel">
+	            <Button  style={Styles.secondary} onClick={this.handleAlertClose('openEditAlert')} className="update-item-cancel">
 	              Cancel
 	            </Button>
-	            <Button onClick={this.handleUpdateItem}  color="inherit" className="update-item-update">
+	            <Button style={Styles.primary} onClick={this.handleUpdateItem} className="update-item-update">
 	              Update
 	            </Button>
 	          </DialogActions>

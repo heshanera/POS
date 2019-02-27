@@ -39,7 +39,7 @@ let getUser = function(req, res) {
   }, function(err, user) {
     if (err)
       res.send(err);
-    else if (user != null) {
+    else if (user.length === 1) {
 
       const username = user[0].username;
       const firstName = user[0].firstName;

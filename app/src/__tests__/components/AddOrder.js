@@ -70,6 +70,17 @@ describe('AddOrder component', () => {
     expect(wrapper.state('openAddOrder')).toEqual(true);
   });
 
+  it('should close the dialog when cancel button is clicked', () => {
+    const wrapper = shallow(component);
+    wrapper.setState({ 
+      openAddOrder: false,
+      selected: {},
+      orderItems: [],
+    })
+    wrapper.find('.cancel-create-order-button').simulate('click');
+    expect(wrapper.state('openAddOrder')).toEqual(false);
+  });
+
   it('should not add order no items are selected', () => {
     const wrapper = shallow(component);
     wrapper.setState({ 
@@ -80,7 +91,7 @@ describe('AddOrder component', () => {
     wrapper.find('.add-order-button').simulate('click');
     wrapper.find('.create-order-button').simulate('click');
     expect(wrapper.state('openAddOrder')).toEqual(true);
-  })  
+  });  
 
   it('should add the item to the order item list when the item is clicked', () => {
     const wrapper = shallow(component);
@@ -97,5 +108,22 @@ describe('AddOrder component', () => {
     expect(wrapper.state('orderItems').length).toEqual(1);
     expect(wrapper.state('orderItems')[0]).toEqual({ name: 'item2', price: 2.3, count: 1 });    
   });
+
+  it('should call the add order function when create order button is called', () => {
+    const wrapper = shallow(component);
+    wrapper.setState({ 
+      openAddOrder: false,
+      selected: {},
+      orderItems: [],
+    })
+    wrapper.find('.add-order-button').simulate('click');
+    wrapper.find('.order-item-container').at(0).simulate('click', { _id: 1, itemName: 'item1', price: 1.5 })
+    wrapper.find('.order-item-container').at(1).simulate('click', { _id: 2, itemName: 'item2', price: 2.3 })
+    const createOrder = jest.spyOn(wrapper.instance(), "handleOrderCreate");
+    wrapper.instance().forceUpdate();
+    wrapper.find('.create-order-button').simulate('click');
+    expect(createOrder).toHaveBeenCalledTimes(1);
+    expect(wrapper.state('openAddOrder')).toEqual(false);
+  }) 
 
 });

@@ -8,9 +8,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-// import { MuiThemeProvider } from '@material-ui/core/styles';
-// import themes from "./ColorTheme"
-
+import Styles from './Styles'
 import './App.css'
 
 
@@ -45,11 +43,11 @@ class Header extends Component {
 	            </DialogContentText>
 	          </DialogContent>
 	          <DialogActions>
-	            <Button onClick={this.handleAlertClose} color="inherit" className="logout-cancel">
-	              <b>Cancel</b>
+	            <Button style={Styles.secondary} onClick={this.handleAlertClose} color="inherit" className="logout-cancel">
+	              Cancel
 	            </Button>
-	            <Button onClick={this.handleLogout()} color="inherit" className="logout-logout">
-	              <b>Logout</b>
+	            <Button style={Styles.primary} onClick={this.handleLogout()} color="inherit" className="logout-logout">
+	              Logout
 	            </Button>
 	          </DialogActions>
 	        </Dialog>

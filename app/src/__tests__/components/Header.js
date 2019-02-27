@@ -11,6 +11,7 @@ describe('Header component', () => {
 
   beforeAll(() => {
     component = <Header 
+                    logout = {jest.fn()}
                     firstName='Heshan' 
                     lastName='Eranga'
                 />
@@ -43,6 +44,18 @@ describe('Header component', () => {
     expect(wrapper.state('open')).toEqual(true);
     wrapper.find('.logout-cancel').simulate('click');
     expect(wrapper.state('open')).toEqual(false);
+  });
+
+  it('should call the logout function when the logout button is clicked', () => {
+    const wrapper = shallow(component);
+    wrapper.setState({
+      open: false 
+    })
+    wrapper.find('.exit-icon').simulate('click');
+    const logout = jest.spyOn(wrapper.instance(), "handleLogout");
+    wrapper.instance().forceUpdate();
+    wrapper.find('.logout-logout').simulate('click');
+    expect(logout).toHaveBeenCalledTimes(1);
   });
 
 });
