@@ -60,13 +60,48 @@ describe('Orderlist component and container', () => {
     expect(Object.keys(component.props())).toEqual(expect.arrayContaining(expectedPropKeys));
   });
 
-  // it("should disable the login button until username and password fields are filed", () => {
-  //   expect(component.find('Button').props().disabled).toEqual(true);
-  //   component.instance().setState({
-  //     username: 'johns',
-  //     password: 'test' 
-  //   });
-  //   const validateForm = jest.spyOn(component.instance(), "validateForm");
-  //   expect(component.instance().validateForm()).toBeTruthy();
-  // });  
+  it("should handle the form changes", () => {
+    component.find('#username').at(5).simulate('change', {
+      target: {id: 'username', value: 'johns'}
+    });
+    component.instance().forceUpdate();
+    expect(component.state('username')).toEqual('johns');
+
+    component.find('#password').at(5).simulate('change', {
+      target: {id: 'password', value: 'pass'}
+    });
+    component.instance().forceUpdate();
+    expect(component.state('password')).toEqual('pass');
+  });  
+
+  it("should validate the form when login button is clicked", () => { 
+
+    const validateForm = jest.spyOn(component.instance(), 'validateForm');
+    component.find('.login-button').at(0).simulate('click');
+    expect(validateForm).toHaveBeenCalledTimes(1);
+
+    component.setState({
+      username: 'johns', 
+      password: ''
+    });
+    component.instance().forceUpdate();
+    component.find('.login-button').at(0).simulate('click');
+    expect(validateForm()).toEqual('Please enter a valid password');
+
+    component.setState({
+      username: '',
+      password: 'pass' 
+    });
+    component.instance().forceUpdate();
+    component.find('.login-button').at(0).simulate('click');
+    expect(validateForm()).toEqual('Please enter a valid username');
+
+    component.setState({
+      username: '',
+      password: '' 
+    });
+    component.instance().forceUpdate();
+    component.find('.login-button').at(0).simulate('click');
+    expect(validateForm()).toEqual('Please enter a valid username and password');
+  });   
 });

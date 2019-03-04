@@ -27,7 +27,7 @@ export class Login extends Component {
     if (this.state.username.length === 0) {
       // if password field is empty
       if (this.state.password.length === 0) {
-        return "Please enter a valid username and a password"
+        return "Please enter a valid username and password"
       } 
       // only the username field is empty
       return "Please enter a valid username"

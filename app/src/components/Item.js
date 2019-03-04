@@ -7,10 +7,6 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
-
-// import { MuiThemeProvider } from '@material-ui/core/styles';
-// import themes from "./ColorTheme"
-
 import Styles from './Styles'
 import './App.css'
 
@@ -145,11 +141,11 @@ class Item extends Component {
 
 	};
 
-	loadItemCounter = () => {
+	loadItemCounter = (itemCount) => {
 		return(
 			<span>
 				<p className="item-count" onClick={this.handleAlertOpen('openEditAlert')}>
-					{this.state.itemCount}
+					{itemCount}
 				</p>
 				{this.loadItemCountAlert()}
 			</span>
@@ -164,7 +160,7 @@ class Item extends Component {
 			  	<DeleteIcon />
 			  </span>
 			  <div className="item-count-container">
-			  	{this.loadItemCounter()}
+			  	{this.loadItemCounter(this.props.itemCount)}
 			  </div>
 			  <div className="order-item-container-header"> 
 			  	<p>{this.loadImage(this.props.itemName)}</p>

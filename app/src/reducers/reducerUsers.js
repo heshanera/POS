@@ -1,19 +1,25 @@
 import { REQUEST_USER, RECEIVE_USER } from '../actions/loginActions';
 
 // loading data from the local storage
-const savedState = JSON.parse(localStorage.getItem('user'))
-let userDetails = {}
-if (savedState != null) {
-  userDetails = {
-    username:savedState.username,
-    firstName:savedState.firstName,
-    lastName:savedState.lastName
-  }
-};
+// const savedState = JSON.parse(localStorage.getItem('user')) || {};
+
+// let userDetails = {}
+// if (savedState != null) {
+//   userDetails = {
+//     username:savedState.username,
+//     firstName:savedState.firstName,
+//     lastName:savedState.lastName
+//   }
+// };
+
+export const getSavedState = () => {
+  let data = (localStorage.getItem('user') || '{}');
+  return JSON.parse(data);
+}
 
 const user = (
   // default values for the state loaded from local storage
-  state = userDetails, action) => {
+  state = getSavedState(), action) => {
 
   switch (action.type) {
     case REQUEST_USER:

@@ -2,8 +2,12 @@ import {requestUser, receiveUser } from '../actions/loginActions';
 import orderService from './orderService';
 import itemService from './itemService';
 import config from './config';
+import { createBrowserHistory } from 'history';
+
+const serviceData = {};
 
 const fetchUser = (user, history) => {
+ serviceData.history = history;
  const data = "username="+user.username+"&password="+user.password;
  return dispatch => {
    dispatch(requestUser());
@@ -19,7 +23,7 @@ const fetchUser = (user, history) => {
       error => console.log('An error occurred.', error),
   )
    .then((user) => {
-      console.log(user);
+      // console.log(user);
       dispatch(receiveUser(user));
       if (!(Object.keys(user).length === 0)) {
         localStorage.setItem('user', JSON.stringify(user));
@@ -37,12 +41,15 @@ const fetchUser = (user, history) => {
  };
 }
 
-const logout = () => {
+const logout = (history) => {
   localStorage.removeItem('user');
   localStorage.removeItem('orders');
   localStorage.removeItem('items');
-  window.location.reload();
+  return dispatch => {
+    history.push('/login');
+  }
+  
 }
 
-const loginService = { fetchUser, logout };
+const loginService = { serviceData, fetchUser, logout };
 export default loginService;

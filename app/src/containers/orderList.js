@@ -32,7 +32,7 @@ export class OrderList extends Component {
 
     handleAddOrder = event => {
       return this.props.addOrder;
-    }
+    };
 
   	handleRemoveItem = event => {
   		return this.props.removeItem;
@@ -62,10 +62,14 @@ export class OrderList extends Component {
       return total;
     };
 
+    handleLogout = () => {
+      return this.props.logout(this.props.history);
+    };
+
     loadHeader = () => {
       return (
         <Header 
-          logout = {this.props.logout}
+          logout = {this.handleLogout}
           firstName = {this.props.user.firstName} 
           lastName = {this.props.user.lastName}
         />
@@ -175,8 +179,8 @@ const mapDispatchToProps = dispatch => ({
   updateItem: (orderId, itemName, price, count) => {
       dispatch(orderService.updateItem(orderId, itemName, price, count)); 
   },
-  logout: () => {
-  		dispatch(loginService.logout);
+  logout: (history) => {
+  		dispatch(loginService.logout(history));
   },
 });
 

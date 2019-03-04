@@ -118,7 +118,8 @@ body {
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
   margin: 15px;
   padding: 20px;
-  background: #eeeeee;
+  /*background: #eeeeee;*/
+  background: #bbb;
   margin-top: 100px; 
   margin-bottom: 100px;
 }

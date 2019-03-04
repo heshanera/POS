@@ -25,7 +25,7 @@ const fetchOrders = (username, history) => {
       if (orders.success == false) {
         // DO NOTHING: TODO
       } else {
-        console.log(orders);
+        // console.log(orders);
         // storing the order list in the local storage
         localStorage.setItem('orders', JSON.stringify(orders));
 
@@ -83,7 +83,6 @@ const addOrder = (newOrder) => {
 }
 
 const removeItem = (orderId, itemId) => {
-
   const user = JSON.parse(localStorage.getItem('user'))
   const token = user.token;
   let data = {
@@ -227,7 +226,7 @@ const updateItem = (orderId, itemName, price, count) => {
       }
     })
     .catch((e) => {
-      console.log('error in adding the new item ' + itemName + '\ne');
+      console.log('error in adding the new item ' + itemName + '\n' +e);
     });
  };
 }

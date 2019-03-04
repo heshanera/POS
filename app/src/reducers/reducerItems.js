@@ -1,15 +1,16 @@
 import { REQUEST_ITEMS, RECEIVE_ITEMS } from '../actions/itemActions';
 
 // loading data from the local storage
-const savedState = JSON.parse(localStorage.getItem('items'))
-let availableItems = []
-if (savedState != null) {
-  availableItems = savedState
-};
+// let savedState = JSON.parse(localStorage.getItem('items')) || [];
+
+export let getSavedState = () => {
+  let data = (localStorage.getItem('items') || '[]');
+  return JSON.parse(data);
+}
 
 const items = (
   // default values for the state loaded from local storage
-  state = availableItems, 
+  state = getSavedState(), 
   action) => {
 
   switch (action.type) {
@@ -21,4 +22,5 @@ const items = (
        return state;
   }
 };
+
 export default items;

@@ -93,6 +93,16 @@ describe('Orderlist component and container', () => {
       }
     ];
 
+    beforeEach(() => {
+      JSON.parse = jest.fn().mockImplementationOnce(() => {
+        const user = {
+          username:'johns',
+          token: 'uyweoiwdmqweokvnewiu798'
+        };
+        return user;
+      });
+    });
+
 
     const reducer = { 
       user: user,
@@ -141,9 +151,6 @@ describe('Orderlist component and container', () => {
   });
 
   it("should display the order list, header and the order add button when logged in", () => {
-    JSON.parse = jest.fn().mockImplementationOnce(() => {
-       {user:{ username:'johns' }};
-    });
     const loadOrderList = jest.spyOn(component.instance(), "loadOrderList");
     const loadHeader = jest.spyOn(component.instance(), "loadHeader");
     const loadAddContainers = jest.spyOn(component.instance(), "loadAddContainers");
@@ -180,7 +187,47 @@ describe('Orderlist component and container', () => {
   it("should keep the details of expanded order id in the state", () => {
     component.instance().handleExpand('12qwdgsad261eggd2513fghasd767')({}, true);
     expect(component.instance().state.orderId).toEqual('12qwdgsad261eggd2513fghasd767');
+    expect(component.instance().state.expanded).toEqual('12qwdgsad261eggd2513fghasd767');
+    component.instance().handleExpand('12qwdgsad261eggd2513fghasd767')({}, false);
+    expect(component.instance().state.orderId).toEqual('12qwdgsad261eggd2513fghasd767');
+    expect(component.instance().state.expanded).toEqual(false);
   });  
+
+  it("should be able to call removeItem function", () => {
+    const removeItem = jest.spyOn(component.props(), 'removeItem');
+    removeItem();
+    expect(removeItem).toHaveBeenCalledTimes(1);
+
+  }); 
+
+  it("should be able to call addOrder function", () => {
+    const addOrder = jest.spyOn(component.props(), 'addOrder');
+    addOrder({});
+    expect(addOrder).toHaveBeenCalledTimes(1);
+
+  }); 
+
+  it("should be able to call addItem function", () => {
+    const addItem = jest.spyOn(component.props(), 'addItem');
+    addItem();
+    expect(addItem).toHaveBeenCalledTimes(1);
+  });   
+
+  it("should be able to call updateItem function", () => {
+    const updateItem = jest.spyOn(component.props(), 'updateItem');
+    updateItem();
+    expect(updateItem).toHaveBeenCalledTimes(1);
+  });
+
+  it("should be able to call logout function", () => {
+    const logout = jest.spyOn(component.props(), 'logout');
+    logout();
+    expect(logout).toHaveBeenCalledTimes(1);
+
+    const handleLogout = jest.spyOn(component.instance(), 'handleLogout');
+    handleLogout();
+    expect(handleLogout).toHaveBeenCalledTimes(1);
+  });
 
 });
 
