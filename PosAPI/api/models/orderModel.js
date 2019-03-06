@@ -5,7 +5,8 @@ let Schema = mongoose.Schema;
 
 let OrderSchema = new Schema({
   userName: {
-    type: String
+    type: String,
+    required: true
   },
   orderList: [{
       orderId:String,

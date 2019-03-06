@@ -7,26 +7,26 @@ let createOrder = function(req, res) {
   var newOrder = new OrderModel(req.body);
   newOrder.save(function(err, order) {
     if (err)
-      res.send(err);
-    res.json(order);
+      res.status(400).send(err);
+    else res.json(order);
   });
 };
 
 let removeOrderList = function(req, res) {
-  OrderModel.remove({
-    _id: req.params.orderId
+  OrderModel.deleteOne({
+    username: req.body.username
   }, function(err, order) {
     if (err)
-      res.send(err);
-    res.json({ message: 'Order successfully deleted' });
+      res.status(400).send(err);
+    else res.json({ message: 'Order successfully deleted' });
   });
 };
 
 let listOrders = function(req, res) {
   OrderModel.find({}, function(err, order) {
     if (err)
-      res.send(err);
-    res.json(order);
+      res.status(400).send(err);
+    else res.json(order);
   });
 };
 

@@ -22,19 +22,25 @@ let addItem = function(req, res) {
     newItem.image = itemImage;
   	newItem.save(function(err, item) {
     	if (err)
-      		res.send(err);
-    	res.json({ message: 'Item ' + item.itemName + ' successfully added'});
+      		res.status(400).send(err);
+    	res.json({ 
+          itemId: item._id,
+          message: 'Item ' + item.itemName + ' successfully added'
+        });
   	});
 };
 
 let updateItem = function(req, res) {
-	ItemModel.findOne({ _id: req.body._id }, function(err, item) {
+	ItemModel.findOne({ _id: req.body._id }, function(error, item) {
 		item.itemName = req.body.itemName;
 		item.price = req.body.price;
 		item.save(function(err, item) {
     		if (err)
-      			res.send(err);
-    		res.json({ message: 'Item ' + item.itemName + ' successfully updated'});
+      			res.status(400).send(err);
+    		res.json({ 
+          itemId: item._id,
+          message: 'Item ' + item.itemName + ' successfully updated'
+        });
   		});
 	});
 };
@@ -42,17 +48,17 @@ let updateItem = function(req, res) {
 let listItems = function(req, res) {
 	ItemModel.find({}, function(err, items) {
     	if (err)
-      		res.send(err);
+      		res.status(400).send(err);
     	res.json(items);
   	});
 }
 
 let deleteItem = function(req, res) {
-  ItemModel.remove({
+  ItemModel.deleteOne({
     itemName: req.body.itemId
   }, function(err, order) {
     if (err)
-      res.send(err);
+      res.status(400).send(err);
     res.json({ message: 'Item successfully deleted' });
   });
 };

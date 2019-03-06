@@ -17,12 +17,18 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
-mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/posDB', { useNewUrlParser: true });
+
 
 // importing and registering routes
 let routes = require('./api/routes/posRoutes');
 routes(app);
 
-app.listen(port);
+if(!module.parent) {
+	mongoose.Promise = global.Promise;
+	mongoose.connect('mongodb://localhost/posDB', { useNewUrlParser: true });	
+ 	app.listen(port);
+}
+
 console.log('POS RESTful API server started on: ' + port);
+
+module.exports = app

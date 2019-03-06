@@ -5,10 +5,12 @@ let Schema = mongoose.Schema;
 
 let UserSchema = new Schema({
   username: {
-    type: String
+    type: String,
+    required: true
   },
   password: {
-    type: String
+    type: String,
+    required: true
   },
   firstName: {
     type: String

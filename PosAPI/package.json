@@ -4,7 +4,7 @@
   "description": "RESTful posAPI",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Test\" && exit 1",
+    "test": "nyc mocha --exit",
     "start": "nodemon server.js"
   },
   "keywords": [
@@ -15,7 +15,9 @@
   "author": "heshan eranga",
   "license": "ISC",
   "devDependencies": {
-    "nodemon": "^1.18.9"
+    "mocha": "^6.0.2",
+    "nodemon": "^1.18.9",
+    "supertest": "^3.4.2"
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -23,6 +25,7 @@
     "express-oauth-server": "^2.0.0",
     "jsonwebtoken": "^8.5.0",
     "mongoose": "^5.4.10",
-    "multer": "^1.4.1"
+    "multer": "^1.4.1",
+    "nyc": "^13.3.0"
   }
 }

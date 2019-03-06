@@ -9,26 +9,28 @@ let addUser = function(req, res) {
   var newUser = new User(req.body);
   newUser.save(function(err, user) {
     if (err)
-      res.send(err);
-    res.json(user);
+      res.status(400).send(err);
+    else res.json(user);
   });
 };
 
 let deleteUser = function(req, res) {
-  User.remove({
-    _id: req.params.userId
+  User.deleteOne({
+    _id: req.body.userId 
   }, function(err, user) {
     if (err)
-      res.send(err);
-    res.json({ message: 'User successfully removed' });
-  });
+      res.status(400).send(err);
+    else res.json({ 
+      deletedCount: user.deletedCount
+    });
+  })
 };
 
 let listUsers = function(req, res) {
   User.find({}, function(err, userList) {
     if (err)
-      res.send(err);
-    res.json(userList);
+      res.status(400).send(err);
+    else res.json(userList);
   });
 };
 
@@ -38,7 +40,7 @@ let getUser = function(req, res) {
     password: req.body.password
   }, function(err, user) {
     if (err)
-      res.send(err);
+      res.status(400).send(err);
     else if (user.length === 1) {
 
       const username = user[0].username;
@@ -59,7 +61,7 @@ let getUser = function(req, res) {
         lastName: lastName
       }); 
       // res.json(user[0]); 
-    } else res.json({});
+    } else res.status(404).json({});
   });
 };
 

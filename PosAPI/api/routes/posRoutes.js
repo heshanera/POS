@@ -13,10 +13,11 @@ module.exports = function(app) {
   //  username: string, password: string, 
   //  firstName: string, lastName: string
   // }
-  app.route('/user')
+  app.route('/addUser')
+    .post(middleware.checkToken)
     .post(user.addUser); // add new user
 
-  app.route('/user')
+  app.route('/listUsers')
     .get(middleware.checkToken)
     .get(user.listUsers); // list all current users
 
@@ -25,7 +26,7 @@ module.exports = function(app) {
     .post(user.getUser); // return a user
 
   // params = {userId: string}
-  app.route('/user/:userId')
+  app.route('/deleteUser')
     .delete(middleware.checkToken)
     .delete(user.deleteUser); // delete a user
 
@@ -34,6 +35,7 @@ module.exports = function(app) {
 
   // params = {itemName: string, price: number}
   app.route('/addItem')
+    .post(middleware.checkToken)
     .post(item.uploadImage.single('file'))
     .post(item.addItem); // add a new item to the available items
 
@@ -57,7 +59,7 @@ module.exports = function(app) {
     .post(middleware.checkToken)
     .post(order.createOrder); // create new orderlist for a new user
 
-  app.route('/removeOrderList/:orderId')
+  app.route('/removeOrderList')
     .delete(middleware.checkToken)
     .delete(order.removeOrderList); // delete all orders of a user
 

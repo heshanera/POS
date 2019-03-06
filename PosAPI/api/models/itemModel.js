@@ -6,10 +6,12 @@ const Schema = mongoose.Schema;
 
 const ItemSchema = new Schema({
   itemName: {
-    type: String
+    type: String,
+    required: true
   },
   price: {
-    type: Number
+    type: Number,
+    required: true
   },
   image: {
   	contentType: String,
