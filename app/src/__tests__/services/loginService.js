@@ -17,33 +17,29 @@ describe('Login', () => {
   it('creates RECEIVE_USER when fetching user has been done', () => {
     fetchMock.postOnce(config.apiUrl+'/getUser', {
       body: { 
-        user: {
-          username:'johns', 
-          firstName: 'John',
-          lastName: 'Smith'
-        } 
+        username:'johns', 
+        firstName: 'John',
+        lastName: 'Smith'
       },
       headers: { 'Content-Type': 'application/json' }
     });
 
     fetchMock.postOnce(config.apiUrl+'/getItems', {
-      body:{ },
+      body:{},
       headers: { 'Content-Type': 'application/json' }
     });
 
-    fetchMock.postOnce(config.apiUrl+'/getOrders', {
+    fetchMock.getOnce(config.apiUrl+'/getOrders/johns', {
       body: {},
       headers: { 'Content-Type': 'application/json' }
     });
 
     const expectedActions = [
       { type: loginActions.REQUEST_USER },
-      { type: loginActions.RECEIVE_USER, payload: { 
-          user: {
-            username:'johns', 
-            firstName: 'John',
-            lastName: 'Smith'
-          } 
+      { type: loginActions.RECEIVE_USER, payload: {   
+          username:'johns', 
+          firstName: 'John',
+          lastName: 'Smith'
         } 
       },
       { type: itemActions.REQUEST_ITEMS },

@@ -3,40 +3,40 @@ import { loggedIn } from '../actions/loginActions';
 import config from './config';
 
 const fetchOrders = (username, history) => {
- const data = "username="+username;
  const token = JSON.parse(localStorage.getItem('user')).token;
  return dispatch => {
    dispatch(requestOrders());
-   return fetch(config.apiUrl+'/getOrders', {
-        method: 'POST',
+   return fetch(config.apiUrl+'/getOrders/'+username, {
+        method: 'GET',
         headers: {
             'Authorization': token,
             'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: data
+        }
     })
    .then(
       response => response.json(),
-      error => console.log('An error occurred.', error),
+      error => console.log('error occurred: ', error),
     )
    .then((orders) => {
 
       // If authentication fails
-      if (orders.success == false) {
-        // DO NOTHING: TODO
-      } else {
-        // console.log(orders);
-        // storing the order list in the local storage
-        localStorage.setItem('orders', JSON.stringify(orders));
+      if (orders) {
+        if (orders.success == false) {
+          // DO NOTHING: TODO
+        } else {
+          // console.log(orders);
+          // storing the order list in the local storage
+          localStorage.setItem('orders', JSON.stringify(orders));
 
-        dispatch(receiveOrders(orders));
-        if (!(Object.keys(orders).length === 0)) {
-          history.push('/orders');
+          dispatch(receiveOrders(orders));
+          if (!(Object.keys(orders).length === 0)) {
+            history.push('/orders');
+          }
         }
-      }
+      } else throw new Error('no orders received');
    })
-  .catch((e) => {
-    console.log('invalid username');
+  .catch((error) => {
+    console.log('error occurred: ', error);
    });
  };
 }

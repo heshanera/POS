@@ -81,22 +81,20 @@ describe('Login', () => {
   /**** Fetch Orders ****/
   it('creates RECEIVE_ORDERS when fetching user has been done', () => {
 
-    fetchMock.postOnce(config.apiUrl+'/getOrders', {
+    fetchMock.getOnce(config.apiUrl+'/getOrders/johns', {
       body: userOrders,
-      headers: { 'Content-Type': 'application/json' }
     });
-
     const expectedActions = [
       { type: orderActions.REQUEST_ORDERS },
       { type: orderActions.RECEIVE_ORDERS, payload: userOrders}
     ];
-    return store.dispatch(orderService.fetchOrders()).then(() => {
+    return store.dispatch(orderService.fetchOrders('johns',{ push:() => {} })).then(() => {
       expect(store.getActions()).toEqual(expectedActions)
     })
   })
 
   it('handle when the authentication fails', () => { 
-    fetchMock.postOnce(config.apiUrl+'/getOrders', {
+    fetchMock.getOnce(config.apiUrl+'/getOrders/johns', {
       body: { 
         success: false
       },
@@ -105,17 +103,17 @@ describe('Login', () => {
     const expectedActions = [
       { type: orderActions.REQUEST_ORDERS },
     ]
-    return store.dispatch(orderService.fetchOrders()).then(() => {
+    return store.dispatch(orderService.fetchOrders('johns',{ push:() => {} })).then(() => {
       expect(store.getActions()).toEqual(expectedActions)
-    })
+    })  
   })
 
   it('handle error when there is an error in fetching', () => { 
-    fetchMock.postOnce(config.apiUrl+'/getOrders', {throws: 'Error occurred'})
+    fetchMock.getOnce(config.apiUrl+'/getOrders/johns', {throws: 'Error occurred'});
     const expectedActions = [
       { type: orderActions.REQUEST_ORDERS },
     ]
-    return store.dispatch(orderService.fetchOrders()).then(() => {
+    return store.dispatch(orderService.fetchOrders('johns',{ push:() => {} })).then(() => {
       expect(store.getActions()).toEqual(expectedActions)
     })
   })

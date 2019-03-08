@@ -23,7 +23,7 @@ const fetchUser = (user, history) => {
       error => console.log('An error occurred.', error),
   )
    .then((user) => {
-      // console.log(user);
+      // console.log(user)
       dispatch(receiveUser(user));
       if (!(Object.keys(user).length === 0)) {
         localStorage.setItem('user', JSON.stringify(user));
