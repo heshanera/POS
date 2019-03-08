@@ -12,7 +12,10 @@ let OrderSchema = new Schema({
       orderId:String,
       items: [{
         itemId: String,
-        name: String,
+        name: {
+          type: String,
+          required: true
+        },
         price: Number,
         count: Number
       }],

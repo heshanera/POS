@@ -17,8 +17,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
-
-
 // importing and registering routes
 let routes = require('./api/routes/posRoutes');
 routes(app);

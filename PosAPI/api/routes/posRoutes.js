@@ -75,9 +75,9 @@ module.exports = function(app) {
     .delete(middleware.checkToken)
     .delete(order.removeOrder); // remove an order from user order list  
 
-  app.route('/getOrders')
-    .post(middleware.checkToken)
-    .post(order.getOrders); // return an order list of the requested user
+  app.route('/getOrders/:username')
+    .get(middleware.checkToken)
+    .get(order.getOrders); // return an order list of the requested user
 
   // params = {username: string, orderId: string, itemName: string, price: number, count: number}
   app.route('/addOrderItem')

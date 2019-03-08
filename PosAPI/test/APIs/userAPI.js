@@ -1,6 +1,6 @@
 const request = require('supertest');
-const server = require('../server');
-const User = require('../api/models/userModel');
+const server = require('../../server');
+const User = require('../../api/models/userModel');
 
 describe('API testing for user', () => {
 
@@ -8,7 +8,7 @@ describe('API testing for user', () => {
 	let userId = '';
 	describe('POST /getUser', () => {
 	    
-		it('respond 404 when user is not found', (done) => {
+		it('respond 400 when user is not found', (done) => {
 	    	const userCredentials = {
 	    		username: 'brucew',
 	    		password: 'pass'
@@ -16,7 +16,7 @@ describe('API testing for user', () => {
 	        request(server)	
 	            .post('/getUser')
 	            .send(userCredentials)
-	            .expect(404, done);
+	            .expect(400, done);
 	    });
 
 	    it('respond with user details and an authentication token', (done) => {
@@ -86,24 +86,11 @@ describe('API testing for user', () => {
 	});
 
 	describe('DELETE /deleteUser', () => {
-	    it('respond with 401 when request is not authorized', (done) => {
-	    	const userDetails = {
-	    		userId: '41224d776a326fb40f000001'
-	    	};
-	        request(server)	
-	            .delete('/deleteUser')
-	            .set('Accept', 'application/json')
-	            .send(userDetails)
-	            .expect('Content-Type', /json/)
-	            .expect('{"success":false,"message":"Auth token is not supplied"}')
-	            .expect(401, done);
-	    });
-
 	    it('respond with message when user is successfuly deleted', (done) => {
 	    	const userDetails = {
-	    		userId: userId
+	    		username: 'harryp',
+	    		password: 'pass'
 	    	};
-
 	        request(server)	
 	            .delete('/deleteUser')
 	            .set('Accept', 'application/json')
@@ -115,18 +102,41 @@ describe('API testing for user', () => {
 	    });
 
 	  	it('respond with 400 when an error occurred in deleting an existing user', (done) => {
-	  		const userDetails = {
-	    		userId: '{*&%}'
-	    	};
             request(server)	
 	            .delete('/deleteUser')
 	            .set('Accept', 'application/json')
 	            .set('Authorization', token)
-	            .send(userDetails)
+	            .send({})
 	            .expect('Content-Type', /json/)
 	            .expect(400, done);
 	    });
 
+	});
+
+	describe('GET /listUsers', () => {
+	    it('respond with 400 when an error in listing the users', (done) => {
+	    	const userCredentials = {
+	    		username: 'johns',
+	    		password: 'pass'
+	    	};
+	    	request(server)	
+	            .delete('/deleteUser')
+	            .set('Accept', 'application/json')
+	            .set('Authorization', token)
+	            .send(userCredentials)
+	            .expect('Content-Type', /json/)
+	            .expect('{"deletedCount":1}')
+	            .expect(200)
+	            .end(() => {
+	            	request(server)	
+			            .get('/listUsers')
+			            .set('Accept', 'application/json')
+			            .set('Authorization', token)
+			            .expect('Content-Type', /json/)
+			            .expect({})
+			            .expect(400, done);
+	            })
+	    })
 	});
 
 });

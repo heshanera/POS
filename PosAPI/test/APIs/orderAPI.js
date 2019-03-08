@@ -1,11 +1,12 @@
 const request = require('supertest');
-const server = require('../server');
-const Order = require('../api/models/orderModel');
+const server = require('../../server');
+const Order = require('../../api/models/orderModel');
 
 describe('API testing for order and order items', () => {
 
 	let token = '';
-	let orderId = '';
+	let orderIdList = [];
+	let itemIdList = [];
 	describe('Creating an authorized user', () => {
 		it('respond with user details and an authentication token', (done) => {
 	    	const userCredentials = {
@@ -33,12 +34,7 @@ describe('API testing for order and order items', () => {
 			    				count:1,
 			    				name: 'itemX',
 			    				price: 1.3
-			    			},
-			    			{
-			    				count:2,
-			    				name: 'itemY',
-			    				price: 1.8
-			    			},
+			    			}
 			    		],
 			    		status: 'pending',
 	    			}
@@ -86,10 +82,6 @@ describe('API testing for order and order items', () => {
 	    			.set('Authorization', token)
 	            	.expect(200, done);
 	    });
-
-	    it('respond with 400 when error receiving the order list', (done) => {
-	    	done()
-	    });
 	});
 
 	describe('POST /addOrder', () => {
@@ -98,11 +90,6 @@ describe('API testing for order and order items', () => {
 	    	const newOrder = {
 	    		username: 'johns',
 	    		items: [
-	    			{
-	    				count:1,
-	    				name: 'itemX',
-	    				price: 1.3
-	    			},
 	    			{
 	    				count:2,
 	    				name: 'itemY',
@@ -116,31 +103,45 @@ describe('API testing for order and order items', () => {
 	    			.post('/addOrder')
 	    			.set('Authorization', token)
 	    			.send(newOrder)
-	    			.expect((response) => {
-	    				orderId = JSON.parse(response.text)._id;
-	    			})
 	            	.expect(200, done);
 	    });
 
 	    it('respond with 400 when error adding an order', (done) => {
-	    	done()
+	    	const newOrder = {
+	    		username: 'johns',
+	    		items: [],
+	    		status: 'pending'
+	    	}
+
+	    	request(server)
+	    			.post('/addOrder')
+	    			.set('Authorization', token)
+	    			.send(newOrder)
+	            	.expect(400, done);
 	    });
 	});
 
-	describe('POST /getOrders', () => {
+	describe('GET /getOrders', () => {
 	    it('respond with 200 when user orders are successfully received', (done) => {
-	    	const orderInfo = {
-	    		username: 'johns'
-	    	}
 	    	request(server)
-	    			.post('/getOrders')
+	    			.get('/getOrders/johns')
 	    			.set('Authorization', token)
-	    			.send(orderInfo)
+	    			.expect((response) => {
+	    				// getting the order ids and the item ids
+	    				orderIdList.push(JSON.parse(response.text).orderList[0]._id);
+	    				orderIdList.push(JSON.parse(response.text).orderList[1]._id);
+
+	    				itemIdList.push([JSON.parse(response.text).orderList[0].items[0]._id]);
+	    				itemIdList.push([JSON.parse(response.text).orderList[1].items[0]._id]);
+	    			})
 	            	.expect(200, done);
 	    });
 
 	    it('respond with 400 when receiving user orders', (done) => {
-	    	done()
+	    	request(server)
+	    			.get('/getOrders/invalid')
+	    			.set('Authorization', token)
+	            	.expect(400, done);
 	    });
 	});
 
@@ -151,7 +152,7 @@ describe('API testing for order and order items', () => {
 	    		itemName: 'itemA',
 	    		price: 1.3,
 	    		count: 1,
-	    		orderId: orderId 
+	    		orderId: orderIdList[1] 
 	    	}
 	    	request(server)
 	    			.post('/addOrderItem')
@@ -161,7 +162,15 @@ describe('API testing for order and order items', () => {
 	    });
 
 	    it('respond with 400 when error in adding a new item to an order', (done) => {
-	    	done()
+	    	const newItem = {
+	    		username: 'johns',
+	    		orderId: 'saydgu' 
+	    	}
+	    	request(server)
+	    			.post('/addOrderItem')
+	    			.set('Authorization', token)
+	    			.send(newItem)
+	            	.expect(400, done);
 	    });
 	});
 
@@ -171,26 +180,78 @@ describe('API testing for order and order items', () => {
 	    		username: 'johns',
 	    		itemName: 'itemA',
 	    		count: 1,
-	    		orderId: orderId 
+	    		orderId: orderIdList[1] 
 	    	}
 	    	request(server)
 	    			.post('/updateOrderItem')
 	    			.set('Authorization', token)
 	    			.send(newItem)
+	    			.expect((response) => {
+	    				itemIdList[1].push(JSON.parse(response.text)._id)
+	    			})
 	            	.expect(200, done);
 	    });
 
 	    it('respond with 400 when error in updating an order', (done) => {
-	    	done()
+	    	const newItem = {
+	    		username: 'john',
+	    	}
+	    	request(server)
+	    			.post('/updateOrderItem')
+	    			.set('Authorization', token)
+	    			.send(newItem)
+	            	.expect(400, done);
 	    });
 	});
 
 	describe('DELETE /removeOrderItem', () => {
 	    it('respond with 200 when an order item is successfully removed', (done) => {
+	    	const item1 = {
+	    		username: 'johns',
+	    		itemId: itemIdList[1][1],
+	    		orderId: orderIdList[1] 
+	    	}
+
+	    	request(server)
+	    			.delete('/removeOrderItem')
+	    			.set('Authorization', token)
+	    			.send(item1)
+	    			.expect('1')
+	            	.expect(200);
+
+	        const item2 = {
+	    		username: 'johns',
+	    		itemId: itemIdList[0][0],
+	    		orderId: orderIdList[0] 
+	    	}
+
+	        request(server)
+	    			.delete('/removeOrderItem')
+	    			.set('Authorization', token)
+	    			.send(item2)
+	    			.expect('0')
+	            	.expect(200, done);
+	    });
+
+	    it('respond with 200 when an order item is successfully removed', (done) => {
+	        const item3 = {
+	    		username: 'johns',
+	    		itemId: itemIdList[1][0],
+	    		orderId: orderIdList[1] 
+	    	}
+	        request(server)
+	    			.delete('/removeOrderItem')
+	    			.set('Authorization', token)
+	    			.send(item3)
+	            	.expect(200, done);
+
+	    });
+
+	    it('respond with 200 when the last item is successfully removed with the last order in the list', (done) => {
 	    	const newItem = {
 	    		username: 'johns',
 	    		itemName: 'itemA',
-	    		orderId: orderId 
+	    		orderId: orderIdList[1] 
 	    	}
 	    	request(server)
 	    			.delete('/removeOrderItem')
@@ -200,27 +261,64 @@ describe('API testing for order and order items', () => {
 	    });
 
 	    it('respond with 400 when error in updating an order', (done) => {
-	    	done()
+	    	const newItem = {
+	    		username: 'john'
+	    	}
+	    	request(server)
+	    			.delete('/removeOrderItem')
+	    			.set('Authorization', token)
+	    			.send(newItem)
+	    			.expect({})
+	            	.expect(400, done);
 	    });
 	});
 
 	describe('DELETE /removeOrder', () => {
 	    it('respond with 200 when an order is successfully removed', (done) => {
 
+	    	let orderId = '';
+	    	const newOrder = {
+	    		username: 'johns',
+	    		items: [
+	    			{
+	    				count:1	,
+	    				name: 'itemY',
+	    				price: 1.8
+	    			},
+	    		],
+	    		status: 'pending'
+	    	}
+	    	request(server)
+	    			.post('/addOrder')
+	    			.set('Authorization', token)
+	    			.send(newOrder)
+	    			.expect((response) => {
+	    				orderId = JSON.parse(response.text)._id;
+	    			})
+	            	.expect(200)
+	            	.end((response) => {
+	            		request(server)
+	            			.delete('/removeOrder')
+			    			.set('Authorization', token)
+			    			.send({
+			    				username: 'johns',
+	    						orderId: orderId
+			    			})
+			            	.expect(200, done);
+	            	})
+	    });
+
+	    it('respond with 400 when error adding an order', (done) => {
 	    	const orderInfo = {
 	    		username: 'johns',
-	    		orderId: orderId
+	    		orderId: orderIdList[1]
 	    	}
 
 	    	request(server)
 	    			.delete('/removeOrder')
 	    			.set('Authorization', token)
 	    			.send(orderInfo)
-	            	.expect(200, done);
-	    });
-
-	    it('respond with 400 when error adding an order', (done) => {
-	    	done()
+	            	.expect(400, done);
 	    });
 	});
 
@@ -234,7 +332,20 @@ describe('API testing for order and order items', () => {
 	    });
 
 	    it('respond with 400 when error deleting the order list', (done) => {
-	    	done()
+	    	request(server)
+	    			.delete('/removeOrderList')
+	    			.set('Authorization', token)
+	    			.send({username:'john'})
+	            	.expect(400, done);
+	    });
+	});
+
+	describe('GET /listOrders', () => {
+	    it('respond with 400 when error receiving the order list', (done) => {
+	    	request(server)
+	    			.get('/listOrders')
+	    			.set('Authorization', token)
+	            	.expect(400, done);
 	    });
 	});
 });

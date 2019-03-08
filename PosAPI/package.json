@@ -3,8 +3,13 @@
   "version": "1.0.0",
   "description": "RESTful posAPI",
   "main": "index.js",
+  "nyc": {
+    "exclude": [
+      "server.js", "test/test_helper.js"
+    ] 
+  },
   "scripts": {
-    "test": "nyc mocha --exit",
+    "test": "nyc mocha --recursive --exit",
     "start": "nodemon server.js"
   },
   "keywords": [

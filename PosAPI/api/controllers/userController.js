@@ -7,46 +7,55 @@ User = mongoose.model('Users');
 
 let addUser = function(req, res) {
   var newUser = new User(req.body);
-  newUser.save(function(err, user) {
-    if (err)
-      res.status(400).send(err);
-    else res.json(user);
-  });
+  newUser.save()
+  .then((user) => {
+    res.json(user);
+  })
+  .catch((err) => {
+    res.status(400).send(err);
+  })
 };
 
 let deleteUser = function(req, res) {
   User.deleteOne({
-    _id: req.body.userId 
-  }, function(err, user) {
-    if (err)
-      res.status(400).send(err);
-    else res.json({ 
-      deletedCount: user.deletedCount
-    });
+    username: req.body.username,
+    password: req.body.password 
+  })
+  .then((user) => {
+    if (user.deletedCount) {
+      res.json({ 
+        deletedCount: user.deletedCount
+      });
+    } else throw new Error('invalid credentials')
+  })
+  .catch((err) => {
+    res.status(400).send(err);
   })
 };
 
 let listUsers = function(req, res) {
-  User.find({}, function(err, userList) {
-    if (err)
-      res.status(400).send(err);
-    else res.json(userList);
-  });
+  User.find({})
+  .then((userList) => {
+    if (userList.length > 0)
+      res.json(userList);
+    else 
+      throw new Error('no users');
+  })
+  .catch((err) => {
+    res.status(400).send(err);
+  })
 };
 
 let getUser = function(req, res) {
   User.find({
     username: req.body.username,
     password: req.body.password
-  }, function(err, user) {
-    if (err)
-      res.status(400).send(err);
-    else if (user.length === 1) {
-
+  })
+  .then((user) => {
+    if (user.length === 1) {
       const username = user[0].username;
       const firstName = user[0].firstName;
       const lastName = user[0].lastName;
-
       let token = jwt.sign(
         {username: username},
         config.secret,
@@ -60,8 +69,10 @@ let getUser = function(req, res) {
         firstName: firstName,
         lastName: lastName
       }); 
-      // res.json(user[0]); 
-    } else res.status(404).json({});
+    } else throw new Error('invalid user credentials');
+  })
+  .catch((err) => {
+    res.status(400).send(err);
   });
 };
 

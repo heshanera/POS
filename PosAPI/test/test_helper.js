@@ -6,18 +6,22 @@ const Order = require('../api/models/orderModel');
 let mongoose = require('mongoose');
 
 let userId = '';
-let token = ''
+let token = '';
+let connection = '';
 
 before((done) => {
 	// Accessing test database
 	mongoose.Promise = global.Promise;
 	mongoose.connect('mongodb://localhost/testDatabase', { useNewUrlParser: true });
-    const db = mongoose.connection;
-    db.on('error', console.error.bind(console, 'connection error'));
-    db.once('open', function() {
-      console.log('We are connected to test database!');
+    connection = mongoose.connection;
+    connection.on('error', console.error.bind(console, 'connection error'));
+    connection.once('open', function() {
+      console.log('\tWe are connected to test database!');
     });
+    done();
+});
 
+beforeEach((done) => {
 	// create new user
 	const newUser = new User({
 		username: 'johns',
@@ -48,31 +52,13 @@ before((done) => {
 	        done();
 	    })
   	})
-  	.catch()
-});
+  	.catch((err) => {
+  		console.log(err);
+  		done();
+  	})
+})
 
 
 after((done) => {
-	// remove the created user
-	User.deleteMany({})
-	.then((response) => {
-        done();
-    })
-    .catch();
-
-    // Remove added items
-    Item.deleteMany({})
-	.then((response) => {
-		console.log(response);
-        done();
-    })
-    .catch();
-
-    // Remove added orders
-    Order.deleteMany({})
-	.then((response) => {
-		console.log(response);
-        done();
-    })
-    .catch();
+    connection.db.dropDatabase(done);
 });
