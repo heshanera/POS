@@ -24,7 +24,7 @@ describe('Login', () => {
       headers: { 'Content-Type': 'application/json' }
     });
 
-    fetchMock.postOnce(config.apiUrl+'/getItems', {
+    fetchMock.getOnce(config.apiUrl+'/getItems', {
       body:{},
       headers: { 'Content-Type': 'application/json' }
     });

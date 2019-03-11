@@ -15,7 +15,7 @@ const fetchOrders = (username, history) => {
     })
    .then(
       response => response.json(),
-      error => console.log('error occurred: ', error),
+      error => console.log('error occurred'),
     )
    .then((orders) => {
 
@@ -36,7 +36,7 @@ const fetchOrders = (username, history) => {
       } else throw new Error('no orders received');
    })
   .catch((error) => {
-    console.log('error occurred: ', error);
+    console.log('error occurred: ', error.message);
    });
  };
 }

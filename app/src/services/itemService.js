@@ -6,12 +6,11 @@ const fetchAvailableItems = () => {
   return dispatch => {
     dispatch(requestItems());
     return fetch(config.apiUrl+'/getItems', {
-        method: 'POST',
+        method: 'GET',
         headers: {
             'Authorization': token,
             'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: ''
+        }
     })
    .then(
       response => response.json(),
@@ -20,13 +19,16 @@ const fetchAvailableItems = () => {
    .then((items) => {
 
       // If authentication fails
-      if (items.success == false) {
-        // DO NOTHING: TODO
-      } else {
-        // storing the item list in the local storage
-        localStorage.setItem('items', JSON.stringify(items));
-        dispatch(receiveItems(items));
-      }
+      if(items) {
+        if (items.success == false) {
+          // DO NOTHING: TODO
+        } else {
+          // storing the item list in the local storage
+          localStorage.setItem('items', JSON.stringify(items));
+          dispatch(receiveItems(items));
+        }  
+      } else throw new Error('no orders received');
+      
       
    },
   )

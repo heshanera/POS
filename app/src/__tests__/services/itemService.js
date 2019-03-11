@@ -17,7 +17,7 @@ describe('Login', () => {
   });
 
   it('creates RECEIVE_ITEMS when fetching user has been done', () => {
-    fetchMock.postOnce(config.apiUrl+'/getItems', {
+    fetchMock.getOnce(config.apiUrl+'/getItems', {
       body: [{
         image:{},
         itemName:'itemX',
@@ -52,7 +52,7 @@ describe('Login', () => {
   })
 
   it('handle when the authentication fails', () => { 
-    fetchMock.postOnce(config.apiUrl+'/getItems', {
+    fetchMock.getOnce(config.apiUrl+'/getItems', {
       body: { 
         success: false
       },
@@ -68,7 +68,7 @@ describe('Login', () => {
   })
 
   it('handle error when there is an error in fetching', () => { 
-    fetchMock.postOnce(config.apiUrl+'/getItems', {throws: 'Error occurred'})
+    fetchMock.getOnce(config.apiUrl+'/getItems', {throws: 'Error occurred'})
     const expectedActions = [
       { type: itemActions.REQUEST_ITEMS },
     ]
