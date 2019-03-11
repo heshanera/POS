@@ -45,8 +45,8 @@ module.exports = function(app) {
     .post(item.updateItem); // update details of an existing item
 
   app.route('/getItems')
-    .post(middleware.checkToken)
-    .post(item.listItems); // list all available items
+    .get(middleware.checkToken)
+    .get(item.getItems); // list all available items
 
   app.route('/deleteItem')
     .delete(middleware.checkToken)

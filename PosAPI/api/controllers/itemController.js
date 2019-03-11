@@ -52,7 +52,7 @@ let updateItem = function(req, res) {
   });
 };
 
-let listItems = function(req, res) {
+let getItems = function(req, res) {
 	ItemModel.find()
   .then((items) => {
     if (items.length > 0)
@@ -82,4 +82,4 @@ let deleteItem = function(req, res) {
 
 
 
-module.exports = {addItem, updateItem, listItems, deleteItem, uploadImage}; 
+module.exports = {addItem, updateItem, getItems, deleteItem, uploadImage}; 

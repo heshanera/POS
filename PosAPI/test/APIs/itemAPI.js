@@ -86,10 +86,10 @@ describe('API testing for available items', () => {
 	    });
 	});
 
-	describe('POST /getItems', () => {
+	describe('GET /getItems', () => {
 	    it('respond with 200 when the items are successfully received', (done) => {
 	    	request(server)
-    			.post('/getItems')
+    			.get('/getItems')
     			.set('Authorization', token)
             	.expect(200, done);	
 	    });
@@ -119,10 +119,10 @@ describe('API testing for available items', () => {
 	    });
 	});
 
-	describe('POST /getItems', () => {
+	describe('GET /getItems', () => {
 	    it('respond with 400 when no items are received', (done) => {
 	    	request(server)
-    			.post('/getItems')
+    			.get('/getItems')
     			.set('Authorization', token)
     			.expect('{"message":"no items"}')
             	.expect(400, done);	

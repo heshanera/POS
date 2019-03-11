@@ -16,12 +16,21 @@ let OrderSchema = new Schema({
           type: String,
           required: true
         },
-        price: Number,
-        count: Number
+        price: {
+          type: Number,
+          required: true
+        },
+        count: {
+          type: Number,
+          required: true
+        }
       }],
       noOfItems: Number,
       total: Number,
-      createdDate: Date,
+      createdDate: {
+        type: Date,
+        default: Date.now
+      },
       status: String
   }]
 

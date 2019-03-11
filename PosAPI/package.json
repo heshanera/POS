@@ -5,7 +5,7 @@
   "main": "index.js",
   "nyc": {
     "exclude": [
-      "server.js", "test/test_helper.js"
+      "server.js", "test"
     ] 
   },
   "scripts": {
