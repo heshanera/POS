@@ -25,7 +25,9 @@ module.exports = function(app) {
   app.route('/getUser')
     .post(user.getUser); // return a user
 
-  // params = {userId: string}
+  // params = {
+  //  username: string, password: string
+  // }
   app.route('/deleteUser')
     .delete(middleware.checkToken)
     .delete(user.deleteUser); // delete a user
@@ -33,7 +35,7 @@ module.exports = function(app) {
 
   /////////// Items ////////////////
 
-  // params = {itemName: string, price: number}
+  // params = {itemName: string, price: number, image: file}
   app.route('/addItem')
     .post(middleware.checkToken)
     .post(item.uploadImage.single('file'))

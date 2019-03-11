@@ -45,8 +45,7 @@ let addOrder = function(req, res) {
   .then((userOrders) => {
     const newOrder = {
       items: req.body.items,
-      status: req.body.status,
-      createdDate: new Date(new Date().toUTCString())
+      status: req.body.status
     };
     if (newOrder.items.length < 1)
       throw new Error('no items')
@@ -81,7 +80,7 @@ let removeOrder = function(req, res) {
 let addOrderItem = function(req, res) {
   OrderModel.findOne({ userName: req.body.username })
   .then((userOrders) => {
-    if (!(req.body.itemName && req.body.itemName && req.body.itemName))
+    if (!(req.body.itemName && req.body.price && req.body.count))
       throw new Error('invalid item data');
     const newItem = {
       name: req.body.itemName,
