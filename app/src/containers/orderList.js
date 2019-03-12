@@ -7,8 +7,11 @@ import Order from '../components/Order';
 import Header from '../components/Header';
 import AddItem from '../components/AddItem';
 import AddOrder from '../components/AddOrder';
+import ErrorBar from '../components/ErrorBar'
 import loginService from '../services/loginService';
 import orderService from '../services/orderService';
+import { receiveError, resetError } from '../actions/errorActions';
+
 import '../components/App.css'
 
 export class OrderList extends Component {
@@ -132,6 +135,19 @@ export class OrderList extends Component {
       }
     };
 
+    /**** loading the Error Bar component ****/
+    loadErrorBar = () => {
+      // console.log(this.props.errors.show);
+      return(
+        <ErrorBar 
+          message={this.props.errors.error}
+          errorCode={this.props.errors.code}
+          open={this.props.errors.show}
+          reset={this.props.resetError}
+        />
+      );
+    };
+
   	authorizedLogin = () => {
   		const loggedIn = (JSON.parse(localStorage.getItem('user')) !== null);
     	if (loggedIn) {
@@ -147,6 +163,7 @@ export class OrderList extends Component {
             <div>
               {this.loadAddContainers()}
             </div>
+            {this.loadErrorBar()}
 			    </div>	
 		    );
     	} else {
@@ -164,6 +181,7 @@ const mapStateToProps = state => ({
   userOrders: state.userOrders,
 	items: state.items,
 	user: state.user,
+  errors: state.errors,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -182,6 +200,9 @@ const mapDispatchToProps = dispatch => ({
   logout: (history) => {
   		dispatch(loginService.logout(history));
   },
+  resetError: () => {
+      dispatch(resetError());
+  }
 });
 
 

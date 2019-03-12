@@ -34,7 +34,7 @@ class ErrorBar extends Component {
           onClick={this.handleClose}
           action={[
             <Button color="secondary" key='code' size="small">
-              {'Status Code: ' + this.props.errorCode}
+              {'error: ' + this.props.errorCode}
             </Button>,
             <IconButton
               key="close"

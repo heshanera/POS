@@ -1,5 +1,6 @@
 import { requestOrders, receiveOrders, updateOrders } from '../actions/orderActions';
 import { loggedIn } from '../actions/loginActions';
+import { receiveError, resetError } from '../actions/errorActions';
 import config from './config';
 
 const fetchOrders = (username, history) => {
@@ -14,8 +15,11 @@ const fetchOrders = (username, history) => {
         }
     })
    .then(
-      response => response.json(),
-      error => console.log('error occurred'),
+      response => {
+        if(!response.ok) throw new Error(response.status);
+        else return response.json()
+      },
+      error => { new Error('an error occoured')}
     )
    .then((orders) => {
 
@@ -36,7 +40,14 @@ const fetchOrders = (username, history) => {
       } else throw new Error('no orders received');
    })
   .catch((error) => {
-    console.log('error occurred: ', error.message);
+    // console.log('error occurred: ', error.message);
+    dispatch(receiveError({
+          error: 'error occoured in receiving orders',
+          code: error.message,
+          show: true
+        })
+      );
+      setTimeout(() => dispatch(resetError()), 6000);
    });
  };
 }
@@ -59,8 +70,11 @@ const addOrder = (newOrder) => {
         body: data
     })
     .then(
-      response => response.json(),
-      error => console.log('An error occurred.', error),
+      response => {
+        if(!response.ok) throw new Error(response.status);
+        else return response.json()
+      },
+      error => { new Error('an error occoured')}
     )
     .then((order) => {
 
@@ -76,8 +90,15 @@ const addOrder = (newOrder) => {
         dispatch(updateOrders(orders));
       }
     })
-    .catch((e) => {
-      console.log('error in adding the new order\n' + e);
+    .catch((error) => {
+      // console.log('error in adding the new order\n' + e);
+      dispatch(receiveError({
+          error: 'error in adding the new order',
+          code: error.message,
+          show: true
+        })
+      );
+      setTimeout(() => dispatch(resetError()), 6000);
     });
  };
 }
@@ -103,8 +124,11 @@ const removeItem = (orderId, itemId) => {
         body: data
     })
     .then(
-      response => response.json(),
-      error => console.log('An error occurred.', error),
+      response => {
+        if(!response.ok) throw new Error(response.status);
+        else return response.json()
+      },
+      error => { new Error('an error occoured')}
     )
     .then((orderSize) => {
 
@@ -129,8 +153,15 @@ const removeItem = (orderId, itemId) => {
         }
       }
     })
-    .catch((e) => {
-      console.log('error in removing the item' );
+    .catch((error) => {
+      // console.log('error in removing the item' );
+      dispatch(receiveError({
+          error: 'error in removing the item',
+          code: error.message,
+          show: true
+        })
+      );
+      setTimeout(() => dispatch(resetError()), 6000);
     });
   };
 }
@@ -158,8 +189,11 @@ const addItem = (orderId, itemName, price, count) => {
         body: data
     })
     .then(
-      response => response.json(),
-      error => console.log('An error occurred.', error),
+      response => {
+        if(!response.ok) throw new Error(response.status);
+        else return response.json()
+      },
+      error => { new Error('an error occoured')}
     )
     .then((item) => {
 
@@ -175,8 +209,15 @@ const addItem = (orderId, itemName, price, count) => {
         dispatch(updateOrders(orders));
       }
     })
-    .catch((e) => {
-      console.log('error in adding the new item ' + itemName);
+    .catch((error) => {
+      // console.log('error in adding the new item ' + itemName);
+      dispatch(receiveError({
+          error: 'error in adding the item',
+          code: error.message,
+          show: true
+        })
+      );
+      setTimeout(() => dispatch(resetError()), 6000);
     });
  };
 }
@@ -204,8 +245,11 @@ const updateItem = (orderId, itemName, price, count) => {
         body: data
     })
     .then(
-      response => response.json(),
-      error => console.log('An error occurred.', error),
+      response => {
+        if(!response.ok) throw new Error(response.status);
+        else return response.json()
+      },
+      error => { new Error('an error occoured')}
     )
     .then((item) => {
 
@@ -225,8 +269,15 @@ const updateItem = (orderId, itemName, price, count) => {
         dispatch(updateOrders(orders));
       }
     })
-    .catch((e) => {
-      console.log('error in adding the new item ' + itemName + '\n' +e);
+    .catch((error) => {
+      // console.log('error in adding the new item ' + itemName + '\n' +e);
+      dispatch(receiveError({
+          error: 'error in updating the item',
+          code: error.message,
+          show: true
+        })
+      );
+      setTimeout(() => dispatch(resetError()), 6000);
     });
  };
 }

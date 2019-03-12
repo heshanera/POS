@@ -89,7 +89,6 @@ describe('Login', () => {
     });
     const expectedActions = [
       { type: loginActions.REQUEST_USER },
-      { type: loginActions.RECEIVE_USER, payload: {} }
     ]
     const store = mockStore({})
     const user = {username: 'johns', password: 'pass'};
@@ -102,7 +101,6 @@ describe('Login', () => {
     fetchMock.postOnce(config.apiUrl+'/getUser', {throws: 'Error occurred'})
     const expectedActions = [
       { type: loginActions.REQUEST_USER },
-      { type: loginActions.RECEIVE_USER, payload: undefined},
       { type: errorActions.RECEIVE_ERROR, payload: {
           code: 'Cannot convert undefined or null to object', 
           error: 'invalid username or password', 

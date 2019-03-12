@@ -27,8 +27,8 @@ const fetchUser = (user, history) => {
       error => { new Error('an error occoured')}
     )
    .then((user) => {
-      dispatch(receiveUser(user));  
       if (!(Object.keys(user).length === 0)) {
+        dispatch(receiveUser(user));
         localStorage.setItem('user', JSON.stringify(user));
         // loading available items
         dispatch(itemService.fetchAvailableItems());
