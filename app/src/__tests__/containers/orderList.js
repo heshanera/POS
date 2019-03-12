@@ -93,6 +93,12 @@ describe('Orderlist component and container', () => {
       }
     ];
 
+    const error = {
+      error: 'this is an error',
+      code: 400,
+      show: false
+    }
+
     beforeEach(() => {
       JSON.parse = jest.fn().mockImplementationOnce(() => {
         const user = {
@@ -108,6 +114,7 @@ describe('Orderlist component and container', () => {
       user: user,
       userOrders: userOrders,
       items:itemList, 
+      errors: error
     }
 
     store.dispatch = jest.fn();
@@ -227,6 +234,12 @@ describe('Orderlist component and container', () => {
     const handleLogout = jest.spyOn(component.instance(), 'handleLogout');
     handleLogout();
     expect(handleLogout).toHaveBeenCalledTimes(1);
+  });
+
+  it('should be able to call resetError function', () => {
+    const resetError = jest.spyOn(component.props(), 'resetError');
+    resetError();
+    expect(resetError).toHaveBeenCalledTimes(1);
   });
 
 });

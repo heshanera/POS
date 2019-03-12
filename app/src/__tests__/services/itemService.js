@@ -1,6 +1,7 @@
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import * as itemActions from '../../actions/itemActions'
+import * as errorActions from '../../actions/errorActions'
 import itemService from '../../services/itemService'
 import config from '../../services/config';
 import fetchMock from 'fetch-mock'
@@ -68,13 +69,40 @@ describe('Login', () => {
   })
 
   it('handle error when there is an error in fetching', () => { 
-    fetchMock.getOnce(config.apiUrl+'/getItems', {throws: 'Error occurred'})
+    fetchMock.getOnce(config.apiUrl+'/getItems', {
+      throws: 'Error occurred',
+    })
     const expectedActions = [
       { type: itemActions.REQUEST_ITEMS },
+      { type: errorActions.RECEIVE_ERROR, payload: {code: "no orders received", error: "error occoured in receiving items", show: true}}
     ]
     const store = mockStore({})
     return store.dispatch(itemService.fetchAvailableItems()).then(() => {
       expect(store.getActions()).toEqual(expectedActions)
+    })
+  })
+
+  it('handle error and display error messages', () => { 
+    fetchMock.getOnce(config.apiUrl+'/getItems', {
+      status: 400
+    })
+    jest.useFakeTimers();
+    const expectedActions = [
+      { type: itemActions.REQUEST_ITEMS },
+      { type: errorActions.RECEIVE_ERROR, payload: {code: "400", error: "error occoured in receiving items", show: true}}
+    ]
+    const updatedExpectedActions = [
+      { type: itemActions.REQUEST_ITEMS },
+      { type: errorActions.RECEIVE_ERROR, payload: {code: '400', error: "error occoured in receiving items", show: true} },
+      { type: errorActions.RESET_ERROR, payload: {code: "", error: "", show: false}}
+    ]
+    const store = mockStore({})
+    return store.dispatch(itemService.fetchAvailableItems()).then(() => {
+      expect(store.getActions()).toEqual(expectedActions)
+      expect(setTimeout).toHaveBeenCalledTimes(1);
+      expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 6000);
+      jest.runAllTimers();
+      expect(store.getActions()).toEqual(updatedExpectedActions)
     })
   })
 

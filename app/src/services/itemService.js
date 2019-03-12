@@ -1,4 +1,5 @@
 import { requestItems, receiveItems, updateItems } from '../actions/itemActions';
+import { receiveError, resetError } from '../actions/errorActions';
 import config from './config';
 
 const fetchAvailableItems = () => {
@@ -13,8 +14,11 @@ const fetchAvailableItems = () => {
         }
     })
    .then(
-      response => response.json(),
-      error => console.log('An error occurred.', error),
+      response => {
+        if(!response.ok) throw new Error(response.status);
+        else return response.json()
+      },
+      error => { new Error('an error occoured')}
   )
    .then((items) => {
 
@@ -28,12 +32,17 @@ const fetchAvailableItems = () => {
           dispatch(receiveItems(items));
         }  
       } else throw new Error('no orders received');
-      
-      
    },
   )
-  .catch((e) => {
-    console.log('error occurred');
+  .catch((error) => {
+    // console.log('error occurred');
+    dispatch(receiveError({
+        error: 'error occoured in receiving items',
+        code: error.message,
+        show: true
+      })
+    );
+    setTimeout(() => dispatch(resetError()), 6000);
    }
   );
  };
