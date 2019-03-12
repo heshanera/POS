@@ -1,4 +1,5 @@
-import {requestUser, receiveUser } from '../actions/loginActions';
+import { requestUser, receiveUser } from '../actions/loginActions';
+import { receiveError, resetError } from '../actions/errorActions';
 import orderService from './orderService';
 import itemService from './itemService';
 import config from './config';
@@ -19,12 +20,14 @@ const fetchUser = (user, history) => {
         body: data
     })
    .then(
-      response => response.json(),
-      error => console.log('An error occurred.', error),
-  )
+      response => {
+        if(!response.ok) throw new Error(response.status);
+        else return response.json()
+      },
+      error => { new Error('an error occoured')}
+    )
    .then((user) => {
-      // console.log(user)
-      dispatch(receiveUser(user));
+      dispatch(receiveUser(user));  
       if (!(Object.keys(user).length === 0)) {
         localStorage.setItem('user', JSON.stringify(user));
         // loading available items
@@ -32,10 +35,16 @@ const fetchUser = (user, history) => {
         // loading the order details
         dispatch(orderService.fetchOrders(user.username, history));
       }
-   },
-  )
-  .catch((e) => {
-    console.log('invalid username or password');
+   })
+  .catch((error) => {
+    // console.log('invalid username or password: '+ error);
+    dispatch(receiveError({
+        error: 'invalid username or password',
+        code: error.message,
+        show: true
+      })
+    );
+    setTimeout(() => dispatch(resetError()), 6000);
    }
   );
  };

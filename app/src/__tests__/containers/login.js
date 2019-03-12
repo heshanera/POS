@@ -25,6 +25,11 @@ describe('Orderlist component and container', () => {
         firstName:'John',
         lastName:'Smith'
       },
+      errors: {
+        error:'',
+        code:'',
+        show:false
+      }
     }
 
     store.dispatch = jest.fn();
@@ -48,14 +53,14 @@ describe('Orderlist component and container', () => {
 
   it("should map states to props", () => {
     const expectedPropKeys = [
-      'user'
+      'user', 'errors'
     ];
     expect(Object.keys(component.props())).toEqual(expect.arrayContaining(expectedPropKeys));
   });
 
   it("should map dispatch to props", () => {
     const expectedPropKeys = [
-      'onLogin'
+      'onLogin', 'receiveError', 'resetError'
     ];
     expect(Object.keys(component.props())).toEqual(expect.arrayContaining(expectedPropKeys));
   });
@@ -104,4 +109,10 @@ describe('Orderlist component and container', () => {
     component.find('.login-button').at(0).simulate('click');
     expect(validateForm()).toEqual('Please enter a valid username and password');
   });   
+
+  it('should be able to call resetError function', () => {
+    const resetError = jest.spyOn(component.props(), 'resetError');
+    resetError();
+    expect(resetError).toHaveBeenCalledTimes(1);
+  });
 });

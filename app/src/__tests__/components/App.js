@@ -20,7 +20,11 @@ describe('App component', () => {
 
 	beforeAll(() => {  
 	const mockStore = configureStore([thunk]);
-    const store = mockStore({});
+    const store = mockStore({
+      errors: {
+        open: false
+      }
+    });
     container = mount(
       <Provider store={store}>
         <Router>

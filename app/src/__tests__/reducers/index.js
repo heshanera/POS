@@ -3,7 +3,7 @@ import reducer from '../../reducers/index'
 describe('Order reducer', () => {
 
 	it('should return the initial state', () => {
-	    const data = {items: [], user: {}, userOrders: {}};
+	    const data = {errors:{code: '', error: '', show: false}, items: [], user: {}, userOrders: {}};
 	    global.localStorage.clear();
 	    expect(reducer(undefined, {})).toEqual(data);
   	});
@@ -83,7 +83,7 @@ describe('Order reducer', () => {
 			]
 		}
 
-	    const data = {items: items, user: user, userOrders: orders};
+	    const data = {errors: {}, items: items, user: user, userOrders: orders};
 	    expect(reducer(data, {})).toEqual(data);
   	});
 

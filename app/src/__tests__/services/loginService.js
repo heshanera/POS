@@ -2,6 +2,7 @@ import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import * as loginActions from '../../actions/loginActions'
 import * as itemActions from '../../actions/itemActions'
+import * as errorActions from '../../actions/errorActions'
 import * as orderActions from '../../actions/orderActions'
 import loginService from '../../services/loginService'
 import config from '../../services/config';
@@ -56,11 +57,39 @@ describe('Login', () => {
   it('handle when the username or the password is invalid', () => { 
     fetchMock.postOnce(config.apiUrl+'/getUser', {
       body: { },
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 'Content-Type': 'application/json' },
+      status: 400
+    });
+
+    jest.useFakeTimers();
+    const expectedActions = [
+      { type: loginActions.REQUEST_USER },
+      { type: errorActions.RECEIVE_ERROR, payload: {code: '400', error: "invalid username or password", show: true} }
+    ]
+    const updatedExpectedActions = [
+      { type: loginActions.REQUEST_USER },
+      { type: errorActions.RECEIVE_ERROR, payload: {code: '400', error: "invalid username or password", show: true} },
+      { type: errorActions.RESET_ERROR, payload: {code: "", error: "", show: false}}
+    ]
+    const store = mockStore({})
+    const user = {username: 'johns', password: 'pass'};
+    return store.dispatch(loginService.fetchUser(user,{})).then(() => {
+      expect(store.getActions()).toEqual(expectedActions)
+      expect(setTimeout).toHaveBeenCalledTimes(1);
+      expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 6000);
+      jest.runAllTimers();
+      expect(store.getActions()).toEqual(updatedExpectedActions)
+    })
+  });
+
+  it('handle when response in empty', () => { 
+    fetchMock.postOnce(config.apiUrl+'/getUser', {
+      body: { },
+      headers: { 'Content-Type': 'application/json' },
     });
     const expectedActions = [
       { type: loginActions.REQUEST_USER },
-      { type: loginActions.RECEIVE_USER, payload: {}},
+      { type: loginActions.RECEIVE_USER, payload: {} }
     ]
     const store = mockStore({})
     const user = {username: 'johns', password: 'pass'};
@@ -74,6 +103,12 @@ describe('Login', () => {
     const expectedActions = [
       { type: loginActions.REQUEST_USER },
       { type: loginActions.RECEIVE_USER, payload: undefined},
+      { type: errorActions.RECEIVE_ERROR, payload: {
+          code: 'Cannot convert undefined or null to object', 
+          error: 'invalid username or password', 
+          show: true
+        }
+      }
     ]
     const store = mockStore({})
     const user = {username: 'johns', password: 'pass'};
