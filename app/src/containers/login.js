@@ -9,6 +9,8 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { connect } from 'react-redux';
 
+import ErrorBar from '../components/ErrorBar'
+import { receiveError, resetError } from '../actions/errorActions';
 import loginSerive from '../services/loginService';
 import Styles from '../components/Styles'
 
@@ -17,8 +19,7 @@ export class Login extends Component {
 
   state = { 
     username:'', 
-    password:'' ,
-    validateMessage:''
+    password:'' 
   };
 
   /**** frontend validation check the fields are filled or not ****/
@@ -47,26 +48,31 @@ export class Login extends Component {
   /**** calling the login function when the login button is clicked ****/
   handlesubmit = state => (event) => {
     const msg = this.validateForm();
-    this.setState({
-      validateMessage: msg
-    });
-
     if (msg.length === 0){
       const { username, password } = this.state;
       this.props.onLogin(username, password, this.props.history)
+    } else {
+      this.props.receiveError({
+        error: msg,
+        code: 400,
+        show: true
+      })
     }
   };
 
-  /**** load the validation message ****/
-  loadValidationMessage = () => {
+
+  /**** loading the Error Bar component ****/
+  loadErrorBar = () => {
+    // console.log(this.props.errors.show);
     return(
-      <div className='validation-message-container'>
-        <div className='message'>
-          {this.state.validateMessage}
-        </div>
-      </div>
+      <ErrorBar 
+        message={this.props.errors.error}
+        errorCode={this.props.errors.code}
+        open={this.props.errors.show}
+        reset={this.props.resetError}
+      />
     );
-  }
+  };
 
   /**** login component with input form ****/
   loadSignIn = () => {
@@ -100,7 +106,7 @@ export class Login extends Component {
              </div> 
           </form>
         </Paper>
-        {this.loadValidationMessage()}
+        {this.loadErrorBar()}
       </div>     
     );  
   };
@@ -113,11 +119,18 @@ export class Login extends Component {
 
 const mapStateToProps = state => ({
   user: state.user,
+  errors: state.errors,
 });
 
 const mapDispatchToProps = dispatch => ({
   onLogin: (username, password, history) => {
     dispatch(loginSerive.fetchUser({username, password}, history));
+  },
+  receiveError: (error) => {
+    dispatch(receiveError(error));
+  },
+  resetError: () => {
+    dispatch(resetError());
   }
 });
 
