@@ -37,8 +37,8 @@ const fetchAvailableItems = () => {
   .catch((error) => {
     // console.log('error occurred');
     dispatch(receiveError({
-        error: 'error occoured in receiving items',
-        code: error.message,
+        message: 'error occoured in receiving items',
+        error: error.message,
         show: true
       })
     );

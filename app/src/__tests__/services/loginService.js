@@ -64,12 +64,12 @@ describe('Login', () => {
     jest.useFakeTimers();
     const expectedActions = [
       { type: loginActions.REQUEST_USER },
-      { type: errorActions.RECEIVE_ERROR, payload: {code: '400', error: "invalid username or password", show: true} }
+      { type: errorActions.RECEIVE_ERROR, payload: {error: '400', message: "invalid username or password", show: true} }
     ]
     const updatedExpectedActions = [
       { type: loginActions.REQUEST_USER },
-      { type: errorActions.RECEIVE_ERROR, payload: {code: '400', error: "invalid username or password", show: true} },
-      { type: errorActions.RESET_ERROR, payload: {code: "", error: "", show: false}}
+      { type: errorActions.RECEIVE_ERROR, payload: {error: '400', message: "invalid username or password", show: true} },
+      { type: errorActions.RESET_ERROR, payload: {error: "", message: "", show: false}}
     ]
     const store = mockStore({})
     const user = {username: 'johns', password: 'pass'};
@@ -102,8 +102,8 @@ describe('Login', () => {
     const expectedActions = [
       { type: loginActions.REQUEST_USER },
       { type: errorActions.RECEIVE_ERROR, payload: {
-          code: 'Cannot convert undefined or null to object', 
-          error: 'invalid username or password', 
+          error: 'Cannot convert undefined or null to object', 
+          message: 'invalid username or password', 
           show: true
         }
       }

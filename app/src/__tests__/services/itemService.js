@@ -74,7 +74,7 @@ describe('Login', () => {
     })
     const expectedActions = [
       { type: itemActions.REQUEST_ITEMS },
-      { type: errorActions.RECEIVE_ERROR, payload: {code: "no orders received", error: "error occoured in receiving items", show: true}}
+      { type: errorActions.RECEIVE_ERROR, payload: {error: "no orders received", message: "error occoured in receiving items", show: true}}
     ]
     const store = mockStore({})
     return store.dispatch(itemService.fetchAvailableItems()).then(() => {
@@ -89,12 +89,12 @@ describe('Login', () => {
     jest.useFakeTimers();
     const expectedActions = [
       { type: itemActions.REQUEST_ITEMS },
-      { type: errorActions.RECEIVE_ERROR, payload: {code: "400", error: "error occoured in receiving items", show: true}}
+      { type: errorActions.RECEIVE_ERROR, payload: {error: "400", message: "error occoured in receiving items", show: true}}
     ]
     const updatedExpectedActions = [
       { type: itemActions.REQUEST_ITEMS },
-      { type: errorActions.RECEIVE_ERROR, payload: {code: '400', error: "error occoured in receiving items", show: true} },
-      { type: errorActions.RESET_ERROR, payload: {code: "", error: "", show: false}}
+      { type: errorActions.RECEIVE_ERROR, payload: {error: '400', message: "error occoured in receiving items", show: true} },
+      { type: errorActions.RESET_ERROR, payload: {error: "", message: "", show: false}}
     ]
     const store = mockStore({})
     return store.dispatch(itemService.fetchAvailableItems()).then(() => {

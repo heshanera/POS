@@ -42,8 +42,8 @@ const fetchOrders = (username, history) => {
   .catch((error) => {
     // console.log('error occurred: ', error.message);
     dispatch(receiveError({
-          error: 'error occoured in receiving orders',
-          code: error.message,
+          message: 'error occoured in receiving orders',
+          error: error.message,
           show: true
         })
       );
@@ -93,8 +93,8 @@ const addOrder = (newOrder) => {
     .catch((error) => {
       // console.log('error in adding the new order\n' + e);
       dispatch(receiveError({
-          error: 'error in adding the new order',
-          code: error.message,
+          message: 'error in adding the new order',
+          error: error.message,
           show: true
         })
       );
@@ -156,8 +156,8 @@ const removeItem = (orderId, itemId) => {
     .catch((error) => {
       // console.log('error in removing the item' );
       dispatch(receiveError({
-          error: 'error in removing the item',
-          code: error.message,
+          message: 'error in removing the item',
+          error: error.message,
           show: true
         })
       );
@@ -212,8 +212,8 @@ const addItem = (orderId, itemName, price, count) => {
     .catch((error) => {
       // console.log('error in adding the new item ' + itemName);
       dispatch(receiveError({
-          error: 'error in adding the item',
-          code: error.message,
+          message: 'error in adding the item',
+          error: error.message,
           show: true
         })
       );
@@ -272,8 +272,8 @@ const updateItem = (orderId, itemName, price, count) => {
     .catch((error) => {
       // console.log('error in adding the new item ' + itemName + '\n' +e);
       dispatch(receiveError({
-          error: 'error in updating the item',
-          code: error.message,
+          message: 'error in updating the item',
+          error: error.message,
           show: true
         })
       );

@@ -8,5 +8,5 @@ export const receiveError = error => ({
 
 export const resetError = () => ({
     type: 'RESET_ERROR',    
-    payload: { error: '', code:'', show: false }
+    payload: { message: '', error:'', show: false }
 });

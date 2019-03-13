@@ -80,7 +80,7 @@ body {
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
   background: #0091EA;
   color: #ffffff;
-  min-height: 60px;
+  min-height: 65px;
   position: fixed;
   width: 100%;
   top:0;
@@ -89,27 +89,31 @@ body {
 
 .menu-icon {
   float: left;
-  line-height: 75px;
+  /*line-height: 75px;*/
+  margin-top: 20px;
   margin-left: 20px;
   cursor: pointer;;
 }
 
 .person-icon {
   float:right;
-  line-height: 75px;
+  /*line-height: 75px;*/
+  margin-top: 20px;
   margin-right: 5px;
   cursor: pointer;
 }
 
 .nameUser {
-  line-height: 60px;
+  /*line-height: 60px;*/
+  margin-top: 22px;
   float: right;
   margin-right: 10px;
 }
 
 .exit-icon {
   float:right;
-  line-height: 75px;
+  /*line-height: 75px;*/
+  margin-top: 20px;
   margin-right: 20px;
   cursor: pointer;
 }

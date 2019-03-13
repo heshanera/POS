@@ -140,8 +140,8 @@ export class OrderList extends Component {
       // console.log(this.props.errors.show);
       return(
         <ErrorBar 
-          message={this.props.errors.error}
-          errorCode={this.props.errors.code}
+          message={this.props.errors.message}
+          errorCode={this.props.errors.error}
           open={this.props.errors.show}
           reset={this.props.resetError}
         />

@@ -39,8 +39,8 @@ const fetchUser = (user, history) => {
   .catch((error) => {
     // console.log('invalid username or password: '+ error);
     dispatch(receiveError({
-        error: 'invalid username or password',
-        code: error.message,
+        message: 'invalid username or password',
+        error: error.message,
         show: true
       })
     );

@@ -113,7 +113,7 @@ describe('Login', () => {
     fetchMock.getOnce(config.apiUrl+'/getOrders/johns', {throws: 'Error occurred'});
     const expectedActions = [
       { type: orderActions.REQUEST_ORDERS },
-      { type: errorActions.RECEIVE_ERROR, payload: {code: "no orders received", error: "error occoured in receiving orders", show: true}}
+      { type: errorActions.RECEIVE_ERROR, payload: {error: "no orders received", message: "error occoured in receiving orders", show: true}}
     ]
     return store.dispatch(orderService.fetchOrders('johns',{ push:() => {} })).then(() => {
       expect(store.getActions()).toEqual(expectedActions)
@@ -127,12 +127,12 @@ describe('Login', () => {
     jest.useFakeTimers();
      const expectedActions = [
       { type: orderActions.REQUEST_ORDERS },
-      { type: errorActions.RECEIVE_ERROR, payload: {code: "400", error: "error occoured in receiving orders", show: true}}
+      { type: errorActions.RECEIVE_ERROR, payload: {error: "400", message: "error occoured in receiving orders", show: true}}
     ]
     const updatedExpectedActions = [
       { type: orderActions.REQUEST_ORDERS },
-      { type: errorActions.RECEIVE_ERROR, payload: {code: '400', error: "error occoured in receiving orders", show: true} },
-      { type: errorActions.RESET_ERROR, payload: {code: "", error: "", show: false}}
+      { type: errorActions.RECEIVE_ERROR, payload: {error: '400', message: "error occoured in receiving orders", show: true} },
+      { type: errorActions.RESET_ERROR, payload: {error: "", message: "", show: false}}
     ]
     const store = mockStore({})
     return store.dispatch(orderService.fetchOrders('johns',{ push:() => {} })).then(() => {
@@ -219,7 +219,7 @@ describe('Login', () => {
     fetchMock.postOnce(config.apiUrl+'/addOrder', {throws: 'Error occurred'})
     const expectedActions = [
       { type: orderActions.REQUEST_ORDERS },
-      { type: errorActions.RECEIVE_ERROR, payload: {code: "Cannot read property 'success' of undefined", error: "error in adding the new order", show: true}}
+      { type: errorActions.RECEIVE_ERROR, payload: {error: "Cannot read property 'success' of undefined", message: "error in adding the new order", show: true}}
     ]
     return store.dispatch(orderService.addOrder({})).then(() => {
       expect(store.getActions()).toEqual(expectedActions)
@@ -233,12 +233,12 @@ describe('Login', () => {
     jest.useFakeTimers();
      const expectedActions = [
       { type: orderActions.REQUEST_ORDERS },
-      { type: errorActions.RECEIVE_ERROR, payload: {code: "400", error: "error in adding the new order", show: true}}
+      { type: errorActions.RECEIVE_ERROR, payload: {error: "400", message: "error in adding the new order", show: true}}
     ]
     const updatedExpectedActions = [
       { type: orderActions.REQUEST_ORDERS },
-      { type: errorActions.RECEIVE_ERROR, payload: {code: '400', error: "error in adding the new order", show: true} },
-      { type: errorActions.RESET_ERROR, payload: {code: "", error: "", show: false}}
+      { type: errorActions.RECEIVE_ERROR, payload: {error: '400', message: "error in adding the new order", show: true} },
+      { type: errorActions.RESET_ERROR, payload: {error: "", message: "", show: false}}
     ]
     const store = mockStore({})
     return store.dispatch(orderService.addOrder({})).then(() => {
@@ -349,7 +349,7 @@ describe('Login', () => {
     fetchMock.deleteOnce(config.apiUrl+'/removeOrderItem', {throws: 'Error occurred'})
     const expectedActions = [
       { type: orderActions.REQUEST_ORDERS },
-      { type: errorActions.RECEIVE_ERROR, payload: {code: "Cannot read property 'success' of undefined", error: "error in removing the item", show: true}}
+      { type: errorActions.RECEIVE_ERROR, payload: {error: "Cannot read property 'success' of undefined", message: "error in removing the item", show: true}}
     ]
     return store.dispatch(orderService.removeItem({})).then(() => {
       expect(store.getActions()).toEqual(expectedActions)
@@ -363,12 +363,12 @@ describe('Login', () => {
     jest.useFakeTimers();
      const expectedActions = [
       { type: orderActions.REQUEST_ORDERS },
-      { type: errorActions.RECEIVE_ERROR, payload: {code: "400", error: "error in removing the item", show: true}}
+      { type: errorActions.RECEIVE_ERROR, payload: {error: "400", message: "error in removing the item", show: true}}
     ]
     const updatedExpectedActions = [
       { type: orderActions.REQUEST_ORDERS },
-      { type: errorActions.RECEIVE_ERROR, payload: {code: '400', error: "error in removing the item", show: true} },
-      { type: errorActions.RESET_ERROR, payload: {code: "", error: "", show: false}}
+      { type: errorActions.RECEIVE_ERROR, payload: {error: '400', message: "error in removing the item", show: true} },
+      { type: errorActions.RESET_ERROR, payload: {error: "", message: "", show: false}}
     ]
     const store = mockStore({})
     return store.dispatch(orderService.removeItem({})).then(() => {
@@ -440,7 +440,7 @@ describe('Login', () => {
     fetchMock.postOnce(config.apiUrl+'/addOrderItem', {throws: 'Error occurred'})
     const expectedActions = [
       { type: orderActions.REQUEST_ORDERS },
-      { type: errorActions.RECEIVE_ERROR, payload: {code: "Cannot read property 'success' of undefined", error: "error in adding the item", show: true}}
+      { type: errorActions.RECEIVE_ERROR, payload: {error: "Cannot read property 'success' of undefined", message: "error in adding the item", show: true}}
     ]
     return store.dispatch(orderService.addItem('','','','')).then(() => {
       expect(store.getActions()).toEqual(expectedActions)
@@ -454,12 +454,12 @@ describe('Login', () => {
     jest.useFakeTimers();
      const expectedActions = [
       { type: orderActions.REQUEST_ORDERS },
-      { type: errorActions.RECEIVE_ERROR, payload: {code: "400", error: "error in adding the item", show: true}}
+      { type: errorActions.RECEIVE_ERROR, payload: {error: "400", message: "error in adding the item", show: true}}
     ]
     const updatedExpectedActions = [
       { type: orderActions.REQUEST_ORDERS },
-      { type: errorActions.RECEIVE_ERROR, payload: {code: '400', error: "error in adding the item", show: true} },
-      { type: errorActions.RESET_ERROR, payload: {code: "", error: "", show: false}}
+      { type: errorActions.RECEIVE_ERROR, payload: {error: '400', message: "error in adding the item", show: true} },
+      { type: errorActions.RESET_ERROR, payload: {error: "", message: "", show: false}}
     ]
     const store = mockStore({})
     return store.dispatch(orderService.addItem('','','','')).then(() => {
@@ -523,7 +523,7 @@ describe('Login', () => {
     fetchMock.postOnce(config.apiUrl+'/updateOrderItem', {throws: 'Error occurred'})
     const expectedActions = [
       { type: orderActions.REQUEST_ORDERS },
-      { type: errorActions.RECEIVE_ERROR, payload: {code: "Cannot read property 'success' of undefined", error: "error in updating the item", show: true}}
+      { type: errorActions.RECEIVE_ERROR, payload: {error: "Cannot read property 'success' of undefined", message: "error in updating the item", show: true}}
     ]
     return store.dispatch(orderService.updateItem('','','','')).then(() => {
       expect(store.getActions()).toEqual(expectedActions)
@@ -537,12 +537,12 @@ describe('Login', () => {
     jest.useFakeTimers();
      const expectedActions = [
       { type: orderActions.REQUEST_ORDERS },
-      { type: errorActions.RECEIVE_ERROR, payload: {code: "400", error: "error in updating the item", show: true}}
+      { type: errorActions.RECEIVE_ERROR, payload: {error: "400", message: "error in updating the item", show: true}}
     ]
     const updatedExpectedActions = [
       { type: orderActions.REQUEST_ORDERS },
-      { type: errorActions.RECEIVE_ERROR, payload: {code: '400', error: "error in updating the item", show: true} },
-      { type: errorActions.RESET_ERROR, payload: {code: "", error: "", show: false}}
+      { type: errorActions.RECEIVE_ERROR, payload: {error: '400', message: "error in updating the item", show: true} },
+      { type: errorActions.RESET_ERROR, payload: {error: "", message: "", show: false}}
     ]
     const store = mockStore({})
     return store.dispatch(orderService.updateItem('','','','')).then(() => {

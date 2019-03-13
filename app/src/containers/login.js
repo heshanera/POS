@@ -53,8 +53,8 @@ export class Login extends Component {
       this.props.onLogin(username, password, this.props.history)
     } else {
       this.props.receiveError({
-        error: msg,
-        code: 400,
+        message: msg,
+        error: 400,
         show: true
       })
     }
@@ -66,8 +66,8 @@ export class Login extends Component {
     // console.log(this.props.errors.show);
     return(
       <ErrorBar 
-        message={this.props.errors.error}
-        errorCode={this.props.errors.code}
+        message={this.props.errors.message}
+        errorCode={this.props.errors.error}
         open={this.props.errors.show}
         reset={this.props.resetError}
       />
