@@ -1,10 +1,10 @@
-# Add new user
+# Delete an Order
 
-Adding a new user to the system
+Remove an order from the order list of the given user
 
 | URL           | Method        | Auth  |
 | :-----------: |:-------------:| :----:|
-| [![POST](https://img.shields.io/badge//addUser--black.svg)]() | [![POST](https://img.shields.io/badge/POST-orange.svg)]() | [![POST](https://img.shields.io/badge/YES-brightgreen.svg)]() |
+| [![DELETE](https://img.shields.io/badge//removeOrder--black.svg)]() | [![DELETE](https://img.shields.io/badge/DELETE-red.svg)]() | [![DELETE](https://img.shields.io/badge/YES-brightgreen.svg)]() |
 
 
 ## Header
@@ -19,11 +19,8 @@ Adding a new user to the system
 
 | Parameter     | Type          | Description  |
 | :-----------: |:-------------:| :-----------:|
-| username      | string        | username of the user  |
-| password      | string        | password of the user  |
-| firstName     | string        | first name of the user  |
-| lastName      | string        | last name of the user  |
-
+| username      | string        | username of the user that the order belong |
+| orderId       | string        | ID of the order that should be deleted  |
 
 
 ## Example Request
@@ -31,11 +28,11 @@ Adding a new user to the system
 var http = require('http');
 
 var options = {
-  'method': 'POST',
+  'method': 'DELETE',
   'hostname': 'localhost',
-  'path': '/addUser',
+  'path': '/removeOrder',
   'headers': {
-    'Authorization': 'tokenkjasdhaksdasdhasdhweidewfkweflsqwretryr',
+    'Authorization': 'J1c2VybmFtZSI6Imhlc2hhbmVyYSIsImlhdCI6MTU1MjI4MzkyNiwiZXh',
     'Content-Type': 'application/json'
   }
 };
@@ -57,12 +54,12 @@ var req = http.request(options, function (res) {
   });
 });
 
-var postData = JSON.stringify({
+var postData =  JSON.stringify({
   username: "johns",
-  password: "pass",
-  firstName: "john",
-  lastName: "Smith"
+  orderId: "wf3guhqwoklfddp"
 });
+
+req.setHeader('Content-Length', postData.length);
 
 req.write(postData);
 
@@ -70,12 +67,10 @@ req.end();
 ```
 
 ## Example Response
+return the new size of the order list
 ```
 {
-    firstName: "John",
-    lastName: "Smith",
-    username: "johns",
-    _id: "sakjd67khjUYGkjsakdlk"
+  2
 }
 ```
 

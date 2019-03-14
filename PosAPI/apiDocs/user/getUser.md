@@ -52,7 +52,10 @@ var req = http.request(options, function (res) {
   });
 });
 
-var postData =  {username: "johns", password: "pass"};
+var postData = JSON.stringify({
+  username: "johns", 
+  password: "pass"
+});
 
 req.write(postData);
 

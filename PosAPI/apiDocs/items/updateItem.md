@@ -1,10 +1,10 @@
-# Add new user
+# Update an available item
 
-Adding a new user to the system
+Update the details of the availbale items in the system
 
 | URL           | Method        | Auth  |
 | :-----------: |:-------------:| :----:|
-| [![POST](https://img.shields.io/badge//addUser--black.svg)]() | [![POST](https://img.shields.io/badge/POST-orange.svg)]() | [![POST](https://img.shields.io/badge/YES-brightgreen.svg)]() |
+| [![POST](https://img.shields.io/badge//updateItem--black.svg)]() | [![POST](https://img.shields.io/badge/POST-orange.svg)]() | [![POST](https://img.shields.io/badge/YES-brightgreen.svg)]() |
 
 
 ## Header
@@ -19,11 +19,9 @@ Adding a new user to the system
 
 | Parameter     | Type          | Description  |
 | :-----------: |:-------------:| :-----------:|
-| username      | string        | username of the user  |
-| password      | string        | password of the user  |
-| firstName     | string        | first name of the user  |
-| lastName      | string        | last name of the user  |
-
+| _id           | string        | ID of the item  |
+| itemName      | string        | new item name  |
+| price         | number        | new price for the items  |
 
 
 ## Example Request
@@ -33,9 +31,9 @@ var http = require('http');
 var options = {
   'method': 'POST',
   'hostname': 'localhost',
-  'path': '/addUser',
+  'path': '/updateItem',
   'headers': {
-    'Authorization': 'tokenkjasdhaksdasdhasdhweidewfkweflsqwretryr',
+    'Authorization': 'J1c2VybmFtZSI6Imhlc2hhbmVyYSIsImlhdCI6MTU1MjI4MzkyNiwiZXh',
     'Content-Type': 'application/json'
   }
 };
@@ -57,11 +55,10 @@ var req = http.request(options, function (res) {
   });
 });
 
-var postData = JSON.stringify({
-  username: "johns",
-  password: "pass",
-  firstName: "john",
-  lastName: "Smith"
+var postData =  JSON.stringify({
+  _id: "2376gdsaiudqwiodq",
+  itemName: "itemX",
+  price: 1.2
 });
 
 req.write(postData);
@@ -72,10 +69,8 @@ req.end();
 ## Example Response
 ```
 {
-    firstName: "John",
-    lastName: "Smith",
-    username: "johns",
-    _id: "sakjd67khjUYGkjsakdlk"
+    itemId: "sakjd67khjUYGkjsakdlk",
+    message: "Item itemX successfully updated"
 }
 ```
 

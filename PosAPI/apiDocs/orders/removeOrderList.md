@@ -1,10 +1,10 @@
-# Add new user
+# Delete an order list
 
-Adding a new user to the system
+Remove all the orders that belongs to the given user
 
 | URL           | Method        | Auth  |
 | :-----------: |:-------------:| :----:|
-| [![POST](https://img.shields.io/badge//addUser--black.svg)]() | [![POST](https://img.shields.io/badge/POST-orange.svg)]() | [![POST](https://img.shields.io/badge/YES-brightgreen.svg)]() |
+| [![DELETE](https://img.shields.io/badge//removeOrderList--black.svg)]() | [![DELETE](https://img.shields.io/badge/POST-red.svg)]() | [![POST](https://img.shields.io/badge/YES-brightgreen.svg)]() |
 
 
 ## Header
@@ -19,11 +19,7 @@ Adding a new user to the system
 
 | Parameter     | Type          | Description  |
 | :-----------: |:-------------:| :-----------:|
-| username      | string        | username of the user  |
-| password      | string        | password of the user  |
-| firstName     | string        | first name of the user  |
-| lastName      | string        | last name of the user  |
-
+| username      | string        | Username of the user  |
 
 
 ## Example Request
@@ -31,11 +27,11 @@ Adding a new user to the system
 var http = require('http');
 
 var options = {
-  'method': 'POST',
+  'method': 'DELETE',
   'hostname': 'localhost',
-  'path': '/addUser',
+  'path': '/removeOrderList',
   'headers': {
-    'Authorization': 'tokenkjasdhaksdasdhasdhweidewfkweflsqwretryr',
+    'Authorization': 'J1c2VybmFtZSI6Imhlc2hhbmVyYSIsImlhdCI6MTU1MjI4MzkyNiwiZXh',
     'Content-Type': 'application/json'
   }
 };
@@ -57,12 +53,11 @@ var req = http.request(options, function (res) {
   });
 });
 
-var postData = JSON.stringify({
-  username: "johns",
-  password: "pass",
-  firstName: "john",
-  lastName: "Smith"
+var postData =  JSON.stringify({
+  username: "johns"
 });
+
+req.setHeader('Content-Length', postData.length);
 
 req.write(postData);
 
@@ -72,10 +67,7 @@ req.end();
 ## Example Response
 ```
 {
-    firstName: "John",
-    lastName: "Smith",
-    username: "johns",
-    _id: "sakjd67khjUYGkjsakdlk"
+  message: "Orders successfully deleted"
 }
 ```
 

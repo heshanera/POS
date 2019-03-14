@@ -55,7 +55,10 @@ var req = http.request(options, function (res) {
   });
 });
 
-var postData =  "{\n\t\"username\": \"johns\", \n\t\"password\": \"pass\"\n}";
+var postData = JSON.stringify({
+  username: "johns",
+  password: "pass"
+});
 
 req.setHeader('Content-Length', postData.length);
 

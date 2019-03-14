@@ -1,10 +1,10 @@
-# List the users
+# Get Availbale Items
 
-List all the current uses registered in the system
+Return the details of all the availbale items
 
 | URL           | Method        | Auth  |
 | :-----------: |:-------------:| :----:|
-| [![GET](https://img.shields.io/badge//listUsers--black.svg)]() | [![GET](https://img.shields.io/badge/GET-brightgreen.svg)]() | [![GET](https://img.shields.io/badge/YES-brightgreen.svg)]() |
+| [![GET](https://img.shields.io/badge//getItems--black.svg)]() | [![GET](https://img.shields.io/badge/GET-brightgreen.svg)]() | [![GET](https://img.shields.io/badge/YES-brightgreen.svg)]() |
 
 
 ## Header
@@ -27,7 +27,7 @@ var http = require('http');
 var options = {
   'method': 'GET',
   'hostname': 'localhost',
-  'path': '/listUsers',
+  'path': '/getItems',
   'headers': {
     'Authorization': 'J1c2VybmFtZSI6Imhlc2hhbmVyYSIsImlhdCI6MTU1MjI4MzkyNiwiZXh'
   }
@@ -57,12 +57,17 @@ req.end();
 ```
 [
   {
-    firstName: "John",
-    lastName: "Smith",
-    username: "johns",
-    _id: "sakjd67khjUYGkjsakdlk"
+    image: {
+      contentType: "image/png", 
+      image: {
+        data: []
+        type: "Buffer"
+      }
+    },
+    itemName: "Chocolate Cupcake",
+    price: 4.75,
+    _id: "5c7166a61dee2c23f58dce5d"
   }
 ]
-
 ```
 
