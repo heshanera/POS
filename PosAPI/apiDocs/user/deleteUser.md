@@ -1,10 +1,10 @@
-# Get User Information
+# Delete a user
 
-Return the details of an existing user if the user credentials are valid. An Authentication token is also sent with the user details.
+Removing a user registered in the system
 
 | URL           | Method        | Auth  |
 | :-----------: |:-------------:| :----:|
-| [![POST](https://img.shields.io/badge//getUser--black.svg)]() | [![POST](https://img.shields.io/badge/POST-orange.svg)]() | [![POST](https://img.shields.io/badge/NO-red.svg)]() |
+| [![DELETE](https://img.shields.io/badge//deleteUser--black.svg)]() | [![DELETE](https://img.shields.io/badge/DELETE-red.svg)]() | [![DELETE](https://img.shields.io/badge/YES-brightgreen.svg)]() |
 
 
 ## Header
@@ -12,6 +12,7 @@ Return the details of an existing user if the user credentials are valid. An Aut
 | Name          | Value        |
 | :-----------: |:-------------:|
 | Content-Type | application/json |
+| Authorization | JWT Authentication token |
 
 
 ## Body
@@ -22,15 +23,17 @@ Return the details of an existing user if the user credentials are valid. An Aut
 | password      | string        | password of the user  |
 
 
+
 ## Example Request
 ```
 var http = require('http');
 
 var options = {
-  'method': 'POST',
+  'method': 'DELETE',
   'hostname': 'localhost',
-  'path': '/getUser',
+  'path': '/deleteUser',
   'headers': {
+    'Authorization': 'J1c2VybmFtZSI6Imhlc2hhbmVyYSIsImlhdCI6MTU1MjI4MzkyNiwiZXh',
     'Content-Type': 'application/json'
   }
 };
@@ -52,7 +55,9 @@ var req = http.request(options, function (res) {
   });
 });
 
-var postData =  {username: "johns", password: "pass"};
+var postData =  "{\n\t\"username\": \"johns\", \n\t\"password\": \"pass\"\n}";
+
+req.setHeader('Content-Length', postData.length);
 
 req.write(postData);
 
@@ -62,12 +67,7 @@ req.end();
 ## Example Response
 ```
 {
-    firstName: "John",
-    lastName: "Smith",
-    message: "Authentication successfull",
-    success: true,
-    token: "eyJhbGciOiJIUzI1pXVVyYSIsImlhdCI6MTU1MjQ4MTA1NCwiZXhwIjoxNOAIJrt9cI",
-    username: "johns"
+    deletedCount: 1
 }
 ```
 
