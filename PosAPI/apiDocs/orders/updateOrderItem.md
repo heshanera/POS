@@ -18,7 +18,7 @@ update the item count of the item of an order
 ## Body
 
 | Parameter     | Type          | Description  |
-| :-----------: |:-------------:| :-----------:|
+| :-----------: |:-------------:| :-----------|
 | username      | string        | username of the user that the order belong |
 | orderId       | string        | ID of the order that the item should be updated  |
 | itemName      | string        | name of the item to be updated  |

@@ -18,7 +18,7 @@ Add new order to the list of the orders of the given user
 ## Body
 
 | Parameter     | Type          | Description  |
-| :-----------: |:-------------:| :-----------:|
+| :-----------: |:-------------:| :-----------|
 | username      | string        | username of the user that the order belong |
 | items         | array         | array contains list of items. each item contain name, price anth the count  |
 | status        | string        | status of the order  |

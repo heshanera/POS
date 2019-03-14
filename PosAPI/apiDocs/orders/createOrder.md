@@ -18,7 +18,7 @@ Create a new orderlist for a user
 ## Body
 
 | Parameter     | Type          | Description  |
-| :-----------: |:-------------:| :-----------:|
+| :-----------: |:-------------:| :-----------|
 | username      | string        | Username of the user  |
 | orderlist     | array         | Array contains a list of orders. Each order contain list of items and the current status of the order  |
 

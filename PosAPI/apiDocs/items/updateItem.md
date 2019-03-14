@@ -18,7 +18,7 @@ Update the details of the availbale items in the system
 ## Body
 
 | Parameter     | Type          | Description  |
-| :-----------: |:-------------:| :-----------:|
+| :-----------: |:-------------:| :-----------|
 | _id           | string        | ID of the item  |
 | itemName      | string        | new item name  |
 | price         | number        | new price for the items  |

@@ -10,7 +10,7 @@ List all the current uses registered in the system
 ## Header
 
 | Name          | Value        |
-| :-----------: |:-------------:|
+| :-----------: |:-------------|
 | Content-Type | application/json |
 | Authorization | JWT Authentication token |
 

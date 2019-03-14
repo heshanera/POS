@@ -18,7 +18,7 @@ Remove an order from the order list of the given user
 ## Body
 
 | Parameter     | Type          | Description  |
-| :-----------: |:-------------:| :-----------:|
+| :-----------: |:-------------:| :-----------|
 | username      | string        | username of the user that the order belong |
 | orderId       | string        | ID of the order that should be deleted  |
 

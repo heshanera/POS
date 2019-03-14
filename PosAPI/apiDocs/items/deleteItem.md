@@ -18,7 +18,7 @@ Remove the details of the availbale items in the system
 ## Body
 
 | Parameter     | Type          | Description  |
-| :-----------: |:-------------:| :-----------:|
+| :-----------: |:-------------:| :-----------|
 | itemName      | string        | item name  |
 
 

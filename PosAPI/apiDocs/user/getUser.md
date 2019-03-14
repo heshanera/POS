@@ -17,7 +17,7 @@ Return the details of an existing user if the user credentials are valid. An Aut
 ## Body
 
 | Parameter     | Type          | Description  |
-| :-----------: |:-------------:| :-----------:|
+| :-----------: |:-------------:| :-----------|
 | username      | string        | username of the user  |
 | password      | string        | password of the user  |
 

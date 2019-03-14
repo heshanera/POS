@@ -18,7 +18,7 @@ Removing a user registered in the system
 ## Body
 
 | Parameter     | Type          | Description  |
-| :-----------: |:-------------:| :-----------:|
+| :-----------: |:-------------:| :-----------|
 | username      | string        | username of the user  |
 | password      | string        | password of the user  |
 

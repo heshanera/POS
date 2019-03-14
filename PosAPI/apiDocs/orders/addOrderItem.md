@@ -18,7 +18,7 @@ Add new item to an existing order
 ## Body
 
 | Parameter     | Type          | Description  |
-| :-----------: |:-------------:| :-----------:|
+| :-----------: |:-------------:| :-----------|
 | username      | string        | username of the user that the order belong |
 | orderId       | string        | ID of the order that the item should be added  |
 | itemName      | string        | name of the item added  |

@@ -18,7 +18,7 @@ Add a new item to the available items
 ## Body
 
 | Parameter     | Type          | Description  |
-| :-----------: |:-------------:| :-----------:|
+| :-----------: |:-------------:| :-----------|
 | itemname      | string        | name of the item  |
 | price         | number        | price for the item  |
 | file          | file          | image displaying the item  |

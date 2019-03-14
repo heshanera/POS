@@ -18,7 +18,7 @@ Remove all the orders that belongs to the given user
 ## Body
 
 | Parameter     | Type          | Description  |
-| :-----------: |:-------------:| :-----------:|
+| :-----------: |:-------------:| :-----------|
 | username      | string        | Username of the user  |
 
 

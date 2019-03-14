@@ -18,7 +18,7 @@ remove an item from the order
 ## Body
 
 | Parameter     | Type          | Description  |
-| :-----------: |:-------------:| :-----------:|
+| :-----------: |:-------------:| :-----------|
 | username      | string        | username of the user that the order belong |
 | orderId       | string        | ID of the order that should be updated  |
 | itemId        | string        | ID of the item that the item should be removed  |

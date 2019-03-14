@@ -18,7 +18,7 @@ Adding a new user to the system
 ## Body
 
 | Parameter     | Type          | Description  |
-| :-----------: |:-------------:| :-----------:|
+| :-----------: |:-------------:| :-----------|
 | username      | string        | username of the user  |
 | password      | string        | password of the user  |
 | firstName     | string        | first name of the user  |
