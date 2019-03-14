@@ -6,14 +6,14 @@ A simple POS system. React and Redux is used in the frontend. Backend server is 
 
 ### App
 ```
-cd app
-npm install
+$ cd app
+$ npm install
 ```
 
 ### Server
 ```
-cd PosAPI
-npm install
+$ cd PosAPI
+$ npm install
 ```
 
 ## System Architechture

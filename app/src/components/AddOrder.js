@@ -22,9 +22,7 @@ class AddOrder extends Component {
 
   handleClickOpen = () => {
     const selected = this.state.selected;
-    this.props.availableItems.map((item) => {
-      selected[item._id] = false;
-    });
+    this.props.availableItems.map(item => selected[item._id] = false );
     this.setState({ 
       openAddOrder: true,
       selected:selected 
@@ -50,7 +48,7 @@ class AddOrder extends Component {
       });
     } else {
       // remove item from the order
-      orderItems = orderItems.filter(orderItem => orderItem.name != item.itemName);
+      orderItems = orderItems.filter(orderItem => orderItem.name !== item.itemName);
     }
 
     this.setState({
@@ -68,11 +66,11 @@ class AddOrder extends Component {
       this.props.addOrder(order);
       this.setState({ openAddOrder: false });  
     }   
-  }
+  };
 
 
   loadImage = (itemName) => {
-    const itemData = this.props.availableItems.find(item => item.itemName == itemName);
+    const itemData = this.props.availableItems.find(item => item.itemName === itemName);
     const image = "data:"+itemData.image.contentType+";base64," + Buffer.from(itemData.image.image).toString('base64');
     return(
       // <img className='item-image' src={image} alt='Img'/>

@@ -1,5 +1,4 @@
 import { requestOrders, receiveOrders, updateOrders } from '../actions/orderActions';
-import { loggedIn } from '../actions/loginActions';
 import { receiveError, resetError } from '../actions/errorActions';
 import config from './config';
 
@@ -25,7 +24,7 @@ const fetchOrders = (username, history) => {
 
       // If authentication fails
       if (orders) {
-        if (orders.success == false) {
+        if (orders.success === false) {
           // DO NOTHING: TODO
         } else {
           // console.log(orders);
@@ -79,7 +78,7 @@ const addOrder = (newOrder) => {
     .then((order) => {
 
        // If authentication fails
-      if (order.success == false) {
+      if (order.success === false) {
         // DO NOTHING: TODO
       } else {
         // update the local storage
@@ -133,7 +132,7 @@ const removeItem = (orderId, itemId) => {
     .then((orderSize) => {
 
       // If authentication fails
-      if (orderSize.success == false) {
+      if (orderSize.success === false) {
         // DO NOTHING: TODO
       } else {
         // update the local storage
@@ -198,7 +197,7 @@ const addItem = (orderId, itemName, price, count) => {
     .then((item) => {
 
        // If authentication fails
-      if (item.success == false) {
+      if (item.success === false) {
         // DO NOTHING: TODO
       } else {
         // update the local storage
@@ -254,14 +253,14 @@ const updateItem = (orderId, itemName, price, count) => {
     .then((item) => {
 
        // If authentication fails
-      if (item.success == false) {
+      if (item.success === false) {
         // DO NOTHING: TODO
       } else {
         // get data from local storage
         let orders = JSON.parse(localStorage.getItem('orders'));
         const i = orders.orderList.findIndex(order => order._id === orderId);
         // index of the item    
-        const itemIndx = orders.orderList[i].items.findIndex((item => item.name == itemName));
+        const itemIndx = orders.orderList[i].items.findIndex((item => item.name === itemName));
         // update the item details
         orders.orderList[i].items[itemIndx].count = count;
         // update the local storage

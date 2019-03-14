@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import { Redirect } from 'react-router'
 
@@ -10,7 +9,7 @@ import AddOrder from '../components/AddOrder';
 import ErrorBar from '../components/ErrorBar'
 import loginService from '../services/loginService';
 import orderService from '../services/orderService';
-import { receiveError, resetError } from '../actions/errorActions';
+import { resetError } from '../actions/errorActions';
 
 import '../components/App.css'
 
@@ -110,7 +109,7 @@ export class OrderList extends Component {
     };
 
     loadAddOrderItem = () => {
-      const order = this.props.userOrders.orderList.filter(order => order._id == this.state.orderId)[0]
+      const order = this.props.userOrders.orderList.filter(order => order._id === this.state.orderId)[0]
       if (order) {
         return(
           <div className="global-add-item-container">

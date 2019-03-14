@@ -1,4 +1,4 @@
-import { requestItems, receiveItems, updateItems } from '../actions/itemActions';
+import { requestItems, receiveItems } from '../actions/itemActions';
 import { receiveError, resetError } from '../actions/errorActions';
 import config from './config';
 
@@ -24,7 +24,7 @@ const fetchAvailableItems = () => {
 
       // If authentication fails
       if(items) {
-        if (items.success == false) {
+        if (items.success === false) {
           // DO NOTHING: TODO
         } else {
           // storing the item list in the local storage

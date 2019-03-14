@@ -3,7 +3,6 @@ import { receiveError, resetError } from '../actions/errorActions';
 import orderService from './orderService';
 import itemService from './itemService';
 import config from './config';
-import { createBrowserHistory } from 'history';
 
 const serviceData = {};
 
