@@ -4,10 +4,7 @@ import orderService from './orderService';
 import itemService from './itemService';
 import config from './config';
 
-const serviceData = {};
-
 const fetchUser = (user, history) => {
- serviceData.history = history;
  const data = "username="+user.username+"&password="+user.password;
  return dispatch => {
    dispatch(requestUser());
@@ -59,5 +56,79 @@ const logout = (history) => {
   
 }
 
-const loginService = { serviceData, fetchUser, logout };
+const register = (user, history) => {
+   const data = JSON.stringify(user);
+   return dispatch => {
+     return fetch(config.apiUrl+'/addUser', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: data
+      })
+     .then(
+        response => {
+          if(!response.ok) throw new Error(response.status);
+          else return response.json()
+        },
+        error => { new Error('an error occoured')}
+      )
+     .then((user) => {
+        if (!(Object.keys(user).length === 0)) {
+          createOrderList(user, history, dispatch);
+        }
+        else throw new Error('error occoured');
+     })
+    .catch((error) => {
+      dispatch(receiveError({
+          message: 'error occoured',
+          error: error.message,
+          show: true
+        })
+      );
+      setTimeout(() => dispatch(resetError()), 6000);
+     }
+    );
+   };
+}
+
+const createOrderList = (user, history, dispatch) => {
+  let data = {};
+  data.username = user.username;
+  data.orderList = [];
+  data = JSON.stringify(data);
+     return fetch(config.apiUrl+'/createOrder', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: data
+      })
+     .then(
+        response => {
+          if(!response.ok) throw new Error(response.status);
+          else return response.json()
+        },
+        error => { new Error('an error occoured')}
+      )
+     .then((orderlist) => {
+        if (!(Object.keys(orderlist).length === 0)) {
+          // redirect to the login
+          history.push('/login');
+        }
+        else throw new Error('error occoured');
+     })
+    .catch((error) => {
+      dispatch(receiveError({
+          message: 'error occoured',
+          error: error.message,
+          show: true
+        })
+      );
+      setTimeout(() => dispatch(resetError()), 6000);
+     }
+    );
+}
+
+const loginService = { register, fetchUser, logout };
 export default loginService;

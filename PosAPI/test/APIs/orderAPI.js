@@ -26,7 +26,7 @@ describe('API testing for order and order items', () => {
 	describe('POST /createOrder', () => {
 	    it('respond with 200 when the order is successfully added', (done) => {
 	    	const newOrderList = {
-	    		userName: 'johns',
+	    		username: 'johns',
 	    		orderList: [
 	    			{
 	    				items: [
@@ -42,7 +42,6 @@ describe('API testing for order and order items', () => {
 	    	}
 	    	request(server)
 	    			.post('/createOrder')
-	    			.set('Authorization', token)
 	    			.send(newOrderList)
 	            	.expect(200, done);
 	    });
@@ -69,7 +68,17 @@ describe('API testing for order and order items', () => {
 	    	}
 	    	request(server)
 	    			.post('/createOrder')
-	    			.set('Authorization', token)
+	    			.send(newOrderList)
+	            	.expect(400, done);
+	    });
+
+	    it('respond with 400 when the user already exists', (done) => {
+	    	const newOrderList = {
+	    		username: 'johns',
+	    		orderList: []
+	    	}
+	    	request(server)
+	    			.post('/createOrder')
 	    			.send(newOrderList)
 	            	.expect(400, done);
 	    });

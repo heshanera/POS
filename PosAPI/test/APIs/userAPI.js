@@ -65,7 +65,6 @@ describe('API testing for user', () => {
 	        request(server)	
 	            .post('/addUser')
 	            .set('Accept', /json/)
-	            .set('Authorization', token)
 	            .send(userDetails)
 	            .expect('Content-Type', /json/)
 	            .expect((response) => {
@@ -79,6 +78,21 @@ describe('API testing for user', () => {
 	            .post('/addUser')
 	            .set('Accept', /json/)
 	            .set('Authorization', token)
+	            .expect('Content-Type', /json/)
+	            .expect(400, done);
+	    });
+
+	    it('respond with 400 when the user already exists', (done) => {
+	    	const userDetails = {
+	    		username: 'harryp',
+	    		password: 'pass',
+	    		firstName: 'Harry',
+	    		lastName: 'Potter'
+	    	};
+	        request(server)	
+	            .post('/addUser')
+	            .set('Authorization', token)
+	            .send(userDetails)
 	            .expect('Content-Type', /json/)
 	            .expect(400, done);
 	    });

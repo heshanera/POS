@@ -4,10 +4,23 @@ const mongoose = require('mongoose'),
 OrderModel = mongoose.model('Orders');
 
 let createOrder = function(req, res) {
-  var newOrder = new OrderModel(req.body);
-  newOrder.save()
-  .then((order) => {
-    res.json(order);
+  OrderModel.findOne({ userName: req.body.username })
+  .then((orderList) =>{
+    if (orderList !== null) {
+      throw new Error('username already exists');
+    } else {
+      if (!req.body.username || !req.body.orderList)
+        throw new Error('invalid parameters')
+      const newOrderList = {
+        userName: req.body.username,
+        orderList: req.body.orderList,
+      }
+      var newOrder = new OrderModel(newOrderList);
+      newOrder.save()
+      .then((order) => {
+        res.json(order);
+      })
+    }
   })
   .catch((err) => {
     res.status(400).send(err);

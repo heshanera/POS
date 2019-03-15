@@ -4,7 +4,7 @@ Adding a new user to the system
 
 | URL           | Method        | Auth  |
 | :-----------: |:-------------:| :----:|
-| [![POST](https://img.shields.io/badge//addUser--black.svg)]() | [![POST](https://img.shields.io/badge/POST-orange.svg)]() | [![POST](https://img.shields.io/badge/YES-brightgreen.svg)]() |
+| [![POST](https://img.shields.io/badge//addUser--black.svg)]() | [![POST](https://img.shields.io/badge/POST-orange.svg)]() | [![POST](https://img.shields.io/badge/NO-red.svg)]() |
 
 
 ## Header
@@ -12,7 +12,6 @@ Adding a new user to the system
 | Name          | Value        |
 | :-----------: |:-------------:|
 | Content-Type | application/json |
-| Authorization | JWT Authentication token |
 
 
 ## Body
@@ -35,7 +34,6 @@ var options = {
   'hostname': 'localhost',
   'path': '/addUser',
   'headers': {
-    'Authorization': 'tokenkjasdhaksdasdhasdhweidewfkweflsqwretryr',
     'Content-Type': 'application/json'
   }
 };

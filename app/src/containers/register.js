@@ -4,7 +4,7 @@ import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import PersonIcon from '@material-ui/icons/Person';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { connect } from 'react-redux';
@@ -15,28 +15,33 @@ import { receiveError, resetError } from '../actions/errorActions';
 import loginSerive from '../services/loginService';
 import Styles from '../components/Styles'
 
-
-export class Login extends Component {
+export class Register extends Component {
 
   state = { 
     username:'', 
-    password:'' 
+    password:'', 
+    confirmedPass:'',
+    firstName:'',
+    lastName:'',
   };
 
   /**** frontend validation check the fields are filled or not ****/
   validateForm = () => {
-    // if username field is empty
-    if (this.state.username.length === 0) {
-      // if password field is empty
-      if (this.state.password.length === 0) {
-        return "Please enter a valid username and password"
-      } 
-      // only the username field is empty
+    // check if the fields are empty
+    if (this.state.username.length === 0)
       return "Please enter a valid username"
-    // only the password field is empty
-    } else if (this.state.password.length === 0) {
+    if (this.state.password.length === 0)
       return "Please enter a valid password"
-    } else return "";  
+    if (this.state.confirmedPass.length === 0)
+      return "Please confirm the password"
+    if (this.state.firstName.length === 0)
+      return "Please enter the first name"
+    if (this.state.lastName.length === 0)
+      return "Please enter the last name" 
+    // matching the passwords
+    if (this.state.password !== this.state.confirmedPass)
+      return "Passwords does not match"
+    else return ''
   };
 
   /**** set the sate when the data is entered to the fields ****/
@@ -50,8 +55,13 @@ export class Login extends Component {
   handlesubmit = state => (event) => {
     const msg = this.validateForm();
     if (msg.length === 0){
-      const { username, password } = this.state;
-      this.props.onLogin(username, password, this.props.history)
+      const user = {
+        username: this.state.username,
+        password: this.state.password,
+        firstName: this.state.firstName,
+        lastName: this.state.lastName
+      };
+      this.props.onRegister(user, this.props.history)
     } else {
       this.props.receiveError({
         message: msg,
@@ -74,30 +84,42 @@ export class Login extends Component {
     );
   };
 
-  /**** load register form ****/
-  loadRegisterForm = () => {
-    this.props.history.push('/register');
+  /**** load login form ****/
+  loadLoginForm = () => {
+    this.props.history.push('/login');
   };
 
   /**** login component with input form ****/
-  loadSignIn = () => {
+  loadRegisterForm = () => {
     return(
-       <div className='login-container'>
+       <div className='register-container'>
         <Paper className='login-box'>
           <Avatar className='login-icon'>
-            <LockOutlinedIcon style={Styles.secondary} color='inherit' />
+            <PersonIcon style={Styles.secondary} color='inherit' />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            Sign Up
           </Typography>
           <form className='' >
             <FormControl margin="normal" required fullWidth>
               <InputLabel htmlFor="username">Username</InputLabel>
-              <Input onChange={this.handleFormChange}  id="username" autoComplete="username" className='test123' />
+              <Input onChange={this.handleFormChange}  id="username" autoComplete="username" />
             </FormControl>
             <FormControl margin="normal" required fullWidth>
               <InputLabel htmlFor="password">Password</InputLabel>
-              <Input onChange={this.handleFormChange} type="password" id="password" autoComplete="current-password" />
+              <Input onChange={this.handleFormChange} type="password" id="password" />
+            </FormControl>
+            <FormControl margin="normal" required fullWidth>
+              <InputLabel htmlFor="password">Confirm Password</InputLabel>
+              <Input onChange={this.handleFormChange} type="password" id="confirmedPass" />
+            </FormControl>
+            <FormControl margin="normal" required fullWidth>
+              <InputLabel htmlFor="firstName">First Name</InputLabel>
+              <Input onChange={this.handleFormChange}  id="firstName" autoComplete="firstName"/>
+            </FormControl>
+            <FormControl margin="normal" required fullWidth>
+              <InputLabel htmlFor="lastName">Last Name</InputLabel>
+              <Input onChange={this.handleFormChange}  id="lastName" autoComplete="lastName"/>
             </FormControl>
             <div className='login-button-container'>
               <Button
@@ -106,11 +128,11 @@ export class Login extends Component {
                 className = 'login-button' 
                 onClick = {this.handlesubmit()}
               >
-              Sign In
+              Sign Up
               </Button>
              </div> 
           </form>
-            <div className='registerMessage'> Need an account? <span className='registerLink' onClick={this.loadRegisterForm}>Register </span></div>
+          <div className='registerMessage'> Already registered? <span className='registerLink' onClick={this.loadLoginForm}> Login </span></div>
         </Paper>
         {this.loadErrorBar()}
       </div>     
@@ -122,19 +144,19 @@ export class Login extends Component {
       if (loggedIn) {
         return (<Redirect to="/orders"/>)
       }
-      return ( this.loadSignIn() );
+      return ( this.loadRegisterForm() );
   };
 
 }
 
 const mapStateToProps = state => ({
-  user: state.user,
+  // user: state.user,
   errors: state.errors,
 });
 
 const mapDispatchToProps = dispatch => ({
-  onLogin: (username, password, history) => {
-    dispatch(loginSerive.fetchUser({username, password}, history));
+  onRegister: (user, history) => {
+    dispatch(loginSerive.register(user, history));
   },
   receiveError: (error) => {
     dispatch(receiveError(error));
@@ -144,5 +166,5 @@ const mapDispatchToProps = dispatch => ({
   }
 });
 
-const LoginContainer = connect(mapStateToProps, mapDispatchToProps)(Login);
-export default LoginContainer;
+const RegisterContainer = connect(mapStateToProps, mapDispatchToProps)(Register);
+export default RegisterContainer;

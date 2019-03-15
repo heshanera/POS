@@ -6,10 +6,21 @@ mongoose = require('mongoose'),
 User = mongoose.model('Users');
 
 let addUser = function(req, res) {
-  var newUser = new User(req.body);
-  newUser.save()
+  User.find({
+    username: req.body.username
+  })
   .then((user) => {
-    res.json(user);
+    if (user.length > 0) {
+      throw new Error('username already exists');
+    } else {
+      var newUser = new User(req.body);
+      newUser.save()
+      .then((user) => {
+        res.json(user);
+      }, (err) => {
+        res.status(400).send(err);
+      })
+    }
   })
   .catch((err) => {
     res.status(400).send(err);
