@@ -150,7 +150,6 @@ export class OrderList extends Component {
   	authorizedLogin = () => {
   		const loggedIn = (JSON.parse(localStorage.getItem('user')) !== null);
     	if (loggedIn) {
-    		// console.log('logged In');
     		return (
 		    	<div>
 		    		<div className="header">
