@@ -14,7 +14,6 @@ module.exports = function(app) {
   //  firstName: string, lastName: string
   // }
   app.route('/addUser')
-    .post(middleware.checkToken)
     .post(user.addUser); // add new user
 
   app.route('/listUsers')
@@ -58,7 +57,6 @@ module.exports = function(app) {
   /////////// Orders ////////////////
 
   app.route('/createOrder')
-    .post(middleware.checkToken)
     .post(order.createOrder); // create new orderlist for a new user
 
   app.route('/removeOrderList')
