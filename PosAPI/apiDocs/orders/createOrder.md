@@ -4,7 +4,7 @@ Create a new orderlist for a user
 
 | URL           | Method        | Auth  |
 | :-----------: |:-------------:| :----:|
-| [![POST](https://img.shields.io/badge//createOrder--black.svg)]() | [![POST](https://img.shields.io/badge/POST-orange.svg)]() | [![POST](https://img.shields.io/badge/YES-brightgreen.svg)]() |
+| [![POST](https://img.shields.io/badge//createOrder--black.svg)]() | [![POST](https://img.shields.io/badge/POST-orange.svg)]() | [![POST](https://img.shields.io/badge/NO-red.svg)]() |
 
 
 ## Header
@@ -12,7 +12,6 @@ Create a new orderlist for a user
 | Name          | Value        |
 | :-----------: |:-------------:|
 | Content-Type | application/json |
-| Authorization | JWT Authentication token |
 
 
 ## Body
@@ -32,7 +31,6 @@ var options = {
   'hostname': 'localhost',
   'path': '/createOrder',
   'headers': {
-    'Authorization': 'J1c2VybmFtZSI6Imhlc2hhbmVyYSIsImlhdCI6MTU1MjI4MzkyNiwiZXh',
     'Content-Type': 'application/json'
   }
 };
