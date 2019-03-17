@@ -14,7 +14,18 @@ describe('User', () => {
 
 	it('should generate the current date and time when saving a user', (done) => {
 		let user = new User({username: 'johns', password: 'pass'});
-		assert.equal(user.registeredDate.toJSON(), new Date().toJSON());
+		// get the current date and time
+		let now = new Date();
+		now.setMilliseconds(0);
+		now.setSeconds(0);
+		now = now.toISOString();
+		// date time user registered
+		let registeredDate = user.registeredDate;
+		registeredDate.setMilliseconds(0);
+		registeredDate.setSeconds(0);
+		registeredDate = registeredDate.toISOString(); 
+		// comparison
+		assert.equal(registeredDate, now);
 		done();
 	});
 })

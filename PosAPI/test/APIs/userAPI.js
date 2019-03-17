@@ -5,13 +5,23 @@ const User = require('../../api/models/userModel');
 describe('API testing for user', () => {
 
 	let token = '';
-	let userId = '';
 	describe('POST /getUser', () => {
 	    
-		it('respond 400 when user is not found', (done) => {
+		it('respond 400 when username is invalid', (done) => {
 	    	const userCredentials = {
 	    		username: 'brucew',
 	    		password: 'pass'
+	    	};
+	        request(server)	
+	            .post('/getUser')
+	            .send(userCredentials)
+	            .expect(400, done);
+	    });
+
+	    it('respond 400 when password is invalid', (done) => {
+	    	const userCredentials = {
+	    		username: 'johns',
+	    		password: 'passs'
 	    	};
 	        request(server)	
 	            .post('/getUser')
@@ -67,9 +77,6 @@ describe('API testing for user', () => {
 	            .set('Accept', /json/)
 	            .send(userDetails)
 	            .expect('Content-Type', /json/)
-	            .expect((response) => {
-	            	userId = response.body._id;
-	            })
 	            .expect(200, done);
 	    });
 
@@ -100,6 +107,20 @@ describe('API testing for user', () => {
 	});
 
 	describe('DELETE /deleteUser', () => {
+		it('respond with 400 when credentials are incorrect', (done) => {
+	    	const userDetails = {
+	    		username: 'harryp',
+	    		password: 'passs'
+	    	};
+            request(server)	
+	            .delete('/deleteUser')
+	            .set('Accept', 'application/json')
+	            .set('Authorization', token)
+	            .send(userDetails)
+	            .expect('Content-Type', /json/)
+	            .expect(400, done);
+	    });
+
 	    it('respond with message when user is successfuly deleted', (done) => {
 	    	const userDetails = {
 	    		username: 'harryp',
