@@ -1,9 +1,10 @@
 'use strict';
 
-const config = require('../middleware/config'),
-jwt = require('jsonwebtoken'),
-mongoose = require('mongoose'), 
-User = mongoose.model('Users');
+const config = require('../middleware/config');
+const jwt = require('jsonwebtoken');
+const mongoose = require('mongoose'); 
+const User = mongoose.model('Users');
+const bcrypt = require('bcrypt');
 
 let addUser = function(req, res) {
   User.find({
@@ -13,13 +14,25 @@ let addUser = function(req, res) {
     if (user.length > 0) {
       throw new Error('username already exists');
     } else {
-      var newUser = new User(req.body);
-      newUser.save()
-      .then((user) => {
-        res.json(user);
+      // hashing the password
+      const saltRounds = 5;
+      const userInfo = req.body
+      bcrypt.hash(userInfo.password, saltRounds)
+      .then((hash) => {
+        userInfo.password = hash;
+        let newUser = new User(userInfo);
+        newUser.save()
+        .then((user) => {
+          res.json({
+            username: user.username,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            registeredDate: user.registeredDate
+          });
+        });
       }, (err) => {
         res.status(400).send(err);
-      })
+      });
     }
   })
   .catch((err) => {
@@ -28,16 +41,31 @@ let addUser = function(req, res) {
 };
 
 let deleteUser = function(req, res) {
-  User.deleteOne({
-    username: req.body.username,
-    password: req.body.password 
+  User.find({
+    username: req.body.username
   })
   .then((user) => {
-    if (user.deletedCount) {
-      res.json({ 
-        deletedCount: user.deletedCount
-      });
-    } else throw new Error('invalid credentials')
+    if (user.length === 0) {
+      throw new Error('invalid username')
+    } else {
+      // comparing the password
+      bcrypt.compare(req.body.password, user[0].password)
+      .then((matching) => {
+          if (matching) {
+            User.deleteOne({
+              username: req.body.username
+            })
+            .then((user) => {
+              res.json({ deletedCount: user.deletedCount });
+            })
+          } else {
+            throw new Error('invalid password')
+          }
+      })
+      .catch((err) => {
+        res.status(400).send(err);
+      })
+    }
   })
   .catch((err) => {
     res.status(400).send(err);
@@ -59,28 +87,36 @@ let listUsers = function(req, res) {
 
 let getUser = function(req, res) {
   User.find({
-    username: req.body.username,
-    password: req.body.password
+    username: req.body.username
   })
   .then((user) => {
     if (user.length === 1) {
-      const username = user[0].username;
-      const firstName = user[0].firstName;
-      const lastName = user[0].lastName;
-      let token = jwt.sign(
-        {username: username},
-        config.secret,
-        { expiresIn: '24h' }
-      );
-      res.json({
-        success: true,
-        message: 'Authentication successfull',
-        token:token,
-        username: username,
-        firstName: firstName,
-        lastName: lastName
-      }); 
-    } else throw new Error('invalid user credentials');
+      // comparing the password
+      bcrypt.compare(req.body.password, user[0].password)
+      .then((matching) => {
+          if (matching) {
+            const username = user[0].username;
+            const firstName = user[0].firstName;
+            const lastName = user[0].lastName;
+            let token = jwt.sign(
+              {username: username},
+              config.secret,
+              { expiresIn: '24h' }
+            );
+            res.json({
+              success: true,
+              message: 'Authentication successfull',
+              token:token,
+              username: username,
+              firstName: firstName,
+              lastName: lastName
+            });
+          } else throw new Error('invalid password')
+      })
+      .catch((err) => {
+        res.status(400).send(err);
+      })
+    } else throw new Error('invalid username');
   })
   .catch((err) => {
     res.status(400).send(err);

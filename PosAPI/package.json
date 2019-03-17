@@ -5,8 +5,9 @@
   "main": "index.js",
   "nyc": {
     "exclude": [
-      "server.js", "test"
-    ] 
+      "server.js",
+      "test"
+    ]
   },
   "scripts": {
     "test": "nyc mocha --recursive --exit",
@@ -25,6 +26,7 @@
     "supertest": "^3.4.2"
   },
   "dependencies": {
+    "bcrypt": "^3.0.4",
     "cors": "^2.8.5",
     "express": "^4.16.4",
     "express-oauth-server": "^2.0.0",
