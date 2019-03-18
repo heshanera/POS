@@ -7,6 +7,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
+import Divider from '@material-ui/core/Divider';
 import Styles from './Styles'
 import './App.css'
 
@@ -69,11 +70,13 @@ class Item extends Component {
 	          aria-describedby="alert-dialog-description"
 	        >
 	          <DialogTitle id="delete-dialog-title">{"Remove Item"}</DialogTitle>
+	          <Divider style={Styles.titleDivider}/>
 	          <DialogContent>
 	            <DialogContentText id="alert-dialog-description">
 	              {this.handleRemoveMessage(this.props.orderSize)}
 	            </DialogContentText>
 	          </DialogContent>
+	          <Divider />
 	          <DialogActions>
 	            <Button style={Styles.secondary} onClick={this.handleAlertClose('openDeleteAlert')} color="inherit" className="delete-item-cancel">
 	              Cancel
@@ -107,6 +110,7 @@ class Item extends Component {
 	          aria-labelledby="form-dialog-title"
 	        >
 	          <DialogTitle id="form-dialog-title">{this.props.itemName}</DialogTitle>
+	          <Divider style={Styles.titleDivider}/>
 	          <DialogContent>
 	            <DialogContentText> </DialogContentText>
 
@@ -128,6 +132,7 @@ class Item extends Component {
 				</div>    
 
 	          </DialogContent>
+	          <Divider />
 	          <DialogActions>
 	            <Button  style={Styles.secondary} onClick={this.handleAlertClose('openEditAlert')} className="update-item-cancel">
 	              Cancel

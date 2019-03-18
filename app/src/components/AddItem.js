@@ -10,6 +10,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import Divider from '@material-ui/core/Divider';
 import Styles from './Styles'
 import './App.css'
 
@@ -64,11 +65,13 @@ class AddItem extends Component {
 	          aria-describedby="alert-dialog-description"
 	        >
 	          <DialogTitle id="add-item-dialog-title">{"Add new item"}</DialogTitle>
+	          <Divider style={Styles.titleDivider}/>
 	          <DialogContent>
 	            <DialogContentText id="alert-dialog-description">
 	              Are you sure want to add <b>{this.state.itemName}</b> to the order
 	            </DialogContentText>
 	          </DialogContent>
+	          <Divider />
 	          <DialogActions>
 	            <Button style={Styles.secondary} onClick={this.handleAlertClose} color="inherit" className="cancel-add-item-button">
 	              Cancel

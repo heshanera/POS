@@ -15,11 +15,11 @@ import Login from '../../containers/login';
 configure({adapter: new Adapter()});
 
 describe('App component', () => {
-	let component;
-	let container;
+  let component;
+  let container;
 
-	beforeAll(() => {  
-	const mockStore = configureStore([thunk]);
+  beforeAll(() => {  
+    const mockStore = configureStore([thunk]);
     const store = mockStore({
       errors: {
         open: false
@@ -33,11 +33,29 @@ describe('App component', () => {
       </Provider>
     )
     component = container.find(App);
-	});
 
-	it('should renders without crashing', () => {
-		expect(container.length).toBeTruthy();
-    	expect(component.length).toBeTruthy();
-	});
+    // JSON.parse = jest.fn().mockImplementationOnce(() => {
+    //   const user = {
+    //     username:'johns',
+    //     token: 'uyweoiwdmqweokvnewiu798'
+    //   };
+    //   return user;
+    // });
+
+    const localStorageUserData = JSON.stringify({ username:'johns' });
+    Storage.prototype.getItem = jest.fn((data) => {
+      if (data === 'user') return localStorageUserData;
+    });
+
+  });
+
+  afterAll(() => {
+    Storage.prototype.getItem.mockRestore();
+  });
+
+  it('should renders without crashing', () => {
+    expect(container.length).toBeTruthy();
+    expect(component.length).toBeTruthy();
+  });
 
 });

@@ -13,8 +13,13 @@ const secondary = {
 }
 
 const dialogTitle = {
-	fontWeight: '700'
+	fontWeight: 'bold'
 }
 
-const Styles = {primary, secondary, dialogTitle};
+const titleDivider = {
+	marginTop: '-10px',
+	marginBottom: '30px'
+}
+
+const Styles = {primary, secondary, dialogTitle, titleDivider};
 export default Styles;

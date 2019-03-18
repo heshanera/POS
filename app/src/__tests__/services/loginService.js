@@ -11,9 +11,22 @@ import fetchMock from 'fetch-mock'
 const mockStore = configureMockStore([thunk])
 
 describe('Login', () => {
+
+  beforeAll(() => {  
+    const localStorageUserData = JSON.stringify({ username:'johns' });
+    Storage.prototype.getItem = jest.fn((data) => {
+      if (data === 'user') return localStorageUserData;
+    });
+
+  });
+
   afterEach(() => {
     fetchMock.restore()
   });
+
+  afterAll(() => {
+    Storage.prototype.getItem.mockRestore();
+  })
 
   it('creates RECEIVE_USER when fetching user has been done', () => {
     fetchMock.postOnce(config.apiUrl+'/getUser', {

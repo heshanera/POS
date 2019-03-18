@@ -9,6 +9,7 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Divider from '@material-ui/core/Divider';
 
 import Styles from './Styles'
 import './App.css'
@@ -88,6 +89,7 @@ class AddOrder extends Component {
           maxWidth = {'lg'}
         >
           <DialogTitle id="form-dialog-title">Order</DialogTitle>
+          <Divider style={Styles.titleDivider}/>
           <DialogContent>
             <DialogContentText>
 
@@ -127,6 +129,7 @@ class AddOrder extends Component {
             </div>
 
           </DialogContent>
+          <Divider />
           <DialogActions className="add-order-action-container">
           <Button style={Styles.secondary} onClick={this.handleClose} className="cancel-create-order-button">
             Cancel
