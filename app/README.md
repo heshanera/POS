@@ -4,11 +4,15 @@ POS front-end developed using react and redux.
 
 ## Install
 
-##### ```$ npm install```
+```
+$ npm install
+```
 
 ## Start and Watch
 
-##### ```$ npm start```
+```
+$ npm start
+```
 
 Runs the app in the development mode.<br>
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
@@ -18,17 +22,23 @@ You will also see any lint errors in the console.
 
 ## Run tests
 
-##### ```$ npm test```
+```
+$ npm test
+```
 
 Launches the test runner in the interactive watch mode.<br>
 
-##### ```$ npm test -- --coverage```
+```
+$ npm test -- --coverage
+```
 
 Launches the test runner and generate a coverage report<br>
 
 ## Build
 
-##### ```$ npm run build```
+```
+$ npm run build
+```
 
 Builds the app for production to the `build` folder.<br>
 It correctly bundles React in production mode and optimizes the build for the best performance.

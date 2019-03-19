@@ -4,17 +4,23 @@ Server developed using Nodejs, Express and Mongodb.
 
 ## Install
 
-##### ```$ npm install```
+```
+$ npm install
+```
 
 ## Start Mongodb
 
-##### ``` $ mongod ```
+``` 
+$ mongod 
+```
 
 ## Start the server
 
-##### ```$ npm start```
+```
+$ npm start
+```
 
-## API Endpoints
+# API Endpoints
 
 ## User
 
