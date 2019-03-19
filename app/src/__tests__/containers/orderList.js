@@ -9,6 +9,7 @@ import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk'
 import OrderListContainer from '../../containers/orderList';
 import { OrderList } from '../../containers/orderList';
+import 'jest-localstorage-mock';
 
 configure({adapter: new Adapter()});
 
@@ -16,7 +17,6 @@ describe('Orderlist component and container', () => {
 
   let container;
   let component;
-  let wrapper
 
   beforeAll(() => {
     const mockStore = configureStore([thunk]);
@@ -99,17 +99,6 @@ describe('Orderlist component and container', () => {
       show: false
     }
 
-    beforeEach(() => {
-      JSON.parse = jest.fn().mockImplementationOnce(() => {
-        const user = {
-          username:'johns',
-          token: 'uyweoiwdmqweokvnewiu798'
-        };
-        return user;
-      });
-    });
-
-
     const reducer = { 
       user: user,
       userOrders: userOrders,
@@ -128,13 +117,23 @@ describe('Orderlist component and container', () => {
         </Router>
       </Provider>)
     component = container.find(OrderList);
+     
+  });
 
-    wrapper = shallow(
-      <OrderList
-        user={user}
-        userOrders={userOrders}
-      />
-    );
+  beforeEach(() => {
+
+    global.JSON.parse = jest.fn(() => {
+      return {
+        username:'johns',
+        token: 'uyweoiwdmqweokvnewiu798'
+      }
+    });
+
+    const user = {
+      username: 'johns',
+      token: 'uyweoiwdmqweokvnewiu798'
+    };
+    localStorage.setItem('user', JSON.stringify(user));
 
   });
 

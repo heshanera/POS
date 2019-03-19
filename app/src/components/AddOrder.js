@@ -74,8 +74,8 @@ class AddOrder extends Component {
     const itemData = this.props.availableItems.find(item => item.itemName === itemName);
     const image = "data:"+itemData.image.contentType+";base64," + Buffer.from(itemData.image.image).toString('base64');
     return(
-      // <img className='item-image' src={image} alt='Img'/>
-      <img className='item-image' alt='Img'/>
+      <img className='item-image' src={image} alt='Img'/>
+      // <img className='item-image' alt='Img'/>
     );
   };
 

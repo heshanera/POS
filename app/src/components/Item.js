@@ -95,8 +95,8 @@ class Item extends Component {
 			if (itemData.image !== undefined ) {
 				const image = "data:"+itemData.image.contentType+";base64," + Buffer.from(itemData.image.image).toString('base64');
 				return(
-					// <img className='item-image' src={image} alt='Img'/>
-					<img className='item-image'alt='Img'/>
+					<img className='item-image' src={image} alt='Img'/>
+					// <img className='item-image'alt='Img'/>
 				);
 			} else return (<img className='item-image'alt='Img'/>);
 		}

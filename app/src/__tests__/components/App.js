@@ -11,6 +11,7 @@ import Adapter from 'enzyme-adapter-react-16';
 import App from '../../components/App';
 import OrderList from '../../containers/orderList';
 import Login from '../../containers/login';
+import 'jest-localstorage-mock';
 
 configure({adapter: new Adapter()});
 
@@ -34,23 +35,6 @@ describe('App component', () => {
     )
     component = container.find(App);
 
-    // JSON.parse = jest.fn().mockImplementationOnce(() => {
-    //   const user = {
-    //     username:'johns',
-    //     token: 'uyweoiwdmqweokvnewiu798'
-    //   };
-    //   return user;
-    // });
-
-    const localStorageUserData = JSON.stringify({ username:'johns' });
-    Storage.prototype.getItem = jest.fn((data) => {
-      if (data === 'user') return localStorageUserData;
-    });
-
-  });
-
-  afterAll(() => {
-    Storage.prototype.getItem.mockRestore();
   });
 
   it('should renders without crashing', () => {

@@ -8,6 +8,7 @@ import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk'
 import LoginContainer from '../../containers/login';
 import { Login } from '../../containers/login';
+import 'jest-localstorage-mock';
 
 configure({adapter: new Adapter()});
 
@@ -129,16 +130,11 @@ describe('Orderlist component and container', () => {
 
   it("should redirect to orders page if alraedy logged in", () => {
     const localStorageUserData = JSON.stringify({ username:'johns' });
-    Storage.prototype.getItem = jest.fn((data) => {
-      if (data === 'user') return localStorageUserData;
-    });
+    localStorage.setItem('user', localStorageUserData);
     component.instance().forceUpdate();
     expect(component.length).toBeTruthy();
-    Storage.prototype.getItem = jest.fn((data) => {
-      if (data === 'user') return null;
-    });
+    localStorage.removeItem('user');
     component.instance().forceUpdate();
-    Storage.prototype.getItem.mockRestore();
   });
 
 });
