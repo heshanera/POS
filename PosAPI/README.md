@@ -1,28 +1,18 @@
-# PosAPI
+# POS API
 
 Server developed using Nodejs, Express and Mongodb.
 
-## Installation
+## Install
 
-```
-$ npm install
-```
+##### ```$ npm install```
 
-## Database
-[install mongodb](https://docs.mongodb.com/manual/installation/)
+## Start Mongodb
 
+##### ``` $ mongod ```
 
-start the database 
+## Start the server
 
-``` 
-$ mongod 
-```
-
-## Starting the server
-```
-$ npm start
-```
-
+##### ```$ npm start```
 
 ## API Endpoints
 
