@@ -22,17 +22,21 @@ class Order extends Component {
 	            		{'#' + this.props.orderId.substring(15)}
 	            	</span>	
 	            </span>
-	            <span className="order-items">
-	            	Items:
-	            	<span className="order-value-container">
-	            		{this.props.noOfItems}
-	            	</span>	
+	            <span className="order-items-container">
+	            	<div className="order-items">
+	            		Items:
+		            	<span className="order-value-container">
+		            		{this.props.noOfItems}
+		            	</span>
+	            	</div>	
 	            </span>
-	            <span className="order-total">
-	            	Total:
-	            	<span className="order-value-container">
-	            		{'$ ' + this.props.orderTotal}
-	            	</span>
+	            <span className="order-total-container">
+	            	<div className="order-total">
+		            	Total:
+		            	<span className="order-value-container">
+		            		{'$ ' + this.props.orderTotal}
+		            	</span>
+		            </div>
 	            </span>
 	          </ExpansionPanelSummary>
 	          <ExpansionPanelDetails className="order-detail">

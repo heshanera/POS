@@ -164,16 +164,28 @@ body {
   text-align: left;
 }
 
-.order-items {
+.order-items-container {
   padding: 20px;
   width:20%;
 }
 
-.order-total {
+.order-items {
+  text-align: left;
+  width:150px;
+  float: right;
+}
+
+.order-total-container {
   float:right;
   padding: 20px;
   width:40%;
   text-align: right;
+}
+
+.order-total {
+  text-align: left;
+  width:150px;
+  float: right;
 }
 
 .order-detail{  

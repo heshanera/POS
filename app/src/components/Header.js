@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import MenuIcon from '@material-ui/icons/Menu';
+import DesktopWindows from '@material-ui/icons/DesktopWindows';
 import PersonIcon from '@material-ui/icons/PersonPin';
 import ExitIcon from '@material-ui/icons/ExitToApp';
 import Button from '@material-ui/core/Button';
@@ -61,7 +61,7 @@ class Header extends Component {
 		return(
 			<div>
 				<span className="menu-icon">
-					<MenuIcon />
+					<DesktopWindows />
 				</span>
 				<span className="exit-icon" onClick = {this.handleAlertOpen}>
 					<ExitIcon/>
