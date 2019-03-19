@@ -1,4 +1,4 @@
-# POS Front-end
+# POS APP
 
 POS front-end developed using react and redux.
 
