@@ -14,9 +14,12 @@ For development, you will only need Node.js and Mongodb installed on your enviro
 You should be able to run the following command after the installation procedure
 below.
 
-    $ node --version
-
-    $ npm --version
+```
+$ node --version
+```
+```
+$ npm --version
+```
 
 ### MongoDB
 
@@ -26,6 +29,6 @@ below.
 You should be able to run the following command after the installation procedure
 below.
 
-	mongo -version
+	$ mongo -version
 
 
