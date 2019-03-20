@@ -1,8 +1,7 @@
 # POS APP
 
 [![Build Status](https://travis-ci.com/heshanera/POS.svg?token=ip5Rapk5jYsnEQF9yfy4&branch=master)](https://travis-ci.com/heshanera/POS)
-[![Coverage Status](./coverage/coverage.svg)]()
-
+[![Coverage Status](https://img.shields.io/badge/coverage-100%25-brightgreen.svg)]()
 
 POS front-end developed using react and redux.
 
