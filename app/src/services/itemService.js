@@ -18,7 +18,7 @@ const fetchAvailableItems = () => {
         if(!response.ok) throw new Error(response.status);
         else return response.json()
       },
-      error => { new Error('an error occoured')}
+      error => { throw new Error(error) }
   )
    .then((items) => {
 

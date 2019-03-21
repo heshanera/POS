@@ -18,7 +18,7 @@ const fetchOrders = (username, history) => {
         if(!response.ok) throw new Error(response.status);
         else return response.json()
       },
-      error => { new Error('an error occoured')}
+      error => { throw new Error(error) }
     )
    .then((orders) => {
 
@@ -73,7 +73,7 @@ const addOrder = (newOrder) => {
         if(!response.ok) throw new Error(response.status);
         else return response.json()
       },
-      error => { new Error('an error occoured')}
+      error => { throw new Error(error) }
     )
     .then((order) => {
 
@@ -127,7 +127,7 @@ const removeItem = (orderId, itemId) => {
         if(!response.ok) throw new Error(response.status);
         else return response.json()
       },
-      error => { new Error('an error occoured')}
+      error => { throw new Error(error) }
     )
     .then((orderSize) => {
 
@@ -192,7 +192,7 @@ const addItem = (orderId, itemName, price, count) => {
         if(!response.ok) throw new Error(response.status);
         else return response.json()
       },
-      error => { new Error('an error occoured')}
+      error => { throw new Error(error) }
     )
     .then((item) => {
 
@@ -248,7 +248,7 @@ const updateItem = (orderId, itemName, price, count) => {
         if(!response.ok) throw new Error(response.status);
         else return response.json()
       },
-      error => { new Error('an error occoured')}
+      error => { throw new Error(error) }
     )
     .then((item) => {
 

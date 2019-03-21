@@ -20,7 +20,7 @@ const fetchUser = (user, history) => {
         if(!response.ok) throw new Error(response.status);
         else return response.json()
       },
-      error => { new Error('an error occoured')}
+      error => { throw new Error(error) }
     )
    .then((user) => {
       if (!(Object.keys(user).length === 0)) {
@@ -71,7 +71,7 @@ const register = (user, history) => {
           if(!response.ok) throw new Error(response.status);
           else return response.json()
         },
-        error => { new Error('an error occoured')}
+        error => { throw new Error(error) }
       )
      .then((user) => {
         if (!(Object.keys(user).length === 0)) {
@@ -109,7 +109,7 @@ const createOrderList = (user, history, dispatch) => {
           if(!response.ok) throw new Error(response.status);
           else return response.json()
         },
-        error => { new Error('an error occoured')}
+        error => { throw new Error(error) }
       )
      .then((orderlist) => {
         if (!(Object.keys(orderlist).length === 0)) {
