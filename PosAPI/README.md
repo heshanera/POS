@@ -1,5 +1,7 @@
 # POS API
 
+[![Coverage Status](https://img.shields.io/badge/coverage-100%25-brightgreen.svg)]()
+
 Server developed using Nodejs, Express and Mongodb.
 
 ## Install
@@ -24,56 +26,60 @@ $ npm start
 
 ## User
 
-[![POST](https://img.shields.io/badge/Login-POST-orange.svg?style=flat-square)](https://github.com/heshanera/POS/blob/master/PosAPI/apiDocs/user/getUser.md) 
-[![POST](https://img.shields.io/badge//getUser--orange.svg?style=flat-square)](https://github.com/heshanera/POS/blob/master/PosAPI/apiDocs/user/getUser.md)
+| <b>Login</b>        | [![POST](https://img.shields.io/badge/-POST-orange.svg)](https://github.com/heshanera/POS/blob/master/PosAPI/apiDocs/user/getUser.md)           | [/getUser](https://github.com/heshanera/POS/blob/master/PosAPI/apiDocs/user/getUser.md)  |
+| ------------- |:-------------:| -----:|
 
-[![POST](https://img.shields.io/badge/Add%20new%20user-POST-orange.svg?style=flat-square)](https://github.com/heshanera/POS/blob/master/PosAPI/apiDocs/user/addUser.md)
-[![POST](https://img.shields.io/badge//addUser--orange.svg?style=flat-square)](https://github.com/heshanera/POS/blob/master/PosAPI/apiDocs/user/addUser.md)
+| <b>Add new user</b>        | [![POST](https://img.shields.io/badge/-POST-orange.svg)](https://github.com/heshanera/POS/blob/master/PosAPI/apiDocs/user/addUser.md)          | [/addUser](https://github.com/heshanera/POS/blob/master/PosAPI/apiDocs/user/addUser.md) |
+| ------------- |:-------------:| -----:|
 
-[![POST](https://img.shields.io/badge/List%20users-GET-brightgreen.svg?style=flat-square)](https://github.com/heshanera/POS/blob/master/PosAPI/apiDocs/user/listUsers.md)
-[![POST](https://img.shields.io/badge//listUsers--brightgreen.svg?style=flat-square)](https://github.com/heshanera/POS/blob/master/PosAPI/apiDocs/user/listUsers.md)
+| <b>List users</b>        | [![GET](https://img.shields.io/badge/-GET-brightgreen.svg)](https://github.com/heshanera/POS/blob/master/PosAPI/apiDocs/user/listUsers.md)          | [/listUsers](https://github.com/heshanera/POS/blob/master/PosAPI/apiDocs/user/listUsers.md)  |
+| ------------- |:-------------:| -----:|
 
-[![POST](https://img.shields.io/badge/Delete%20user-DELETE-red.svg?style=flat-square)](https://github.com/heshanera/POS/blob/master/PosAPI/apiDocs/user/deleteUser.md)
-[![POST](https://img.shields.io/badge//deleteUser--red.svg?style=flat-square)](https://github.com/heshanera/POS/blob/master/PosAPI/apiDocs/user/deleteUser.md)
+| <b>Delete user</b>        | [![DELETE](https://img.shields.io/badge/-DELETE-red.svg?style=flat-square)](https://github.com/heshanera/POS/blob/master/PosAPI/apiDocs/user/deleteUser.md)          | [/deleteUser](https://github.com/heshanera/POS/blob/master/PosAPI/apiDocs/user/deleteUser.md) |
+| ------------- |:-------------:| -----:|
+
 
 ## Orders
-[![POST](https://img.shields.io/badge/Create%20an%20order%20list-POST-orange.svg?style=flat-square)](https://github.com/heshanera/POS/blob/master/PosAPI/apiDocs/orders/createOrder.md) 
-[![POST](https://img.shields.io/badge//createOrder--orange.svg?style=flat-square)](https://github.com/heshanera/POS/blob/master/PosAPI/apiDocs/orders/createOrder.md)
 
-[![POST](https://img.shields.io/badge/Delete%20order%20list-DELETE-red.svg?style=flat-square)](https://github.com/heshanera/POS/blob/master/PosAPI/apiDocs/orders/removeOrderList.md) 
-[![POST](https://img.shields.io/badge//removeOrderList--red.svg?style=flat-square)](https://github.com/heshanera/POS/blob/master/PosAPI/apiDocs/orders/removeOrderList.md)
+| <b>Create an order list</b>        | [![POST](https://img.shields.io/badge/-POST-orange.svg)](https://github.com/heshanera/POS/blob/master/PosAPI/apiDocs/orders/createOrder.md)           | [/createOrder](https://github.com/heshanera/POS/blob/master/PosAPI/apiDocs/orders/createOrder.md)  |
+| ------------- |:-------------:| -----:|
 
-[![POST](https://img.shields.io/badge/Get%20all%20orders-GET-brightgreen.svg?style=flat-square)](https://github.com/heshanera/POS/blob/master/PosAPI/apiDocs/orders/listOrders.md) 
-[![POST](https://img.shields.io/badge//listOrders--brightgreen.svg?style=flat-square)](https://github.com/heshanera/POS/blob/master/PosAPI/apiDocs/orders/listOrders.md)
+| <b>Delete order list</b>        | [![DELETE](https://img.shields.io/badge/-DELETE-red.svg)](https://github.com/heshanera/POS/blob/master/PosAPI/apiDocs/orders/removeOrderList.md)          | [/removeOrderList](https://github.com/heshanera/POS/blob/master/PosAPI/apiDocs/orders/removeOrderList.md)  |
+| ------------- |:-------------:| -----:|
 
-[![POST](https://img.shields.io/badge/Add%20a%20new%20order%20for%20user-POST-orange.svg?style=flat-square)](https://github.com/heshanera/POS/blob/master/PosAPI/apiDocs/orders/addOrder.md) 
-[![POST](https://img.shields.io/badge//addOrder--orange.svg?style=flat-square)](https://github.com/heshanera/POS/blob/master/PosAPI/apiDocs/orders/addOrder.md)
+| <b>Get all orders</b>        | [![GET](https://img.shields.io/badge/-GET-brightgreen.svg)](https://github.com/heshanera/POS/blob/master/PosAPI/apiDocs/orders/listOrders.md)           | [/listOrders](https://github.com/heshanera/POS/blob/master/PosAPI/apiDocs/orders/listOrders.md)   |
+| ------------- |:-------------:| -----:|
 
-[![POST](https://img.shields.io/badge/Remove%20an%20order-DELETE-red.svg?style=flat-square)](https://github.com/heshanera/POS/blob/master/PosAPI/apiDocs/orders/removeOrder.md) 
-[![POST](https://img.shields.io/badge//removeOrder--red.svg?style=flat-square)](https://github.com/heshanera/POS/blob/master/PosAPI/apiDocs/orders/removeOrder.md)
 
-[![POST](https://img.shields.io/badge/Add%20a%20new%20item%20to%20order-POST-orange.svg?style=flat-square)](https://github.com/heshanera/POS/blob/master/PosAPI/apiDocs/orders/addOrderItem.md) 
-[![POST](https://img.shields.io/badge//addOrderItem--orange.svg?style=flat-square)](https://github.com/heshanera/POS/blob/master/PosAPI/apiDocs/orders/addOrderItem.md)
+| <b>Add a new order for user</b> | [![POST](https://img.shields.io/badge/-POST-orange.svg)](https://github.com/heshanera/POS/blob/master/PosAPI/apiDocs/orders/addOrder.md)            | [/addOrder](https://github.com/heshanera/POS/blob/master/PosAPI/apiDocs/orders/addOrder.md)    |
+| ------------- |:-------------:| -----:|
 
-[![POST](https://img.shields.io/badge/Update%20the%20item%20count-POST-orange.svg?style=flat-square)](https://github.com/heshanera/POS/blob/master/PosAPI/apiDocs/orders/updateOrderItem.md) 
-[![POST](https://img.shields.io/badge//updateOrderItem--orange.svg?style=flat-square)](https://github.com/heshanera/POS/blob/master/PosAPI/apiDocs/orders/updateOrderItem.md)
+| <b>Remove an order</b>        | [![DELETE](https://img.shields.io/badge/-DELETE-red.svg)](https://github.com/heshanera/POS/blob/master/PosAPI/apiDocs/orders/removeOrder.md)          | [/RemoveOrder](https://github.com/heshanera/POS/blob/master/PosAPI/apiDocs/orders/removeOrder.md)  |
+| ------------- |:-------------:| -----:|
 
-[![POST](https://img.shields.io/badge/remove%20an%20item%20from%20an%20order-DELETE-red.svg?style=flat-square)](https://github.com/heshanera/POS/blob/master/PosAPI/apiDocs/orders/removeOrderItem.md) 
-[![POST](https://img.shields.io/badge//removeOrderItem--red.svg?style=flat-square)](https://github.com/heshanera/POS/blob/master/PosAPI/apiDocs/orders/removeOrderItem.md)
+| <b>Add new item to order</b>        | [![POST](https://img.shields.io/badge/-POST-orange.svg)](https://github.com/heshanera/POS/blob/master/PosAPI/apiDocs/orders/addOrderItem.md)          | [/addOrderItem](https://github.com/heshanera/POS/blob/master/PosAPI/apiDocs/orders/addOrderItem.md)  |
+| ------------- |:-------------:| -----:|
 
-[![POST](https://img.shields.io/badge/get%20oder%20list%20of%20a%20user-GET-brightgreen.svg?style=flat-square)](https://github.com/heshanera/POS/blob/master/PosAPI/apiDocs/orders/getOrders.md) 
-[![POST](https://img.shields.io/badge//getOrders:username--brightgreen.svg?style=flat-square)](https://github.com/heshanera/POS/blob/master/PosAPI/apiDocs/orders/getOrders.md)
+| <b>Update the item count</b>        | [![POST](https://img.shields.io/badge/-POST-orange.svg)](https://github.com/heshanera/POS/blob/master/PosAPI/apiDocs/orders/updateOrderItem.md)          | [/updateOrderItem](https://github.com/heshanera/POS/blob/master/PosAPI/apiDocs/orders/updateOrderItem.md)  |
+| ------------- |:-------------:| -----:|
+
+| <b>Remove an item from an order</b>        | [![DELETE](https://img.shields.io/badge/-DELETE-red.svg)](https://github.com/heshanera/POS/blob/master/PosAPI/apiDocs/orders/removeOrderItem.md)          | [/removeOrderItem](https://github.com/heshanera/POS/blob/master/PosAPI/apiDocs/orders/removeOrderItem.md)  |
+| ------------- |:-------------:| -----:|
+
+| <b>Get orders of all users</b>        | [![GET](https://img.shields.io/badge/-GET-brightgreen.svg)](https://github.com/heshanera/POS/blob/master/PosAPI/apiDocs/orders/getOrders.md)          | [/getOrders](https://github.com/heshanera/POS/blob/master/PosAPI/apiDocs/orders/getOrders.md)  |
+| ------------- |:-------------:| -----:|
 
 ## Items
 
-[![POST](https://img.shields.io/badge/Get%20all%20available%20items-GET-brightgreen.svg?style=flat-square)](https://github.com/heshanera/POS/blob/master/PosAPI/apiDocs/items/getItems.md) 
-[![POST](https://img.shields.io/badge//getItems--brightgreen.svg?style=flat-square)](https://github.com/heshanera/POS/blob/master/PosAPI/apiDocs/items/getItems.md)
+| <b>Get all available items</b>        | [![GET](https://img.shields.io/badge/-GET-brightgreen.svg)](https://github.com/heshanera/POS/blob/master/PosAPI/apiDocs/items/getItems.md)           | [/getItems](https://github.com/heshanera/POS/blob/master/PosAPI/apiDocs/items/getItems.md)   |
+| ------------- |:-------------:| -----:|
 
-[![POST](https://img.shields.io/badge/Adding%20a%20new%20item-POST-orange.svg?style=flat-square)](https://github.com/heshanera/POS/blob/master/PosAPI/apiDocs/items/addItem.md) 
-[![POST](https://img.shields.io/badge//addItem--orange.svg?style=flat-square)](https://github.com/heshanera/POS/blob/master/PosAPI/apiDocs/items/addItem.md)
+| <b>Adding a new item</b>        | [![POST](https://img.shields.io/badge/-POST-orange.svg)](https://github.com/heshanera/POS/blob/master/PosAPI/apiDocs/items/addItem.md)           | [/addItem](https://github.com/heshanera/POS/blob/master/PosAPI/apiDocs/items/addItem.md)   |
+| ------------- |:-------------:| -----:|
 
-[![POST](https://img.shields.io/badge/Update%20an%20available%20item-POST-orange.svg?style=flat-square)](https://github.com/heshanera/POS/blob/master/PosAPI/apiDocs/items/updateItem.md) 
-[![POST](https://img.shields.io/badge//updateItem--orange.svg?style=flat-square)](https://github.com/heshanera/POS/blob/master/PosAPI/apiDocs/items/updateItem.md)
+| <b>Update an available item</b>        | [![POST](https://img.shields.io/badge/-POST-orange.svg)](https://github.com/heshanera/POS/blob/master/PosAPI/apiDocs/items/updateItem.md)           | [/updateItem](https://github.com/heshanera/POS/blob/master/PosAPI/apiDocs/items/updateItem.md)   |
+| ------------- |:-------------:| -----:|
 
-[![POST](https://img.shields.io/badge/Delete%20an%20available%20item-DELETE-red.svg?style=flat-square)](https://github.com/heshanera/POS/blob/master/PosAPI/apiDocs/items/deleteItem.md) 
-[![POST](https://img.shields.io/badge//deleteItem--red.svg?style=flat-square)](https://github.com/heshanera/POS/blob/master/PosAPI/apiDocs/items/deleteItem.md)
+| <b>Delete an available item</b>        | [![DELETE](https://img.shields.io/badge/-DELETE-red.svg)](https://github.com/heshanera/POS/blob/master/PosAPI/apiDocs/items/deleteItem.md)           | [/deleteItem](https://github.com/heshanera/POS/blob/master/PosAPI/apiDocs/items/deleteItem.md)   |
+| ------------- |:-------------:| -----:|
+
