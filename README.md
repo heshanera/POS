@@ -2,7 +2,7 @@
 
 [![MIT license](http://img.shields.io/badge/license-MIT-blue.svg)](http://opensource.org/licenses/MIT)
 
-A simple POS system. React and Redux is used in the frontend. Backend server is developed in nodejs, mongodb. mongoose is used as an object data modeling library.
+A simple POS system. React and Redux is used in the frontend. Backend server is developed in Nodejs and Mongodb. mongoose is used as an object data modeling library.
 
 ## Prerequisites
 
@@ -30,7 +30,7 @@ $ npm --version
 [MongoDB](https://www.mongodb.com/) is a cross-platform document-oriented database program.
 You should be able to run the following command after the installation procedure
 below.
-
-	$ mongo -version
-
+```
+$ mongo -version
+```
 
