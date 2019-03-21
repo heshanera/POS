@@ -74,7 +74,7 @@ describe('Login', () => {
     })
     const expectedActions = [
       { type: itemActions.REQUEST_ITEMS },
-      { type: errorActions.RECEIVE_ERROR, payload: {error: "no orders received", message: "error occoured in receiving items", show: true}}
+      { type: errorActions.RECEIVE_ERROR, payload: {error: "Error occurred", message: "error occoured in receiving items", show: true}}
     ]
     const store = mockStore({})
     return store.dispatch(itemService.fetchAvailableItems()).then(() => {

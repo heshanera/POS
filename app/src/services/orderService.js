@@ -21,22 +21,18 @@ const fetchOrders = (username, history) => {
       error => { throw new Error(error) }
     )
    .then((orders) => {
+      if (orders.success === false) {
+        // DO NOTHING: TODO
+      } else {
+        // console.log(orders);
+        // storing the order list in the local storage
+        localStorage.setItem('orders', JSON.stringify(orders));
 
-      // If authentication fails
-      if (orders) {
-        if (orders.success === false) {
-          // DO NOTHING: TODO
-        } else {
-          // console.log(orders);
-          // storing the order list in the local storage
-          localStorage.setItem('orders', JSON.stringify(orders));
-
-          dispatch(receiveOrders(orders));
-          if (!(Object.keys(orders).length === 0)) {
-            history.push('/orders');
-          }
+        dispatch(receiveOrders(orders));
+        if (!(Object.keys(orders).length === 0)) {
+          history.push('/orders');
         }
-      } else throw new Error('no orders received');
+      }
    })
   .catch((error) => {
     // console.log('error occurred: ', error.message);

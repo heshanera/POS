@@ -21,17 +21,13 @@ const fetchAvailableItems = () => {
       error => { throw new Error(error) }
   )
    .then((items) => {
-
-      // If authentication fails
-      if(items) {
-        if (items.success === false) {
-          // DO NOTHING: TODO
-        } else {
-          // storing the item list in the local storage
-          localStorage.setItem('items', JSON.stringify(items));
-          dispatch(receiveItems(items));
-        }  
-      } else throw new Error('no orders received');
+      if (items.success === false) {
+        // DO NOTHING: TODO
+      } else {
+        // storing the item list in the local storage
+        localStorage.setItem('items', JSON.stringify(items));
+        dispatch(receiveItems(items));
+      }  
    },
   )
   .catch((error) => {

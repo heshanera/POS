@@ -113,7 +113,7 @@ describe('Login', () => {
     fetchMock.getOnce(config.apiUrl+'/getOrders/johns', {throws: 'Error occurred'});
     const expectedActions = [
       { type: orderActions.REQUEST_ORDERS },
-      { type: errorActions.RECEIVE_ERROR, payload: {error: "no orders received", message: "error occoured in receiving orders", show: true}}
+      { type: errorActions.RECEIVE_ERROR, payload: {error: "Error occurred", message: "error occoured in receiving orders", show: true}}
     ]
     return store.dispatch(orderService.fetchOrders('johns',{ push:() => {} })).then(() => {
       expect(store.getActions()).toEqual(expectedActions)
@@ -219,7 +219,7 @@ describe('Login', () => {
     fetchMock.postOnce(config.apiUrl+'/addOrder', {throws: 'Error occurred'})
     const expectedActions = [
       { type: orderActions.REQUEST_ORDERS },
-      { type: errorActions.RECEIVE_ERROR, payload: {error: "Cannot read property 'success' of undefined", message: "error in adding the new order", show: true}}
+      { type: errorActions.RECEIVE_ERROR, payload: {error: "Error occurred", message: "error in adding the new order", show: true}}
     ]
     return store.dispatch(orderService.addOrder({})).then(() => {
       expect(store.getActions()).toEqual(expectedActions)
@@ -349,7 +349,7 @@ describe('Login', () => {
     fetchMock.deleteOnce(config.apiUrl+'/removeOrderItem', {throws: 'Error occurred'})
     const expectedActions = [
       { type: orderActions.REQUEST_ORDERS },
-      { type: errorActions.RECEIVE_ERROR, payload: {error: "Cannot read property 'success' of undefined", message: "error in removing the item", show: true}}
+      { type: errorActions.RECEIVE_ERROR, payload: {error: "Error occurred", message: "error in removing the item", show: true}}
     ]
     return store.dispatch(orderService.removeItem({})).then(() => {
       expect(store.getActions()).toEqual(expectedActions)
@@ -440,7 +440,7 @@ describe('Login', () => {
     fetchMock.postOnce(config.apiUrl+'/addOrderItem', {throws: 'Error occurred'})
     const expectedActions = [
       { type: orderActions.REQUEST_ORDERS },
-      { type: errorActions.RECEIVE_ERROR, payload: {error: "Cannot read property 'success' of undefined", message: "error in adding the item", show: true}}
+      { type: errorActions.RECEIVE_ERROR, payload: {error: "Error occurred", message: "error in adding the item", show: true}}
     ]
     return store.dispatch(orderService.addItem('','','','')).then(() => {
       expect(store.getActions()).toEqual(expectedActions)
@@ -523,7 +523,7 @@ describe('Login', () => {
     fetchMock.postOnce(config.apiUrl+'/updateOrderItem', {throws: 'Error occurred'})
     const expectedActions = [
       { type: orderActions.REQUEST_ORDERS },
-      { type: errorActions.RECEIVE_ERROR, payload: {error: "Cannot read property 'success' of undefined", message: "error in updating the item", show: true}}
+      { type: errorActions.RECEIVE_ERROR, payload: {error: "Error occurred", message: "error in updating the item", show: true}}
     ]
     return store.dispatch(orderService.updateItem('','','','')).then(() => {
       expect(store.getActions()).toEqual(expectedActions)

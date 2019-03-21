@@ -115,7 +115,7 @@ describe('Login', () => {
     const expectedActions = [
       { type: loginActions.REQUEST_USER },
       { type: errorActions.RECEIVE_ERROR, payload: {
-          error: 'Cannot convert undefined or null to object', 
+          error: 'Error occurred', 
           message: 'invalid username or password', 
           show: true
         }
@@ -161,7 +161,7 @@ describe('Login', () => {
     fetchMock.postOnce(config.apiUrl+'/addUser', {throws: 'Error occurred'})
     const expectedActions = [
       { type: errorActions.RECEIVE_ERROR, payload: {
-          error: 'Cannot convert undefined or null to object', 
+          error: 'Error occurred', 
           message: 'error occoured', 
           show: true
         }
