@@ -1,5 +1,7 @@
 # Point Of Sale System
 
+[![MIT license](http://img.shields.io/badge/license-MIT-blue.svg)](http://opensource.org/licenses/MIT)
+
 A simple POS system. React and Redux is used in the frontend. Backend server is developed in nodejs, mongodb. mongoose is used as an object data modeling library.
 
 ## Prerequisites
