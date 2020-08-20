@@ -26,7 +26,7 @@
     "supertest": "^3.4.2"
   },
   "dependencies": {
-    "bcrypt": "^3.0.4",
+    "bcrypt": "^5.0.0",
     "cors": "^2.8.5",
     "express": "^4.16.4",
     "express-oauth-server": "^2.0.0",
