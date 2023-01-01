@@ -4,7 +4,7 @@ import { receiveError, resetError } from '../actions/errorActions';
 import config from './config';
 
 const fetchOrders = (username, history) => {
-  const { token } = JSON.parse(localStorage.getItem('user'));
+  const { token } = JSON.parse(localStorage.getItem('user') || '{}');
   return (dispatch) => {
     dispatch(requestOrders());
     return fetch(`${config.apiUrl}/getOrders/${username}`, {

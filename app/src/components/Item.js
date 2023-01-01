@@ -18,14 +18,21 @@ import './App.css';
 class Item extends Component {
   constructor() {
     super();
-
-    const { itemCount, itemPrice } = this.props;
+    const { itemCount, itemPrice } = this.props || {};
     this.state = {
       openDeleteAlert: false,
       openEditAlert: false,
       itemCount,
       totalPrice: (itemPrice * itemCount).toFixed(2),
     };
+  }
+
+  componentDidMount() {
+    const { itemCount, itemPrice } = this.props || {};
+    this.setState({
+      itemCount,
+      totalPrice: (itemPrice * itemCount).toFixed(2),
+    });
   }
 
   handleAlertOpen = (state) => () => {

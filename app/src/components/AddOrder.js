@@ -98,42 +98,50 @@ class AddOrder extends Component {
     const { openAddOrder, selected } = this.state;
     const { availableItems } = this.props;
 
-    <Dialog open={openAddOrder} onClose={this.handleClose} aria-labelledby="form-dialog-title" fullWidth maxWidth="lg">
-      <DialogTitle id="form-dialog-title">Order</DialogTitle>
-      <Divider style={Styles.titleDivider} />
-      <DialogContent>
-        <DialogContentText />
+    return (
+      <Dialog
+        open={openAddOrder}
+        onClose={this.handleClose}
+        aria-labelledby="form-dialog-title"
+        fullWidth
+        maxWidth="lg"
+      >
+        <DialogTitle id="form-dialog-title">Order</DialogTitle>
+        <Divider style={Styles.titleDivider} />
+        <DialogContent>
+          <DialogContentText />
 
-        <div className="wrapper2">
-          {availableItems.map((item, index) => (
-            <div key={index} className="order-item-container" onClick={this.handleCheck(item)}>
-              <div className="order-check-box">
-                <FormControlLabel
-                  control={<Checkbox checked={selected[item._id]} value={item._id} color="default" />}
-                />
-              </div>
+          <div className="wrapper2">
+            {availableItems.map((item, index) => (
+              <div key={index} className="order-item-container" onClick={this.handleCheck(item)}>
+                <div className="order-check-box">
+                  <FormControlLabel
+                    control={<Checkbox checked={selected[item._id]} value={item._id} color="default" />}
+                  />
+                </div>
 
-              <div className="order-item-container-header">
-                <p>{this.loadImage(item.itemName)}</p>
+                <div className="order-item-container-header">
+                  <p>{this.loadImage(item.itemName)}</p>
+                </div>
+                <div className="order-item-info">
+                  <p className="order-item-name">{item.itemName}</p>
+                  <p className="order-item-price">${item.itemPrice}</p>
+                </div>
               </div>
-              <div className="order-item-info">
-                <p className="order-item-name">{item.itemName}</p>
-                <p className="order-item-price">${item.itemPrice}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </DialogContent>
-      <Divider />
-      <DialogActions className="add-order-action-container">
-        <Button style={Styles.secondary} onClick={this.handleClose} className="cancel-create-order-button">
-          Cancel
-        </Button>
-        <Button style={Styles.primary} onClick={this.handleOrderCreate} className="create-order-button">
-          <b>Create Order</b>
-        </Button>
-      </DialogActions>
-    </Dialog>;
+            ))}
+          </div>
+        </DialogContent>
+        <Divider />
+        <DialogActions className="add-order-action-container">
+          <Button style={Styles.secondary} onClick={this.handleClose} className="cancel-create-order-button">
+            Cancel
+          </Button>
+          <Button style={Styles.primary} onClick={this.handleOrderCreate} className="create-order-button">
+            <b>Create Order</b>
+          </Button>
+        </DialogActions>
+      </Dialog>
+    );
   };
 
   loadAddOrderButton = () => (

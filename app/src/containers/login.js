@@ -124,7 +124,7 @@ export class Login extends Component {
   );
 
   render() {
-    const loggedIn = JSON.parse(localStorage.getItem('user')) !== null;
+    const loggedIn = JSON.parse(localStorage.getItem('user') || null) !== null;
     if (loggedIn) {
       return <Redirect to="/orders" />;
     }

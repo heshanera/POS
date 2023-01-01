@@ -3,7 +3,7 @@ import { receiveError, resetError } from '../actions/errorActions';
 import config from './config';
 
 const fetchAvailableItems = () => {
-  const { token } = JSON.parse(localStorage.getItem('user'));
+  const { token } = JSON.parse(localStorage.getItem('user') || '{}');
   return (dispatch) => {
     dispatch(requestItems());
     return fetch(`${config.apiUrl}/getItems`, {
@@ -32,7 +32,6 @@ const fetchAvailableItems = () => {
         }
       })
       .catch((error) => {
-        // console.log('error occurred');
         dispatch(
           receiveError({
             message: 'error occoured in receiving items',

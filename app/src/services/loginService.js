@@ -6,6 +6,7 @@ import config from './config';
 
 const fetchUser = (user, history) => {
   const data = `username=${user.username}&password=${user.password}`;
+
   return (dispatch) => {
     dispatch(requestUser());
     return fetch(`${config.apiUrl}/getUser`, {
@@ -27,7 +28,7 @@ const fetchUser = (user, history) => {
       .then((userData) => {
         if (!(Object.keys(userData).length === 0)) {
           dispatch(receiveUser(userData));
-          localStorage.setItem('user', JSON.stringify(userData));
+          localStorage.setItem('user', JSON.stringify(userData || ''));
           // loading available items
           dispatch(itemService.fetchAvailableItems());
           // loading the order details

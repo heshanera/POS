@@ -3,7 +3,10 @@ import { REQUEST_ORDERS, RECEIVE_ORDERS, UPDATE_ORDERS } from '../actions/orderA
 // let savedState = JSON.parse(localStorage.getItem('orders')) || {};
 
 export const getSavedState = () => {
-  const data = localStorage.getItem('orders') || '{}';
+  const data = localStorage.getItem('orders');
+  if (!data) {
+    return {};
+  }
   return JSON.parse(data);
 };
 
