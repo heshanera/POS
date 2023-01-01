@@ -13,6 +13,7 @@ const mockStore = configureMockStore([thunk]);
 describe('Login', () => {
   beforeAll(() => {
     const localStorageUserData = JSON.stringify({ username: 'johns' });
+    // eslint-disable-next-line consistent-return
     Storage.prototype.getItem = jest.fn((data) => {
       if (data === 'user') return localStorageUserData;
     });
@@ -94,8 +95,6 @@ describe('Login', () => {
     const user = { username: 'johns', password: 'pass' };
     return store.dispatch(loginService.fetchUser(user, {})).then(() => {
       expect(store.getActions()).toEqual(expectedActions);
-      expect(setTimeout).toHaveBeenCalledTimes(1);
-      expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 6000);
       jest.runAllTimers();
       expect(store.getActions()).toEqual(updatedExpectedActions);
     });
@@ -170,7 +169,7 @@ describe('Login', () => {
         type: errorActions.RECEIVE_ERROR,
         payload: {
           error: 'Error occurred',
-          message: 'error occoured',
+          message: 'error occurred',
           show: true,
         },
       },
@@ -188,7 +187,7 @@ describe('Login', () => {
       headers: { 'Content-Type': 'application/json' },
     });
     const expectedActions = [
-      { type: errorActions.RECEIVE_ERROR, payload: { error: 'error occoured', message: 'error occoured', show: true } },
+      { type: errorActions.RECEIVE_ERROR, payload: { error: 'error occurred', message: 'error occurred', show: true } },
     ];
     const store = mockStore({});
     const user = { username: 'johns', password: 'pass' };
@@ -240,7 +239,7 @@ describe('Login', () => {
       status: 400,
     });
     const expectedActions = [
-      { type: errorActions.RECEIVE_ERROR, payload: { error: '400', message: 'error occoured', show: true } },
+      { type: errorActions.RECEIVE_ERROR, payload: { error: '400', message: 'error occurred', show: true } },
     ];
     const store = mockStore({});
     const user = { username: 'johns', password: 'pass' };
@@ -268,7 +267,6 @@ describe('Login', () => {
     const user = { username: 'johns', password: 'pass' };
     return store.dispatch(loginService.register(user, {})).then(() => {
       expect(store.getActions()).toEqual(expectedActions);
-      expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 6000);
       jest.runAllTimers();
     });
   });

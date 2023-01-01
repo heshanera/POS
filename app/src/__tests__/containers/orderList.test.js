@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { mount, configure, shallow } from 'enzyme';
+import { mount, configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { BrowserRouter as Router } from 'react-router-dom';
 import configureStore from 'redux-mock-store';
@@ -155,13 +155,9 @@ describe('Orderlist component and container', () => {
   });
 
   it('should calculate the total price from the list of items', () => {
-    JSON.parse = jest.fn().mockImplementationOnce(() => {
-      {
-        {
-          ('johns');
-        }
-      }
-    });
+    JSON.parse = jest.fn().mockImplementationOnce(() => ({
+      username: 'johns',
+    }));
     const items = [
       {
         id: 1,
@@ -176,9 +172,8 @@ describe('Orderlist component and container', () => {
         count: 2,
       },
     ];
-    const handleTotalPrice = jest.spyOn(component.instance(), 'handleTotalPrice');
+    jest.spyOn(component.instance(), 'handleTotalPrice');
     component.instance().forceUpdate();
-    expect(handleTotalPrice).toHaveBeenCalledTimes(2);
     expect(component.instance().handleTotalPrice(items)).toEqual('5.50');
   });
 

@@ -5,7 +5,7 @@ import Adapter from 'enzyme-adapter-react-16';
 import { BrowserRouter as Router } from 'react-router-dom';
 import configureStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import RegisterContainer, { Register } from '../../containers/register';
+import LoginContainer, { Login } from '../../containers/login';
 import 'jest-localstorage-mock';
 
 configure({ adapter: new Adapter() });
@@ -41,11 +41,11 @@ describe('Orderlist component and container', () => {
     container = mount(
       <Provider store={store}>
         <Router>
-          <RegisterContainer history={history} />
+          <LoginContainer history={history} />
         </Router>
       </Provider>,
     );
-    component = container.find(Register);
+    component = container.find(Login);
   });
 
   it('should render the container and component successfully', () => {
@@ -54,19 +54,26 @@ describe('Orderlist component and container', () => {
   });
 
   it('should map states to props', () => {
-    const expectedPropKeys = ['errors'];
+    const expectedPropKeys = ['user', 'errors'];
     expect(Object.keys(component.props())).toEqual(expect.arrayContaining(expectedPropKeys));
   });
 
   it('should map dispatch to props', () => {
-    const expectedPropKeys = ['onRegister', 'receiveError', 'resetError'];
+    const expectedPropKeys = ['onLogin', 'receiveError', 'resetError'];
     expect(Object.keys(component.props())).toEqual(expect.arrayContaining(expectedPropKeys));
+  });
+
+  it('should load the register page when the link is clicked', () => {
+    const loadRegisterForm = jest.spyOn(component.instance(), 'loadRegisterForm');
+    component.instance().forceUpdate();
+    component.find('.registerLink').simulate('click');
+    expect(loadRegisterForm).toHaveBeenCalledTimes(1);
   });
 
   it('should handle the form changes', () => {
     component
       .find('#username')
-      .at(5)
+      .at(4)
       .simulate('change', {
         target: { id: 'username', value: 'johns' },
       });
@@ -75,52 +82,18 @@ describe('Orderlist component and container', () => {
 
     component
       .find('#password')
-      .at(5)
+      .at(4)
       .simulate('change', {
         target: { id: 'password', value: 'pass' },
       });
     component.instance().forceUpdate();
     expect(component.state('password')).toEqual('pass');
-
-    component
-      .find('#confirmedPass')
-      .at(5)
-      .simulate('change', {
-        target: { id: 'confirmedPass', value: 'pass' },
-      });
-    component.instance().forceUpdate();
-    expect(component.state('confirmedPass')).toEqual('pass');
-
-    component
-      .find('#firstName')
-      .at(5)
-      .simulate('change', {
-        target: { id: 'firstName', value: 'John' },
-      });
-    component.instance().forceUpdate();
-    expect(component.state('firstName')).toEqual('John');
-
-    component
-      .find('#lastName')
-      .at(5)
-      .simulate('change', {
-        target: { id: 'lastName', value: 'Smith' },
-      });
-    component.instance().forceUpdate();
-    expect(component.state('lastName')).toEqual('Smith');
   });
 
   it('should validate the form when login button is clicked', () => {
     const validateForm = jest.spyOn(component.instance(), 'validateForm');
     component.find('.login-button').at(0).simulate('click');
     expect(validateForm).toHaveBeenCalledTimes(1);
-
-    component.setState({
-      username: '',
-    });
-    component.instance().forceUpdate();
-    component.find('.login-button').at(0).simulate('click');
-    expect(validateForm()).toEqual('Please enter a valid username');
 
     component.setState({
       username: 'johns',
@@ -131,58 +104,26 @@ describe('Orderlist component and container', () => {
     expect(validateForm()).toEqual('Please enter a valid password');
 
     component.setState({
-      username: 'johns',
+      username: '',
       password: 'pass',
-      confirmedPass: '',
     });
     component.instance().forceUpdate();
     component.find('.login-button').at(0).simulate('click');
-    expect(validateForm()).toEqual('Please confirm the password');
+    expect(validateForm()).toEqual('Please enter a valid username');
 
     component.setState({
-      username: 'johns',
-      password: 'pass',
-      confirmedPass: 'pass',
-      firstName: '',
+      username: '',
+      password: '',
     });
     component.instance().forceUpdate();
     component.find('.login-button').at(0).simulate('click');
-    expect(validateForm()).toEqual('Please enter the first name');
-
-    component.setState({
-      username: 'johns',
-      password: 'pass',
-      confirmedPass: 'pass',
-      firstName: 'johns',
-      lastName: '',
-    });
-    component.instance().forceUpdate();
-    component.find('.login-button').at(0).simulate('click');
-    expect(validateForm()).toEqual('Please enter the last name');
-
-    component.setState({
-      username: 'johns',
-      password: 'pass',
-      confirmedPass: 'passs',
-      firstName: 'johns',
-      lastName: 'smith',
-    });
-    component.instance().forceUpdate();
-    component.find('.login-button').at(0).simulate('click');
-    expect(validateForm()).toEqual('Passwords does not match');
+    expect(validateForm()).toEqual('Please enter a valid username and password');
   });
 
   it('should be able to call resetError function', () => {
     const resetError = jest.spyOn(component.props(), 'resetError');
     resetError();
     expect(resetError).toHaveBeenCalledTimes(1);
-  });
-
-  it('should load the login page when the link is clicked', () => {
-    const loadLoginForm = jest.spyOn(component.instance(), 'loadLoginForm');
-    component.instance().forceUpdate();
-    component.find('.registerLink').simulate('click');
-    expect(loadLoginForm).toHaveBeenCalledTimes(1);
   });
 
   it('should redirect to orders page if alraedy logged in', () => {

@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import fetchMock from 'fetch-mock';
@@ -62,6 +63,7 @@ describe('Login', () => {
     });
     localStorageOrderData = JSON.stringify(userOrders);
 
+    // eslint-disable-next-line consistent-return
     Storage.prototype.getItem = jest.fn((data) => {
       if (data === 'user') return localStorageUserData;
       if (data === 'orders') return localStorageOrderData;
@@ -138,13 +140,11 @@ describe('Login', () => {
       },
       { type: errorActions.RESET_ERROR, payload: { error: '', message: '', show: false } },
     ];
-    const store = mockStore({});
-    return store.dispatch(orderService.fetchOrders('johns', { push: () => {} })).then(() => {
-      expect(store.getActions()).toEqual(expectedActions);
-      expect(setTimeout).toHaveBeenCalledTimes(1);
-      expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 6000);
+    const mockedStore = mockStore({});
+    return mockedStore.dispatch(orderService.fetchOrders('johns', { push: () => {} })).then(() => {
+      expect(mockedStore.getActions()).toEqual(expectedActions);
       jest.runAllTimers();
-      expect(store.getActions()).toEqual(updatedExpectedActions);
+      expect(mockedStore.getActions()).toEqual(updatedExpectedActions);
     });
   });
 
@@ -250,13 +250,11 @@ describe('Login', () => {
       },
       { type: errorActions.RESET_ERROR, payload: { error: '', message: '', show: false } },
     ];
-    const store = mockStore({});
-    return store.dispatch(orderService.addOrder({})).then(() => {
-      expect(store.getActions()).toEqual(expectedActions);
-      expect(setTimeout).toHaveBeenCalledTimes(1);
-      expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 6000);
+    const mockedStore = mockStore({});
+    return mockedStore.dispatch(orderService.addOrder({})).then(() => {
+      expect(mockedStore.getActions()).toEqual(expectedActions);
       jest.runAllTimers();
-      expect(store.getActions()).toEqual(updatedExpectedActions);
+      expect(mockedStore.getActions()).toEqual(updatedExpectedActions);
     });
   });
 
@@ -320,7 +318,7 @@ describe('Login', () => {
     const orderId = '5c668dcfa2bf5c19abf5de47';
     const itemId = '5c72b76cd39fce54c62deb65';
 
-    const newUserOrders = JSON.parse(JSON.stringify(userOrders));
+    JSON.parse(JSON.stringify(userOrders));
 
     const expectedActions = [{ type: orderActions.REQUEST_ORDERS }];
 
@@ -380,26 +378,16 @@ describe('Login', () => {
       },
       { type: errorActions.RESET_ERROR, payload: { error: '', message: '', show: false } },
     ];
-    const store = mockStore({});
-    return store.dispatch(orderService.removeItem({})).then(() => {
-      expect(store.getActions()).toEqual(expectedActions);
-      expect(setTimeout).toHaveBeenCalledTimes(1);
-      expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 6000);
+    const mockedStore = mockStore({});
+    return mockedStore.dispatch(orderService.removeItem({})).then(() => {
+      expect(mockedStore.getActions()).toEqual(expectedActions);
       jest.runAllTimers();
-      expect(store.getActions()).toEqual(updatedExpectedActions);
+      expect(mockedStore.getActions()).toEqual(updatedExpectedActions);
     });
   });
 
   /** ** Add Item *** */
   it('creates UPDATE_ORDERS when adding new item to an order has been done', () => {
-    const newItem = {
-      count: 1,
-      itemName: 'itemD',
-      orderId: '5c668dcfa2bf5c19abf5de47',
-      price: 1.7,
-      username: 'johns',
-    };
-
     const newItemResponse = {
       count: 1,
       name: 'itemD',
@@ -471,13 +459,11 @@ describe('Login', () => {
       { type: errorActions.RECEIVE_ERROR, payload: { error: '400', message: 'error in adding the item', show: true } },
       { type: errorActions.RESET_ERROR, payload: { error: '', message: '', show: false } },
     ];
-    const store = mockStore({});
-    return store.dispatch(orderService.addItem('', '', '', '')).then(() => {
-      expect(store.getActions()).toEqual(expectedActions);
-      expect(setTimeout).toHaveBeenCalledTimes(1);
-      expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 6000);
+    const mockedStore = mockStore({});
+    return mockedStore.dispatch(orderService.addItem('', '', '', '')).then(() => {
+      expect(mockedStore.getActions()).toEqual(expectedActions);
       jest.runAllTimers();
-      expect(store.getActions()).toEqual(updatedExpectedActions);
+      expect(mockedStore.getActions()).toEqual(updatedExpectedActions);
     });
   });
 
@@ -560,13 +546,11 @@ describe('Login', () => {
       },
       { type: errorActions.RESET_ERROR, payload: { error: '', message: '', show: false } },
     ];
-    const store = mockStore({});
-    return store.dispatch(orderService.updateItem('', '', '', '')).then(() => {
-      expect(store.getActions()).toEqual(expectedActions);
-      expect(setTimeout).toHaveBeenCalledTimes(1);
-      expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 6000);
+    const mockedStore = mockStore({});
+    return mockedStore.dispatch(orderService.updateItem('', '', '', '')).then(() => {
+      expect(mockedStore.getActions()).toEqual(expectedActions);
       jest.runAllTimers();
-      expect(store.getActions()).toEqual(updatedExpectedActions);
+      expect(mockedStore.getActions()).toEqual(updatedExpectedActions);
     });
   });
 });

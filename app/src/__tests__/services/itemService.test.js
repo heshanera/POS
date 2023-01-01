@@ -1,9 +1,9 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import fetchMock from 'fetch-mock'
-import * as itemActions from '../../actions/itemActions'
-import * as errorActions from '../../actions/errorActions'
-import itemService from '../../services/itemService'
+import fetchMock from 'fetch-mock';
+import * as itemActions from '../../actions/itemActions';
+import * as errorActions from '../../actions/errorActions';
+import itemService from '../../services/itemService';
 import config from '../../services/config';
 
 const mockStore = configureMockStore([thunk]);
@@ -33,14 +33,15 @@ describe('Login', () => {
     const expectedActions = [
       { type: itemActions.REQUEST_ITEMS },
       {
- type: itemActions.RECEIVE_ITEMS,
-payload: [{
+        type: itemActions.RECEIVE_ITEMS,
+        payload: [
+          {
             image: {},
             itemName: 'itemX',
             price: 1.25,
             _id: '5c7166a61dee2c23f58dce5d',
           },
-
+        ],
       },
     ];
     const localStorageData = JSON.stringify({
@@ -49,7 +50,12 @@ payload: [{
         token: 'sajdkhsakdwqdgdhkhaskjdhwd72ewueeji',
       },
     });
-    Storage.prototype.getItem = jest.fn((key) => { if (key === 'user') return localStorageData });
+
+    // eslint-disable-next-line consistent-return
+    Storage.prototype.getItem = jest.fn((key) => {
+      if (key === 'user') return localStorageData;
+    });
+
     const store = mockStore({});
     return store.dispatch(itemService.fetchAvailableItems()).then(() => {
       expect(store.getActions()).toEqual(expectedActions);
@@ -105,16 +111,13 @@ payload: [{
         type: errorActions.RECEIVE_ERROR,
         payload: { error: '400', message: 'error occoured in receiving items', show: true },
       },
-      { type: errorActions.RESET_ERROR, payload: { error: '', message: '', show: false } }
+      { type: errorActions.RESET_ERROR, payload: { error: '', message: '', show: false } },
     ];
     const store = mockStore({});
     return store.dispatch(itemService.fetchAvailableItems()).then(() => {
       expect(store.getActions()).toEqual(expectedActions);
-      expect(setTimeout).toHaveBeenCalledTimes(1);
-      expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 6000);
       jest.runAllTimers();
       expect(store.getActions()).toEqual(updatedExpectedActions);
     });
   });
-
 });

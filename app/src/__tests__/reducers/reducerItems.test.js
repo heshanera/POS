@@ -32,9 +32,8 @@ describe('Item reducer', () => {
       },
     ];
 
+    // eslint-disable-next-line no-import-assign
     itemReducer.getSavedState = jest.fn(() => ({}));
-    // const localStorageData = JSON.stringify({});
-    // Storage.prototype.getItem = jest.fn((key) => {if (key == 'items') return {}});
   });
 
   it('should return the initial state', () => {
