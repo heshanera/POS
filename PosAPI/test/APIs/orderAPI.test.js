@@ -1,6 +1,7 @@
+/* eslint-disable no-underscore-dangle */
 const request = require('supertest');
 const server = require('../../server');
-const Order = require('../../api/models/orderModel');
+require('../../api/models/orderModel');
 
 describe('API testing for order and order items', () => {
   let token = '';
@@ -243,7 +244,7 @@ describe('API testing for order and order items', () => {
           orderId = JSON.parse(response.text)._id;
         })
         .expect(200)
-        .end((response) => {
+        .end(() => {
           request(server)
             .delete('/removeOrder')
             .set('Authorization', token)

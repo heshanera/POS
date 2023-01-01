@@ -1,6 +1,6 @@
 const request = require('supertest');
 const server = require('../../server');
-const Item = require('../../api/models/itemModel');
+require('../../api/models/itemModel');
 
 describe('API testing for available items', () => {
   let token = '';
@@ -92,9 +92,6 @@ describe('API testing for available items', () => {
     });
 
     it('respond with 400 when there is an error in deleting the item', (done) => {
-      const item = {
-        itemName: null,
-      };
       request(server)
         .delete('/deleteItem')
         .set('Authorization', token)

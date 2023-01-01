@@ -1,6 +1,6 @@
 const request = require('supertest');
 const server = require('../../server');
-const User = require('../../api/models/userModel');
+require('../../api/models/userModel');
 
 describe('API testing for user', () => {
   let token = '';
