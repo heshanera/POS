@@ -4,7 +4,7 @@ const User = require('../api/models/userModel');
 const Item = require('../api/models/itemModel');
 const Order = require('../api/models/orderModel');
 let mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 let userId = '';
 let token = '';

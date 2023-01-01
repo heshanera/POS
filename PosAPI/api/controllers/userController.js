@@ -4,7 +4,7 @@ const config = require('../middleware/config');
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose'); 
 const User = mongoose.model('Users');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 let addUser = function(req, res) {
   User.find({

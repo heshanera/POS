@@ -1,5 +1,5 @@
 {
-  "name": "posapi",
+  "name": "pos-api",
   "version": "1.0.0",
   "description": "RESTful posAPI",
   "main": "index.js",
@@ -18,7 +18,7 @@
     "API",
     "POS"
   ],
-  "author": "heshan eranga",
+  "author": "Heshan Eranga",
   "license": "ISC",
   "devDependencies": {
     "mocha": "^6.0.2",
@@ -26,7 +26,7 @@
     "supertest": "^3.4.2"
   },
   "dependencies": {
-    "bcrypt": "^3.0.4",
+    "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "express": "^4.16.4",
     "express-oauth-server": "^2.0.0",
