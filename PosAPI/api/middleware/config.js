@@ -1,3 +1,3 @@
 module.exports = {
-  secret: 'simpleposapp'
+  secret: 'simpleposapp',
 };

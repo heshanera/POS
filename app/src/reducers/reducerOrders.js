@@ -3,34 +3,39 @@ import { REQUEST_ORDERS, RECEIVE_ORDERS, UPDATE_ORDERS } from '../actions/orderA
 // let savedState = JSON.parse(localStorage.getItem('orders')) || {};
 
 export const getSavedState = () => {
-  let data = (localStorage.getItem('orders') || '{}');
+  const data = localStorage.getItem('orders');
+  if (!data) {
+    return {};
+  }
   return JSON.parse(data);
-}
+};
 
 const orders = (
   // default values for the state loaded from local storage
-  state = getSavedState(), action) => {
-
+  // eslint-disable-next-line default-param-last
+  state = getSavedState(),
+  action,
+) => {
   switch (action.type) {
     case REQUEST_ORDERS:
-      return { 
-       	...state, 
-       	loading: true 
+      return {
+        ...state,
+        loading: true,
       };
     case RECEIVE_ORDERS:
-      return { 
-       	...state, 
-       	orderList: action.payload.orderList,
-       	loading: false 
+      return {
+        ...state,
+        orderList: action.payload.orderList,
+        loading: false,
       };
     case UPDATE_ORDERS:
       return {
-        ...state, 
+        ...state,
         orderList: action.payload.orderList,
-        loading: false
-      }
+        loading: false,
+      };
     default:
-       return state;
+      return state;
   }
 };
 export default orders;

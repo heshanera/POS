@@ -1,7 +1,5 @@
-'use strict'
+const Order = require('./orderModel');
+const User = require('./userModel');
+const Item = require('./itemModel');
 
-let Order = require('./orderModel');
-let User = require('./userModel');
-let Item = require('./itemModel');
-
-module.exports = {Order, User, Item};	
+module.exports = { Order, User, Item };

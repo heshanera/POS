@@ -1,5 +1,5 @@
 {
-  "name": "posapi",
+  "name": "pos-api",
   "version": "1.0.0",
   "description": "RESTful posAPI",
   "main": "index.js",
@@ -11,22 +11,29 @@
   },
   "scripts": {
     "test": "nyc mocha --recursive --exit",
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "lint": "eslint --fix --ext .js,.jsx ."
   },
   "keywords": [
     "RESTFUL",
     "API",
     "POS"
   ],
-  "author": "heshan eranga",
+  "author": "Heshan Eranga",
   "license": "ISC",
   "devDependencies": {
+    "eslint": "^8.31.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-prettier": "^4.2.1",
     "mocha": "^6.0.2",
     "nodemon": "^1.18.9",
+    "prettier": "^2.8.1",
     "supertest": "^3.4.2"
   },
   "dependencies": {
-    "bcrypt": "^3.0.4",
+    "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "express": "^4.16.4",
     "express-oauth-server": "^2.0.0",

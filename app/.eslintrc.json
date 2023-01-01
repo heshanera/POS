@@ -1,0 +1,55 @@
+{
+    "env": {
+        "browser": true,
+        "es2019": true,
+        "jest": true
+    },
+    "extends": [
+        "plugin:react/recommended",
+        "airbnb",
+        "prettier"
+    ],
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": "latest",
+        "sourceType": "module"
+    },
+    "plugins": [
+        "react",
+        "prettier"
+    ],
+    "rules": {
+        // prettier
+        "prettier/prettier": [
+            "error",
+            {
+                "printWidth": 120,
+                "tabWidth": 2,
+                "singleQuote": true,
+                "trailingComma": "all",
+                "arrowParens": "always",
+                "endOfLine" : "auto"
+            }
+        ],
+        // disable consistent types of function components
+        "react/function-component-definition": "off",
+        // suppress errors for missing 'import React' in files
+        "react/react-in-jsx-scope": "off",
+        // disable forbid-prop-types check
+        "react/forbid-prop-types": "off",
+        // allow jsx syntax in js files (for next.js project)
+        "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+        // allow single export from a file without default 
+        "import/prefer-default-export": "off",
+        // allow files without named imports
+        "import/export": 0,
+        // allow exported name as identifier for default export
+        "import/no-named-as-default": 0,
+        // allow prop spreading
+        "react/jsx-props-no-spreading": "off",
+        "max-len": 0,
+        "class-methods-use-this": "off"
+    }
+}
